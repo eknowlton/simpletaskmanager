@@ -1,4 +1,14 @@
 # diedump.run
+A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, and other fun frameworks.
+
+![image](https://github.com/user-attachments/assets/23e1c959-41e8-4b12-911d-35b9b76919b2)
+
+![image](https://github.com/user-attachments/assets/b29cbe64-49a5-4a92-8c9a-52c86bfe2cd8)
+
+![image](https://github.com/user-attachments/assets/a31bb09c-4a86-418b-8add-192b342bc75c)
+
+![image](https://github.com/user-attachments/assets/1a4c5148-db18-4f10-9f3e-056f1a626a2e)
+
 
 - **diedump.run/nginx**
 
