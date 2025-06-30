@@ -25,6 +25,8 @@ $ TAG=$(git rev-parse --short HEAD) docker buildx bake --push
 
 This will build and tag the images to the latest git commit short sha1 hash ( You may want to create a commit for each change/image to avoid caching, maybe 🤷). Then it should push the images up to ECR.
 
+![image](https://github.com/user-attachments/assets/aec60f6b-eeb5-41d3-b40b-5ef1d6ff671f)
+
 ![image](https://github.com/user-attachments/assets/23e1c959-41e8-4b12-911d-35b9b76919b2)
 
 ![image](https://github.com/user-attachments/assets/b29cbe64-49a5-4a92-8c9a-52c86bfe2cd8)
