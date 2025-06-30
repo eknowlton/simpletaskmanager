@@ -55,7 +55,7 @@ export default function Create({
             <Head title="Create a Task" />
             <div className="flex h-full flex-1 flex-row flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
                 <ContentContainer>
-                    <ContentHeader title={project ? 'Create a Project Task' : 'Create a Task'} />
+                    <ContentHeader title={`Create a Task`} />
                     <ContentBody>
                         <TaskForm onSubmit={onSubmit} statuses={statuses} projects={projects} project={project} />
                     </ContentBody>

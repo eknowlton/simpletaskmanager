@@ -46,7 +46,9 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        //
+        return inertia('projects/show', [
+            'project' => $project
+        ]);
     }
 
     public function edit(Project $project)

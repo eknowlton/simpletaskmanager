@@ -11,18 +11,18 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
     {
-        title: 'All Tasks',
+        title: 'All Projects',
         href: '/tasks',
     },
 ];
 
-export default function Show({ task }: { task: Task }) {
+export default function Show({ project }: { project: Project }) {
     return (
-        <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${task.title}`, href: `/tasks/${task.id}/show` }])}>
-            <Head title={`${task.title}`} />
+        <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
+            <Head title={`${project.title}`} />
             <div className="flex h-full flex-1 flex-row flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
                 <ContentContainer>
-                    <ContentHeader title={`${task.title}`} />
+                    <ContentHeader title={`${project.title}`} />
                     <ContentBody>Hello</ContentBody>
                 </ContentContainer>
             </div>

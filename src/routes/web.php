@@ -16,14 +16,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('index');
         Route::get('/create', [TaskController::class, 'create'])->name('create');
         Route::post('/create', [TaskController::class, 'store'])->name('store');
-        Route::get('/{task}/show', [TaskController::class, 'show'])->name('show');
+        Route::get('/{task}', [TaskController::class, 'show'])->name('show');
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
         Route::get('/', [ProjectController::class, 'index'])->name('index');
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::post('/create', [ProjectController::class, 'store'])->name('store');
-        Route::get('/{project}/show', [ProjectController::class, 'show'])->name('show');
+        Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
 
         Route::get('/{project}/tasks/create', [ProjectTaskController::class, 'create'])
             ->name('task.create');

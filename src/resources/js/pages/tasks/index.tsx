@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,6 +26,7 @@ export default function Index({ tasks }: { tasks: PaginatedCollection<Task> }) {
             <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
                 <Button asChild>
                     <Link href={route('tasks.create')} prefetch>
+                        <Plus />
                         New Task
                     </Link>
                 </Button>
@@ -42,7 +44,7 @@ export default function Index({ tasks }: { tasks: PaginatedCollection<Task> }) {
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                         >
                                             <div className="flex flex-grow">
-                                                <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
+                                                <Link href={route('tasks.show', task.id)} className="flex-grow text-lg">
                                                     {task.title}
                                                 </Link>
                                                 <div>

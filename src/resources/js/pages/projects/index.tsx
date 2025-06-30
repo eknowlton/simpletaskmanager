@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,6 +26,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<Proj
             <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
                 <Button asChild>
                     <Link href={route('projects.create')} prefetch>
+                        <Plus />
                         New Project
                     </Link>
                 </Button>
@@ -43,7 +45,9 @@ export default function Index({ projects }: { projects: PaginatedCollection<Proj
                                             style={{ borderColor: project.color }}
                                         >
                                             <div className="flex flex-grow flex-row">
-                                                <div className="flex-grow text-xl">{project.title}</div>
+                                                <Link href={route('projects.show', project.id)} className="flex-grow text-xl">
+                                                    {project.title}
+                                                </Link>
                                                 <div>{project.status_label}</div>
                                             </div>
                                             <div className="flex-grow text-gray-700 dark:text-gray-400">{project.description}</div>
