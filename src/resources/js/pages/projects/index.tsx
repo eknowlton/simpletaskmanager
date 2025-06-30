@@ -1,0 +1,63 @@
+import { ContentBody } from '@/components/content-body';
+import { ContentContainer } from '@/components/content-container';
+import { ContentHeader } from '@/components/content-header';
+import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
+import { Button } from '@/components/ui/button';
+import AppLayout from '@/layouts/app-layout';
+import { type BreadcrumbItem } from '@/types';
+import { Head, Link } from '@inertiajs/react';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: '/dashboard',
+    },
+    {
+        title: 'All Projects',
+        href: '/projects',
+    },
+];
+
+export default function Index({ projects }: { projects: PaginatedCollection<Project> }) {
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="Projects" />
+            <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
+                <Button asChild>
+                    <Link href={route('projects.create')} prefetch>
+                        New Project
+                    </Link>
+                </Button>
+            </div>
+            <div className="flex h-full flex-1 flex-row flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
+                <ContentContainer className="w-auto">
+                    <ContentHeader title="All Projects" />
+                    <ContentBody>
+                        {projects.data.length > 0 ? (
+                            <>
+                                <div className="p-4">
+                                    {projects.data.map((project: Project) => (
+                                        <div
+                                            key={project.id}
+                                            className="mb-2 flex flex-col rounded-md border border-l-8 p-4"
+                                            style={{ borderColor: project.color }}
+                                        >
+                                            <div className="flex flex-grow flex-row">
+                                                <div className="flex-grow text-xl">{project.title}</div>
+                                                <div>{project.status_label}</div>
+                                            </div>
+                                            <div className="flex-grow text-gray-700 dark:text-gray-400">{project.description}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <PaginatedCollectionPaging collection={projects} />
+                            </>
+                        ) : (
+                            <p className="p-4">No projects.</p>
+                        )}
+                    </ContentBody>
+                </ContentContainer>
+            </div>
+        </AppLayout>
+    );
+}

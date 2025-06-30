@@ -1,0 +1,60 @@
+services:
+  nginx:
+    image: diedumprun/web
+    environment:
+      NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx/conf.d
+      APP_HOST: app
+    build:
+      context: ./
+      dockerfile: docker/nginx.Dockerfile
+    volumes_from:
+      - app 
+    ports:
+      - '8000:80'
+    networks:
+      - app-net
+
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=laravel
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+    networks:
+      - app-net
+
+  app:
+    image: diedumprun/app
+    build:
+      context: ./
+      dockerfile: docker/app.Dockerfile
+    ports:
+      - '9000:9000'
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /var/www/html
+    networks:
+      - app-net
+
+  selenium: 
+    image: selenium/standalone-chrome 
+    ports: 
+      - '4444:4444'
+    networks:
+      - app-net
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
