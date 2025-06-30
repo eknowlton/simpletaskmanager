@@ -1,15 +1,6 @@
 # diedump.run
 A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, and other fun frameworks.
 
-![image](https://github.com/user-attachments/assets/23e1c959-41e8-4b12-911d-35b9b76919b2)
-
-![image](https://github.com/user-attachments/assets/b29cbe64-49a5-4a92-8c9a-52c86bfe2cd8)
-
-![image](https://github.com/user-attachments/assets/a31bb09c-4a86-418b-8add-192b342bc75c)
-
-![image](https://github.com/user-attachments/assets/1a4c5148-db18-4f10-9f3e-056f1a626a2e)
-
-
 - **diedump.run/nginx**
 
   Serves PHP application.
@@ -33,3 +24,11 @@ $ TAG=$(git rev-parse --short HEAD) docker buildx bake --push
 ```
 
 This will build and tag the images to the latest git commit short sha1 hash ( You may want to create a commit for each change/image to avoid caching, maybe 🤷). Then it should push the images up to ECR.
+
+![image](https://github.com/user-attachments/assets/23e1c959-41e8-4b12-911d-35b9b76919b2)
+
+![image](https://github.com/user-attachments/assets/b29cbe64-49a5-4a92-8c9a-52c86bfe2cd8)
+
+![image](https://github.com/user-attachments/assets/a31bb09c-4a86-418b-8add-192b342bc75c)
+
+![image](https://github.com/user-attachments/assets/1a4c5148-db18-4f10-9f3e-056f1a626a2e)
