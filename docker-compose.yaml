@@ -14,18 +14,6 @@ services:
     networks:
       - app-net
 
-  database:
-    image: 'postgres:latest'
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=laravel
-      - POSTGRES_PASSWORD=secret
-    volumes:
-      - ./db-data/:/var/lib/postgresql/data/
-    networks:
-      - app-net
-
   app:
     image: diedumprun/app
     build:
@@ -38,6 +26,18 @@ services:
         - action: sync
           path: ./src
           target: /var/www/html
+    networks:
+      - app-net
+
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=laravel
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
     networks:
       - app-net
 

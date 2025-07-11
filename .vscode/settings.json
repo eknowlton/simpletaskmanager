@@ -1,0 +1,44 @@
+{
+    "terminal.integrated.fontSize": 10,
+    "editor.lineNumbers": "relative",
+    "editor.insertSpaces": true,
+
+    "window.zoomLevel": 1,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.showTabs": "none",
+    "editor.minimap.enabled": false,
+
+    "[typescript]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+    },
+    "[typescriptreact]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+    },
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+    },
+
+    "[ruby]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true
+    },
+
+    "editor.acceptSuggestionOnEnter": "off",
+    "vim.disableExtension": false,
+    "editor.fontFamily": "'Dank Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 12,
+    "editor.fontLigatures": true,
+    "workbench.statusBar.visible": true,
+    "workbench.panel.defaultLocation": "right",
+    "terminal.integrated.lineHeight": 0,
+    "terminal.integrated.cursorStyle": "underline",
+    "terminal.integrated.fontFamily": "MesloLGLDZ Nerd Font",
+    "workbench.colorCustomizations" : {
+        "terminal.foreground" : "#fff",
+        "terminal.background" : "#000",
+    },
+    "terminal.explorerKind": "external"
+}

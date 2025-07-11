@@ -6,10 +6,13 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { add } from 'date-fns';
+import { Link } from '@inertiajs/react';
+import { add, parseISO } from 'date-fns';
+import { MessageCircleQuestion } from 'lucide-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { DatePicker } from './ui/date-picker';
+import { TagInput } from './ui/tag-input';
 
 export const TaskFormSchema = z.object({
     title: z.string().min(2, {
@@ -22,32 +25,47 @@ export const TaskFormSchema = z.object({
     due_date: z.date().optional(),
     priority: z.string().nullable().optional(),
     project_id: z.string().nullable().optional(),
+    tags: z
+        .array(
+            z.object({
+                label: z.string(),
+                value: z.string(),
+            }),
+        )
+        .optional(),
 });
 
 export const TaskForm = ({
     onSubmit,
+    task,
     statuses,
     projects,
     project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof TaskFormSchema>>;
+    task: Task;
     statuses: { name: string; value: string }[] | null;
     projects?: Project[] | null;
     project?: Project | null;
 }) => {
     const form = useForm<z.infer<typeof TaskFormSchema>>({
         resolver: zodResolver(TaskFormSchema),
-        defaultValues: {
-            title: '',
-            description: '',
-            status: 'in_progress',
-            due_date: add(new Date(), {
-                weeks: 1,
-            }),
-            priority: '5',
-            project_id: project ? `${project.id}` : null,
-        },
+        defaultValues: task
+            ? { ...task, due_date: parseISO(task.due_date), priority: `${task.priority}`, project_id: task.project_id ? `${task.project_id}` : null }
+            : {
+                  title: '',
+                  description: '',
+                  status: 'in_progress',
+                  due_date: add(new Date(), {
+                      weeks: 1,
+                  }),
+                  priority: '5',
+                  project_id: project ? `${project.id}` : null,
+                  tags: [],
+              },
     });
+
+    const showProjectSelection = !project && projects && projects.length > 0;
 
     return (
         <Form {...form}>
@@ -92,7 +110,7 @@ export const TaskForm = ({
                                 <Label htmlFor="status">Status</Label>
                                 <Select onValueChange={field.onChange} value={field.value} name="status">
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Project" />
+                                        <SelectValue placeholder="Status" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {statuses &&
@@ -107,31 +125,53 @@ export const TaskForm = ({
                             </div>
                         )}
                     />
-                    {!project && projects && projects.length > 0 && (
-                        <FormField
-                            control={form.control}
-                            name="project_id"
-                            render={({ field, fieldState }) => (
-                                <div className="grid gap-2">
-                                    <Label htmlFor="project_id">Project</Label>
-                                    <Select onValueChange={field.onChange} value={field?.value || undefined} name="status">
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Project" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {projects &&
-                                                projects.map((project) => (
-                                                    <SelectItem value={`${project.id}`} key={project.id} key={project.id}>
-                                                        {project.title}
-                                                    </SelectItem>
-                                                ))}
-                                        </SelectContent>
-                                    </Select>
-                                    {fieldState.error && <InputError message={fieldState.error.message} />}
-                                </div>
-                            )}
-                        />
-                    )}
+                    <FormField
+                        disabled={!showProjectSelection}
+                        control={form.control}
+                        name="priority"
+                        render={({ field, fieldState }) => (
+                            <div className="grid gap-2">
+                                <Label htmlFor="priority">Priority</Label>
+                                <Select onValueChange={field.onChange} value={field?.value || undefined} name="status">
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a Priority" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((priority) => (
+                                            <SelectItem value={`${priority}`} key={priority}>
+                                                {priority}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {fieldState.error && <InputError message={fieldState.error.message} />}
+                            </div>
+                        )}
+                    />
+                    <FormField
+                        disabled={!showProjectSelection}
+                        control={form.control}
+                        name="project_id"
+                        render={({ field, fieldState }) => (
+                            <div className="grid gap-2">
+                                <Label htmlFor="project_id">Project</Label>
+                                <Select onValueChange={field.onChange} value={field?.value || undefined} name="status">
+                                    <SelectTrigger>
+                                        <SelectValue placeholder={!project ? `No project selected` : 'Select a Project'} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {projects &&
+                                            projects.map((project) => (
+                                                <SelectItem value={`${project.id}`} key={project.id}>
+                                                    {project.title}
+                                                </SelectItem>
+                                            ))}
+                                    </SelectContent>
+                                </Select>
+                                {fieldState.error && <InputError message={fieldState.error.message} />}
+                            </div>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name="due_date"
@@ -143,11 +183,35 @@ export const TaskForm = ({
                             </div>
                         )}
                     />
-                    <div className="col-span-2">
-                        <Button type="submit" className="mt-4" tabIndex={4}>
-                            Submit
-                        </Button>
-                    </div>
+                    <FormField
+                        control={form.control}
+                        name="tags"
+                        render={({ field, fieldState }) => (
+                            <div className={`grid items-start gap-2 ${!showProjectSelection ? 'col-span-2' : 'col-span-1'}`}>
+                                <Label htmlFor="tags" className="flex">
+                                    <span className="flex-grow">Tags</span>
+                                    <Link className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-300" href="#">
+                                        <MessageCircleQuestion className="h-4 w-4" /> Read more about the tags available and why.
+                                    </Link>
+                                </Label>
+                                <TagInput<string>
+                                    tags={field.value || []}
+                                    setTags={field.onChange}
+                                    allTags={[
+                                        { label: 'Urgent', value: 'urgent' },
+                                        { label: 'Important', value: 'important' },
+                                        { label: '2-Minute Task', value: 'two-minute' },
+                                    ]}
+                                    placeholder="eg. Urgent, Important, 2-Minute Task"
+                                />
+                                {fieldState.error && <InputError message={fieldState.error.message} />}
+                            </div>
+                        )}
+                    />
+
+                    <Button type="submit" className="col-span-full mt-4" tabIndex={4}>
+                        Save Task
+                    </Button>
                 </div>
             </form>
         </Form>

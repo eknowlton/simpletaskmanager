@@ -29,6 +29,8 @@
                 background-color: oklch(0.145 0 0);
             }
         </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 

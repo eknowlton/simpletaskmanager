@@ -1,16 +1,24 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Projects\TaskController as ProjectTaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Inbox\BoardController as InboxBoardController;
+use App\Http\Controllers\Inbox\CalendarController as InboxCalendarController;
+use App\Http\Controllers\Projects\BoardController as ProjectsBoardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+    Route::prefix('inbox')->name('inbox.')->group(function () {
+        Route::get('/', InboxController::class)->name('index');
+        Route::get('/board', [InboxBoardController::class, 'show'])->name('board');
+        Route::get('/calendar', [InboxCalendarController::class, 'show'])->name('calendar');
+    });
 
     Route::prefix('tasks')->name('tasks.')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('index');
@@ -23,12 +31,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [ProjectController::class, 'index'])->name('index');
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::post('/create', [ProjectController::class, 'store'])->name('store');
-        Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
 
+        Route::get('/{project}/board', [ProjectsBoardController::class, 'show'])->name('board');
         Route::get('/{project}/tasks/create', [ProjectTaskController::class, 'create'])
-            ->name('task.create');
+            ->name('tasks.create');
         Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])
-            ->name('task.store');
+            ->name('tasks.store');
+        Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
     });
 });
 

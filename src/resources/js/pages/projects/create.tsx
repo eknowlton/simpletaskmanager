@@ -10,10 +10,6 @@ import { z } from 'zod';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
-    {
         title: 'All Projects',
         href: '/projects',
     },

@@ -17,12 +17,7 @@ export default function Create({
     projects: Project[];
     statuses: { name: string; value: string }[] | null;
 }) {
-    const breadcrumbs: BreadcrumbItem[] = [
-        {
-            title: 'Dashboard',
-            href: '/dashboard',
-        },
-    ];
+    const breadcrumbs: BreadcrumbItem[] = [];
 
     if (project) {
         breadcrumbs.push({
@@ -42,7 +37,6 @@ export default function Create({
     });
 
     const onSubmit = (data: z.infer<typeof TaskFormSchema>) => {
-        console.log('Form data:', data);
         router.post(route('tasks.store'), data, {
             onFinish: () => {
                 toast.success('Project created successfully!');

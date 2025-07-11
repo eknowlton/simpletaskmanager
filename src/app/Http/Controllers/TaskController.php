@@ -35,6 +35,7 @@ class TaskController extends Controller
             'due_date' => $request->due_date,
             'status' => $request->status,
             'priority' => $request->priority,
+            'tags' => $request->tags,
         ]);
 
         if ($request->has('project_id')) {
@@ -47,11 +48,16 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function show(Task $task)
+    public function show(Request $request, Task $task)
     {
         return inertia('tasks/show', [
-            'task' => $task
-        ]);
+            'task' => $task,
+            'projects' => $request->user()->projects,
+            'statuses' => collect(TaskStatus::cases())->map(fn($status) => [
+                    'value' => $status->value,
+                    'name' => $status->label(),
+                ])->toArray()
+            ]);
     }
 
     public function edit(Task $task)

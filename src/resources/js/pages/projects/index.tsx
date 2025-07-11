@@ -6,13 +6,9 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Plus } from 'lucide-react';
+import { Check, CheckCheck, Plus } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
     {
         title: 'All Projects',
         href: '/projects',
@@ -41,7 +37,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<Proj
                                     {projects.data.map((project: Project) => (
                                         <div
                                             key={project.id}
-                                            className="mb-2 flex flex-col rounded-md border border-l-8 p-4"
+                                            className="mb-2 flex flex-col rounded-md border border-l-8 p-4 hover:bg-gray-100 dark:hover:bg-gray-900"
                                             style={{ borderColor: project.color }}
                                         >
                                             <div className="flex flex-grow flex-row">
@@ -50,7 +46,19 @@ export default function Index({ projects }: { projects: PaginatedCollection<Proj
                                                 </Link>
                                                 <div>{project.status_label}</div>
                                             </div>
-                                            <div className="flex-grow text-gray-700 dark:text-gray-400">{project.description}</div>
+                                            <div className="flex">
+                                                <div className="flex-grow text-gray-700 dark:text-gray-400">{project.description}</div>
+                                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                    <span className="ml-2 flex items-center gap-2 text-sm text-gray-500">
+                                                        <Check className="h-4 w-4" />
+                                                        {project.tasks_count}
+                                                    </span>
+                                                    <span className="ml-2 flex items-center gap-2 text-sm text-gray-500">
+                                                        <CheckCheck className="h-4 w-4" />
+                                                        {project.completed_tasks_count}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

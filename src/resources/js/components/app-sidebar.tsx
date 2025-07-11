@@ -4,37 +4,36 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderCheck, FolderPlus, LayoutGrid, LayoutList, Plus } from 'lucide-react';
+import { BookOpen, Calendar, Columns, FolderCheck, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
+        title: 'Inbox',
+        href: route('inbox.index'),
         icon: LayoutGrid,
     },
-    { title: 'All Tasks', href: '/tasks', icon: LayoutList },
     {
-        title: 'Create a task',
-        href: '/tasks/create',
-        icon: Plus,
+        title: 'Calendar',
+        href: route('inbox.calendar'),
+        icon: Calendar,
     },
     {
-        title: 'All Projects',
-        href: '/projects',
+        title: 'Board',
+        href: route('inbox.board'),
+        icon: Columns,
+    },
+    {
+        title: 'Projects',
+        href: route('projects.index'),
         icon: FolderCheck,
-    },
-    {
-        title: 'Create a Project',
-        href: '/projects/create',
-        icon: FolderPlus,
     },
 ];
 
 const footerNavItems: NavItem[] = [
     {
         title: 'Help',
-        href: '/help',
+        href: '#',
         icon: BookOpen,
     },
 ];
@@ -47,13 +46,18 @@ export function AppSidebar() {
         projectMenuItems = [
             {
                 title: 'Project',
-                href: `/projects/${project.id}`,
+                href: route('projects.show', { project: project.id }),
                 icon: FolderCheck,
             },
             {
-                title: 'Create Task',
-                href: `/projects/${project.id}/tasks/create`,
-                icon: Plus,
+                title: 'Calendar',
+                href: '#',
+                icon: Calendar,
+            },
+            {
+                title: 'Board',
+                href: route('projects.board', { project: project.id }),
+                icon: Columns,
             },
         ];
     }
@@ -64,7 +68,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
+                            <Link href="/inbox" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -73,7 +77,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain title="Tasks" items={mainNavItems} />
                 {(props.project as Project | null) && <NavMain items={projectMenuItems} title={project?.title} />}
             </SidebarContent>
 

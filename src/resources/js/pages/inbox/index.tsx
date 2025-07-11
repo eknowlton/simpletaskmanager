@@ -7,31 +7,28 @@ import { Head, Link } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
+        title: 'Inbox',
+        href: '/inbox',
     },
 ];
 
-export default function Dashboard({
-    pending_tasks,
-    completed_tasks,
-    cancelled_tasks,
-    test,
+export default function Inbox({
+    inbox,
+    twoMinute,
 }: {
-    pending_tasks: Task[];
-    completed_tasks: Task[];
-    cancelled_tasks: Task[];
+    inbox: Task[];
+    twoMinute: Task[];
 }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-row flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
-                <ContentContainer className="w-auto">
-                    <ContentHeader title="Pending" />
+            <Head title="Inbox" />
+            <div className="flex h-full flex-row gap-4 overflow-x-auto rounded-xl p-4">
+                <ContentContainer className="flex-grow">
+                    <ContentHeader title="Inbox" />
                     <ContentBody>
-                        {pending_tasks.length > 0 ? (
+                        {inbox.length > 0 ? (
                             <div className="p-4">
-                                {pending_tasks.map((task) => (
+                                {inbox.map((task) => (
                                     <div
                                         key={task.id}
                                         className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
@@ -60,12 +57,12 @@ export default function Dashboard({
                         )}
                     </ContentBody>
                 </ContentContainer>
-                <ContentContainer className="w-auto">
-                    <ContentHeader title="Completed" />
+                <ContentContainer className="w-1/5">
+                    <ContentHeader title="2-Minute Tasks" />
                     <ContentBody>
-                        {completed_tasks.length > 0 ? (
+                        {twoMinute.length > 0 ? (
                             <div className="p-4">
-                                {completed_tasks.map((task) => (
+                                {twoMinute.map((task) => (
                                     <div
                                         key={task.id}
                                         className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
@@ -90,41 +87,7 @@ export default function Dashboard({
                                 ))}
                             </div>
                         ) : (
-                            <p className="p-4">No completed tasks.</p>
-                        )}
-                    </ContentBody>
-                </ContentContainer>
-                <ContentContainer className="w-auto">
-                    <ContentHeader title="Cancelled" />
-                    <ContentBody>
-                        {cancelled_tasks.length > 0 ? (
-                            <div className="p-4">
-                                {cancelled_tasks.map((task) => (
-                                    <div
-                                        key={task.id}
-                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
-                                    >
-                                        <div className="flex flex-grow">
-                                            <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
-                                                {task.title}
-                                            </Link>
-                                            <div>
-                                                {task.status_label}{' '}
-                                                <span className="text-sm text-gray-700 dark:text-gray-400">( {task.priority} )</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-grow">
-                                            <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                            <div>
-                                                <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                <span className="pl-4">{task.due_date}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="p-4">No cancelled tasks.</p>
+                            <p className="p-4">No two minute tasks.</p>
                         )}
                     </ContentBody>
                 </ContentContainer>

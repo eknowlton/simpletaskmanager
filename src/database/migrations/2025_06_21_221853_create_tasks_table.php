@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('category')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
+            $table->json('tags')->nullable();
             $table->softDeletes();
         });
     }

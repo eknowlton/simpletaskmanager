@@ -30,6 +30,7 @@ class TaskController extends Controller
             'due_date' => $request->due_date,
             'status' => $request->status,
             'priority' => $request->priority,
+            'tags' => $request->tags,
         ]);
 
         if ($request->has('project_id')) {

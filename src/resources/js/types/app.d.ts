@@ -6,6 +6,8 @@ interface Task {
     priority: number;
     status: string;
     status_label: string;
+    project_id?: number;
+    tags: Tag[];
 }
 
 interface Project {
@@ -16,7 +18,13 @@ interface Project {
     status_label: string;
     slug: string;
     color: string;
-    icon: string | null;
+    icon?: string ;
+    tasks: Task[];
+    tasks_count: number;
+    completed_tasks_count: number;
+    pending_tasks_count: number;
+    in_progress_tasks_count: number;
+    cancelled_tasks_count: number;
 }
 
 interface FlashMessage {

@@ -12,7 +12,12 @@ class ProjectController extends Controller
     public function index()
     {
         return inertia('projects/index', [
-            'projects' => Project::paginate(10),
+            'projects' => Project::withCount('tasks')
+                ->withCount('completedTasks')
+                ->withCount('pendingTasks')
+                ->withCount('inProgressTasks')
+                ->withCount('cancelledTasks')
+                ->paginate(10),
         ]);
     }
 
@@ -47,7 +52,8 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         return inertia('projects/show', [
-            'project' => $project
+            'project' => $project,
+            'tasks' => $project->tasks
         ]);
     }
 
