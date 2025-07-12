@@ -31,7 +31,6 @@ import {
     KanbanBoardColumnTitle,
     KanbanBoardDropDirection,
     KanbanBoardExtraMargin,
-    KanbanBoardProvider,
     KanbanColorCircle,
     useDndEvents,
 } from './kanban';
@@ -53,90 +52,8 @@ type Column = {
     items: Card[];
 };
 
-export default function KanbanBoardPage() {
-    return (
-        <div className="grid h-full grid-rows-[var(--header-height)_1fr_6rem] overflow-x-hidden sm:grid-rows-[var(--header-height)_1fr_var(--header-height)]">
-            <main className="relative">
-                <div className="absolute inset-0 h-full overflow-x-hidden px-4 py-4">
-                    <KanbanBoardProvider>
-                        <MyKanbanBoard />
-                    </KanbanBoardProvider>
-                </div>
-            </main>
-        </div>
-    );
-}
-
-export function MyKanbanBoard() {
-    const [columns, setColumns] = useState<Column[]>([
-        {
-            id: 'eowdjiak9f9jr27po347jr47',
-            title: 'Backlog',
-            color: 'primary',
-            items: [
-                {
-                    id: '1',
-                    title: 'Add a new column',
-                },
-                {
-                    id: '2',
-                    title: 'Add a new card',
-                },
-                {
-                    id: '3',
-                    title: 'Move a card to another column',
-                },
-                {
-                    id: '4',
-                    title: 'Delete a column',
-                },
-                {
-                    id: '5',
-                    title: 'Delete a card',
-                },
-            ],
-        },
-        {
-            id: 'ad1wx5djclsilpu8sjmp9g70',
-            title: 'To Do',
-            color: 'blue',
-            items: [
-                {
-                    id: '12',
-                    title: 'Install the Shadcn Kanban board into your project',
-                },
-                {
-                    id: '13',
-                    title: 'Build amazing apps',
-                },
-            ],
-        },
-        {
-            id: 'zm3vyxyo0x47tl60340w8jrl',
-            title: 'In Progress',
-            color: 'red',
-            items: [
-                {
-                    id: '14',
-                    title: 'Make some magic',
-                },
-                {
-                    id: '15',
-                    title: 'Stay healthy',
-                },
-                {
-                    id: '16',
-                    title: 'Drink water 💧',
-                },
-            ],
-        },
-        {
-            id: 'rzaksqoyfvgjbw466puqu9uk',
-            title: 'In Review',
-            color: 'yellow',
-            items: [],
-        },
-    ]);
+export function MyKanbanBoard({ value }: { value: any }) {
+    const [columns, setColumns] = useState<Column[]>(value);
 
     // Scroll to the right when a new column is added.
     const scrollContainerReference = useRef<HTMLDivElement>(null);
@@ -501,7 +418,7 @@ function MyKanbanBoardColumn({
     }
 
     return (
-        <KanbanBoardColumn columnId={column.id} key={column.id} onDropOverColumn={handleDropOverColumn}>
+        <KanbanBoardColumn columnId={column.id} key={column.id} onDropOverColumn={handleDropOverColumn} className="h-full">
             <KanbanBoardColumnHeader>
                 {isEditingTitle ? (
                     <form
@@ -687,7 +604,7 @@ function MyKanbanBoardCard({
             }}
             ref={kanbanBoardCardReference}
         >
-            <KanbanBoardCardDescription>{card.title}</KanbanBoardCardDescription>
+            <KanbanBoardCardDescription className="text-sm">{card.title}</KanbanBoardCardDescription>
             <KanbanBoardCardButtonGroup disabled={isActive}>
                 <KanbanBoardCardButton className="text-destructive" onClick={() => onDeleteCard(card.id)} tooltip="Delete card">
                     <Trash2Icon />

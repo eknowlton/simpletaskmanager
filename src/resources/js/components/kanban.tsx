@@ -356,7 +356,7 @@ Board
 */
 
 export function KanbanBoard({ className, ref, ...props }: ComponentProps<'div'>) {
-    return <div className={cn('flex h-full flex-grow items-start gap-x-2 overflow-x-auto py-1', className)} ref={ref} {...props} />;
+    return <div className={cn('flex h-full flex-grow items-start gap-x-4 overflow-x-auto py-1', className)} ref={ref} {...props} />;
 }
 
 /**

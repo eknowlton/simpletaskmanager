@@ -46,6 +46,11 @@ class Task extends Model
         return $this->status->label();
     }
 
+    public function scopeWithStatus(Builder $query, TaskStatus $status)
+    {
+        return $query->where('status', $status);
+    }
+
     public function scopeInboxFor(Builder $query, User $user)
     {
         return $query->where('user_id', $user->id);
@@ -65,6 +70,14 @@ class Task extends Model
             'end' => $this->due_date,
             'title' => $this->title,
             'color' => $this->project?->color,
+        ];
+    }
+
+    public function getBoardAttribute()
+    {
+        return (object) [
+            'id' => $this->id,
+            'title' => $this->title,
         ];
     }
 }
