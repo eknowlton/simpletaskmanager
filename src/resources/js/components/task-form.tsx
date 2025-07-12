@@ -11,7 +11,7 @@ import { add, parseISO } from 'date-fns';
 import { MessageCircleQuestion } from 'lucide-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { DatePicker } from './ui/date-picker';
+import { DateTimeInput } from './ui/date-time-input';
 import { TagInput } from './ui/tag-input';
 
 export const TaskFormSchema = z.object({
@@ -176,10 +176,15 @@ export const TaskForm = ({
                         control={form.control}
                         name="due_date"
                         render={({ field, fieldState }) => (
-                            <div className="grid gap-2">
+                            <div>
                                 <Label htmlFor="due_date">Due Date</Label>
-                                <DatePicker date={field.value} onSelect={field.onChange} />
-                                {fieldState.error && <InputError message={fieldState.error.message} />}
+                                <DateTimeInput
+                                    value={field.value}
+                                    onChange={(date) => {
+                                        console.log(date);
+                                        field.onChange(date);
+                                    }}
+                                />
                             </div>
                         )}
                     />

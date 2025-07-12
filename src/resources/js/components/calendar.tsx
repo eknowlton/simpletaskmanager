@@ -191,10 +191,9 @@ const EventGroup = ({ events, hour }: { events: CalendarEvent[]; hour: Date }) =
                     return (
                         <div
                             key={event.id}
-                            className={cn('relative', dayEventVariants({ variant: event.color }))}
+                            className={cn('relative mb-4 bg-gray-100 dark:bg-gray-900', dayEventVariants({ variant: event.color }))}
                             style={{
                                 top: `${startPosition * 100}%`,
-                                height: `${hoursDifference * 100}%`,
                             }}
                         >
                             {event.title}
@@ -213,7 +212,7 @@ const CalendarDayView = () => {
     const hours = [...Array(24)].map((_, i) => setHours(date, i));
 
     return (
-        <div className="relative flex h-full overflow-auto pt-2">
+        <div className="scrollbar-hide relative flex h-full overflow-x-hidden overflow-y-auto pt-2">
             <TimeTable />
             <div className="flex-1">
                 {hours.map((hour) => (
@@ -252,7 +251,7 @@ const CalendarWeekView = () => {
     if (view !== 'week') return null;
 
     return (
-        <div className="relative flex h-full flex-col overflow-auto">
+        <div className="scrollbar-hide relative flex h-full flex-col overflow-x-hidden overflow-y-auto">
             <div className="sticky top-0 z-10 mb-3 flex border-b bg-card">
                 <div className="w-12"></div>
                 {headerDays.map((date, i) => (
@@ -296,7 +295,7 @@ const CalendarWeekView = () => {
 };
 
 const CalendarMonthView = () => {
-    const { date, view, events, locale } = useCalendar();
+    const { date, view, events, locale, setDate, setView } = useCalendar();
 
     const monthDates = useMemo(() => getDaysInMonth(date), [date]);
     const weekDays = useMemo(() => generateWeekdays(locale), [locale]);
@@ -319,6 +318,9 @@ const CalendarMonthView = () => {
                 {monthDates.map((_date) => {
                     const currentEvents = events.filter((event) => isSameDay(event.start, _date));
 
+                    const longerThanThree = currentEvents.length > 3;
+                    const displayedEvents = longerThanThree ? currentEvents.slice(0, 3) : currentEvents;
+
                     return (
                         <div
                             className={cn(
@@ -336,15 +338,28 @@ const CalendarMonthView = () => {
                                 {format(_date, 'd')}
                             </span>
 
-                            {currentEvents.map((event) => {
+                            {displayedEvents.map((event) => {
                                 return (
                                     <div key={event.id} className="flex items-center gap-1 rounded px-1 text-sm">
                                         <div className={cn('shrink-0', monthEventVariants({ variant: event.color }))}></div>
-                                        <span className="flex-1 truncate">{event.title}</span>
+                                        <span className="flex-1 truncate" title={event.title}>
+                                            {event.title}
+                                        </span>
                                         <time className="text-xs text-muted-foreground/50 tabular-nums">{format(event.start, 'HH:mm')}</time>
                                     </div>
                                 );
                             })}
+                            {longerThanThree && (
+                                <button
+                                    className="flex items-center gap-1 rounded px-3 text-xs"
+                                    onClick={() => {
+                                        setDate(_date);
+                                        setView('day');
+                                    }}
+                                >
+                                    <span className="flex-1 truncate">+{currentEvents.length - 3} more</span>
+                                </button>
+                            )}
                         </div>
                     );
                 })}
@@ -509,7 +524,7 @@ const CalendarCurrentDate = () => {
     const { date, view } = useCalendar();
 
     return (
-        <time dateTime={date.toISOString()} className="tabular-nums">
+        <time dateTime={date.toISOString()} className="mr-4 text-2xl tabular-nums">
             {format(date, view === 'day' ? 'dd MMMM yyyy' : 'MMMM yyyy')}
         </time>
     );

@@ -12,13 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Inbox({
-    inbox,
-    twoMinute,
-}: {
-    inbox: Task[];
-    twoMinute: Task[];
-}) {
+export default function Inbox({ inbox, twoMinute }: { inbox: Task[]; twoMinute: Task[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Inbox" />
@@ -31,7 +25,7 @@ export default function Inbox({
                                 {inbox.map((task) => (
                                     <div
                                         key={task.id}
-                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
+                                        className="dark:hover:bg-white/3 mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100"
                                     >
                                         <div className="flex flex-grow">
                                             <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
@@ -46,7 +40,7 @@ export default function Inbox({
                                             <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
                                             <div>
                                                 <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                <span className="pl-4">{task.due_date}</span>
+                                                <span className="pl-4">{new Date(task.due_date).toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +59,7 @@ export default function Inbox({
                                 {twoMinute.map((task) => (
                                     <div
                                         key={task.id}
-                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
+                                        className="dark:hover:bg-white/3 mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100"
                                     >
                                         <div className="flex flex-grow">
                                             <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
@@ -80,7 +74,7 @@ export default function Inbox({
                                             <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
                                             <div>
                                                 <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                <span className="pl-4">{task.due_date}</span>
+                                                <span className="pl-4">{new Date(task.due_date).toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </div>

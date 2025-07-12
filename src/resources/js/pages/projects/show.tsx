@@ -1,7 +1,7 @@
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
-import { ProjectForm } from '@/components/project-form';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Calendar, ChartNoAxesCombined, Sparkles } from 'lucide-react';
+import { Calendar, ChartNoAxesCombined, Plus, Sparkles } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,18 +23,23 @@ export default function Show({ project, tasks }: { project: Project; tasks: Task
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
             <Head title={`${project.title}`} />
 
+            <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
+                <Button asChild>
+                    <Link href={route('projects.tasks.create', project.id)} prefetch>
+                        <Plus />
+                        New Task
+                    </Link>
+                </Button>
+                <Button asChild>
+                    <Link href={'#'} prefetch>
+                        Edit Project
+                    </Link>
+                </Button>
+            </div>
+
             <div className="flex h-full flex-1 flex-col flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
                 <ContentContainer>
-                    <ContentHeader title={project.title} />
-                    {true ? (
-                        <ContentBody>
-                            <ProjectForm onSubmit={() => {}} statuses={[]} />
-                        </ContentBody>
-                    ) : null}
-                </ContentContainer>
-
-                <ContentContainer>
-                    <ContentHeader title="All Tasks" />
+                    <ContentHeader title={project.title} description={`Inbox`} />
                     <ContentBody>
                         <div className="mx-4 flex flex-grow flex-row gap-2">
                             <Input className="w-1/5" placeholder="Search tasks..." />
@@ -109,7 +114,7 @@ export default function Show({ project, tasks }: { project: Project; tasks: Task
                                 </div>
                             </>
                         ) : (
-                            <p className="p-4">No tasks.</p>
+                            <p className="p-6">No tasks in project.</p>
                         )}
                     </ContentBody>
                 </ContentContainer>

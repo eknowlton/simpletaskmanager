@@ -11,13 +11,12 @@ import {
 } from '@/components/calendar';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Inbox',
-        href: route('inbox.index'),
+        title: 'Project',
+        href: '#',
     },
     {
         title: 'Calendar',
@@ -26,10 +25,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Calendar({ tasks }: { tasks: CalendarEvent[] }) {
-    console.log('Calendar tasks:', tasks);
     return (
         <AppLayout header={false}>
-            <Head title="Tasks" />
             <CCalendar
                 events={tasks.map((task) => ({
                     id: task.id,

@@ -45,13 +45,13 @@ export function AppSidebar() {
     if (project) {
         projectMenuItems = [
             {
-                title: 'Project',
+                title: 'Inbox',
                 href: route('projects.show', { project: project.id }),
                 icon: FolderCheck,
             },
             {
                 title: 'Calendar',
-                href: '#',
+                href: route('projects.calendar', { project: project.id }),
                 icon: Calendar,
             },
             {

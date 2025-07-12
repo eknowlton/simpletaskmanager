@@ -8,6 +8,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\Inbox\BoardController as InboxBoardController;
 use App\Http\Controllers\Inbox\CalendarController as InboxCalendarController;
 use App\Http\Controllers\Projects\BoardController as ProjectsBoardController;
+use App\Http\Controllers\Projects\CalendarController as ProjectsCalendarController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/create', [ProjectController::class, 'store'])->name('store');
 
         Route::get('/{project}/board', [ProjectsBoardController::class, 'show'])->name('board');
+        Route::get('/{project}/calendar', [ProjectsCalendarController::class, 'show'])->name('calendar');
         Route::get('/{project}/tasks/create', [ProjectTaskController::class, 'create'])
             ->name('tasks.create');
         Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])

@@ -85,7 +85,7 @@ export default function Index({ tasks }: { tasks: PaginatedCollection<Task> }) {
                                                 <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
                                                 <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                                                     <Calendar className="h-4 w-4" />
-                                                    <span className="">{task.due_date}</span>
+                                                    <span className="">{new Date(task.due_date).toLocaleString()}</span>
                                                 </div>
                                             </div>
                                             <div className="flex flex-grow pt-2">
@@ -109,7 +109,7 @@ export default function Index({ tasks }: { tasks: PaginatedCollection<Task> }) {
                                 <PaginatedCollectionPaging collection={tasks} />
                             </>
                         ) : (
-                            <p className="p-4">No tasks.</p>
+                            <p className="p-6">No tasks found.</p>
                         )}
                     </ContentBody>
                 </ContentContainer>

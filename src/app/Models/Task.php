@@ -41,11 +41,6 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getDueDateAttribute($value)
-    {
-        return $value ? \Carbon\Carbon::parse($value)->format("Y-m-d") : null;
-    }
-
     public function getStatusLabelAttribute()
     {
         return $this->status->label();
@@ -60,5 +55,16 @@ class Task extends Model
     {
         return $this->inboxFor($user)
         ->whereJsonContains('tags', ['value' => 'two-minute']);
+    }
+
+    public function getCalendarAttribute()
+    {
+        return (object) [
+            'id' => $this->id,
+            'start' => $this->due_date,
+            'end' => $this->due_date,
+            'title' => $this->title,
+            'color' => $this->project?->color,
+        ];
     }
 }

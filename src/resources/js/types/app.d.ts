@@ -56,3 +56,11 @@ interface PaginatedCollection<T> {
     to: number;
     total: number;
 }
+
+interface CalendarEvent {
+    id: string;
+    title: string;
+    start: Date;
+    end: Date;
+    color: VariantProps<typeof monthEventVariants>['variant']
+}

@@ -37,7 +37,9 @@ export default function Create({
     });
 
     const onSubmit = (data: z.infer<typeof TaskFormSchema>) => {
-        router.post(route('tasks.store'), data, {
+        const task = { ...data, due_date: data.due_date?.toISOString() };
+        console.log('Submitting task:', task);
+        router.post(route('tasks.store'), task, {
             onFinish: () => {
                 toast.success('Project created successfully!');
             },
