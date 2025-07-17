@@ -376,7 +376,7 @@ export type KanbanBoardColumnProps = {
     onDropOverColumn?: (dataTransferData: string) => void;
 };
 
-export const kanbanBoardColumnClassNames = 'flex-grow min-w-1/5 rounded-lg border flex flex-col border-border bg-sidebar py-2 max-h-full';
+export const kanbanBoardColumnClassNames = 'flex-grow min-w-1/5  flex flex-col py-2 max-h-full h-full';
 
 export function KanbanBoardColumn({ className, columnId, onDropOverColumn, ref, ...props }: ComponentProps<'section'> & KanbanBoardColumnProps) {
     const [isDropTarget, setIsDropTarget] = useState(false);
@@ -537,7 +537,7 @@ export type KanbanBoardCardProps<T extends { id: string } = { id: string }> = {
     isActive?: boolean;
 };
 
-const kanbanBoardCardClassNames = 'rounded-lg border border-border bg-background p-3 text-start text-foreground shadow-sm';
+const kanbanBoardCardClassNames = 'rounded-lg border border-border bg-sidebar p-3 text-start text-foreground shadow-sm';
 
 export function KanbanBoardCard({ className, data, isActive = false, ref, ...props }: ComponentProps<'button'> & KanbanBoardCardProps) {
     const [isDragging, setIsDragging] = useState(false);

@@ -24,6 +24,11 @@ const mainNavItems: NavItem[] = [
         icon: Columns,
     },
     {
+        title: 'All Tasks',
+        href: route('tasks.index'),
+        icon: Columns,
+    },
+    {
         title: 'Projects',
         href: route('projects.index'),
         icon: FolderCheck,
@@ -58,6 +63,11 @@ export function AppSidebar() {
                 title: 'Board',
                 href: route('projects.board', { project: project.id }),
                 icon: Columns,
+            },
+            {
+                title: 'All Tasks',
+                href: route('projects.show', { project: project.id }),
+                icon: FolderCheck,
             },
         ];
     }

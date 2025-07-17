@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterTasksRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
@@ -10,11 +11,23 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index(Request $request)
+    public function index(FilterTasksRequest $request)
     {
-        return inertia('tasks/index', [
-            'tasks' => $request->user()->tasks()->orderBy('created_at', 'desc')->paginate(5)
-        ]);
+        return inertia('tasks/index')
+        ->with('filter', [
+                'status' => $request->status,
+                'search' => $request->search,
+                'tags' => $request->tags,
+            ])
+            ->with('tasks',  $request->user()->tasks()
+                ->byFilter($request)
+                ->orderBy('created_at', 'desc')
+                ->paginate(5),
+            )
+            ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
+                'value' => $status->value,
+                'label' => $status->label(),
+            ]));
     }
 
     public function create(Request $request)

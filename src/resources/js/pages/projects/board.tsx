@@ -1,4 +1,5 @@
-import KanbanBoardPage from '@/components/kanban-board';
+import { KanbanBoardProvider } from '@/components/kanban';
+import { MyKanbanBoard } from '@/components/kanban-board';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -10,11 +11,16 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Board({ project, tasks }: { project: Project; tasks: PaginatedCollection<Task> }) {
+export default function Board({ project, columns }: { project: Project; columns: any }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
             <Head title="Tasks" />
-            <KanbanBoardPage />
+
+            <div className="h-full p-4">
+                <KanbanBoardProvider>
+                    <MyKanbanBoard value={columns} />
+                </KanbanBoardProvider>
+            </div>
         </AppLayout>
     );
 }

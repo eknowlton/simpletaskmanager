@@ -1,16 +1,9 @@
-import { MoreHorizontalIcon, PenIcon, Trash2Icon } from 'lucide-react';
+import { Edit, Expand, Shrink } from 'lucide-react';
 import type { FormEvent, KeyboardEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { useJsLoaded } from '@/hooks/use-js-loaded';
 import {
@@ -24,7 +17,6 @@ import {
     KanbanBoardCircleColor,
     KanbanBoardColumn,
     KanbanBoardColumnHeader,
-    KanbanBoardColumnIconButton,
     KanbanBoardColumnList,
     KanbanBoardColumnListItem,
     KanbanBoardColumnSkeleton,
@@ -53,6 +45,7 @@ type Column = {
 };
 
 export function MyKanbanBoard({ value }: { value: any }) {
+    const handle = useFullScreenHandle();
     const [columns, setColumns] = useState<Column[]>(value);
 
     // Scroll to the right when a new column is added.
@@ -314,29 +307,51 @@ export function MyKanbanBoard({ value }: { value: any }) {
     const jsLoaded = useJsLoaded();
 
     return (
-        <KanbanBoard ref={scrollContainerReference}>
-            {columns.map((column) =>
-                jsLoaded ? (
-                    <MyKanbanBoardColumn
-                        activeCardId={activeCardId}
-                        column={column}
-                        key={column.id}
-                        onAddCard={handleAddCard}
-                        onCardBlur={handleCardBlur}
-                        onCardKeyDown={handleCardKeyDown}
-                        onDeleteCard={handleDeleteCard}
-                        onDeleteColumn={handleDeleteColumn}
-                        onMoveCardToColumn={handleMoveCardToColumn}
-                        onUpdateCardTitle={handleUpdateCardTitle}
-                        onUpdateColumnTitle={handleUpdateColumnTitle}
-                    />
-                ) : (
-                    <KanbanBoardColumnSkeleton key={column.id} />
-                ),
-            )}
+        <FullScreen handle={handle} className="h-full">
+            <KanbanBoard ref={scrollContainerReference}>
+                {columns.map((column) =>
+                    jsLoaded ? (
+                        <MyKanbanBoardColumn
+                            activeCardId={activeCardId}
+                            column={column}
+                            key={column.id}
+                            onAddCard={handleAddCard}
+                            onCardBlur={handleCardBlur}
+                            onCardKeyDown={handleCardKeyDown}
+                            onDeleteCard={handleDeleteCard}
+                            onDeleteColumn={handleDeleteColumn}
+                            onMoveCardToColumn={handleMoveCardToColumn}
+                            onUpdateCardTitle={handleUpdateCardTitle}
+                            onUpdateColumnTitle={handleUpdateColumnTitle}
+                        />
+                    ) : (
+                        <KanbanBoardColumnSkeleton key={column.id} />
+                    ),
+                )}
 
-            <KanbanBoardExtraMargin />
-        </KanbanBoard>
+                <KanbanBoardExtraMargin>
+                    {handle.active ? (
+                        <button
+                            onClick={() => {
+                                console.log('fullscreen', handle);
+                                handle.exit();
+                            }}
+                        >
+                            <Expand className="h-4 w-4" />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => {
+                                console.log('fullscreen', handle);
+                                handle.enter();
+                            }}
+                        >
+                            <Shrink className="h-4 w-4" />
+                        </button>
+                    )}
+                </KanbanBoardExtraMargin>
+            </KanbanBoard>
+        </FullScreen>
     );
 }
 
@@ -450,7 +465,7 @@ function MyKanbanBoardColumn({
                             {column.title}
                         </KanbanBoardColumnTitle>
 
-                        <DropdownMenu>
+                        {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <KanbanBoardColumnIconButton ref={moreOptionsButtonReference}>
                                     <MoreHorizontalIcon />
@@ -474,7 +489,7 @@ function MyKanbanBoardColumn({
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
-                        </DropdownMenu>
+                        </DropdownMenu> */}
                     </>
                 )}
             </KanbanBoardColumnHeader>
@@ -607,9 +622,9 @@ function MyKanbanBoardCard({
             <KanbanBoardCardDescription className="text-sm">{card.title}</KanbanBoardCardDescription>
             <KanbanBoardCardButtonGroup disabled={isActive}>
                 <KanbanBoardCardButton className="text-destructive" onClick={() => onDeleteCard(card.id)} tooltip="Delete card">
-                    <Trash2Icon />
+                    <Edit className="h-4 w-4" />
 
-                    <span className="sr-only">Delete card</span>
+                    <span className="sr-only">Edit Task</span>
                 </KanbanBoardCardButton>
             </KanbanBoardCardButtonGroup>
         </KanbanBoardCard>

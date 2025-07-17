@@ -15,5 +15,5 @@ test('new users can register', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('inbox', absolute: false));
+    $response->assertRedirect(route('inbox.index', absolute: false));
 });

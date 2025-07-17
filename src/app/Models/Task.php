@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\FilterTasksRequest;
 use App\TaskStatus;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -56,10 +57,28 @@ class Task extends Model
         return $query->where('user_id', $user->id);
     }
 
+    public function scopeForProject(Builder $query, Project $project)
+    {
+        return $query->where('project_id', $project->id);
+    }
+
     public function scopeTwoMinuteFor(Builder $query, User $user)
     {
         return $this->inboxFor($user)
         ->whereJsonContains('tags', ['value' => 'two-minute']);
+    }
+    
+    public function scopeByFilter(Builder $query, FilterTasksRequest $request)
+    {
+        return $query->when($request->status, function ($query) use ($request) {
+            return $query->where('status', $request->status);
+        })
+        ->when($request->search, function ($query) use ($request) {
+            return $query->where('title', 'like', '%' . $request->search . '%');
+        })
+        ->when($request->tags, function ($query) use ($request) {
+            return $query->whereJsonContains('tags', $request->tags);
+        });
     }
 
     public function getCalendarAttribute()
