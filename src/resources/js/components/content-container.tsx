@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import React, { ReactNode } from 'react';
 
 const variantStyles = {
@@ -5,14 +6,20 @@ const variantStyles = {
     secondary: 'border-sidebar-border/50 dark:border-sidebar-border',
 };
 
-export const ContentContainer: React.FC<{ children: ReactNode; className?: string; variant?: 'primary' | 'secondary' }> = ({
-    children,
-    className,
-    variant = 'primary',
-}) => {
+export const ContentContainer: React.FC<{
+    children: ReactNode;
+    className?: string;
+    variant?: 'primary' | 'secondary';
+    ref?: React.ForwardedRef<HTMLDivElement>;
+}> = ({ children, className, variant = 'primary', ref }) => {
     return (
         <div
-            className={`relative min-h-[100vh] flex-grow overflow-hidden rounded-xl border md:min-h-min ${className} ${variantStyles[variant]} duration-300 animate-in fade-in`}
+            ref={ref}
+            className={cn(
+                'flex-grow overflow-hidden rounded-xl border duration-300 animate-in fade-in md:min-h-min',
+                className,
+                variantStyles[variant],
+            )}
         >
             {children}
         </div>

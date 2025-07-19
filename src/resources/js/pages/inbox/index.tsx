@@ -1,9 +1,11 @@
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -16,7 +18,15 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Task[]; twoMinute: 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Inbox" />
-            <div className="flex h-full flex-row gap-4 overflow-x-auto rounded-xl p-4">
+            <div className="flex flex-row flex-wrap gap-4 rounded-xl px-4 pt-4">
+                <Button asChild>
+                    <Link href={route('tasks.create')} prefetch>
+                        <Plus />
+                        New Task
+                    </Link>
+                </Button>
+            </div>
+            <div className="flex h-full flex-row gap-4 rounded-xl p-4">
                 <ContentContainer className="flex-grow">
                     <ContentHeader title="Inbox" />
                     <ContentBody>
@@ -25,7 +35,7 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Task[]; twoMinute: 
                                 {inbox.map((task) => (
                                     <div
                                         key={task.id}
-                                        className="dark:hover:bg-white/3 mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100"
+                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                     >
                                         <div className="flex flex-grow">
                                             <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
@@ -59,7 +69,7 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Task[]; twoMinute: 
                                 {twoMinute.map((task) => (
                                     <div
                                         key={task.id}
-                                        className="dark:hover:bg-white/3 mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100"
+                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                     >
                                         <div className="flex flex-grow">
                                             <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">

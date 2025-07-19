@@ -1,5 +1,3 @@
-import { KanbanBoardProvider } from '@/components/kanban';
-import { MyKanbanBoard } from '@/components/kanban-board';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -16,11 +14,7 @@ export default function Board({ project, columns }: { project: Project; columns:
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
             <Head title="Tasks" />
 
-            <div className="h-full p-4">
-                <KanbanBoardProvider>
-                    <MyKanbanBoard value={columns} />
-                </KanbanBoardProvider>
-            </div>
+            <div className="h-full p-4"></div>
         </AppLayout>
     );
 }

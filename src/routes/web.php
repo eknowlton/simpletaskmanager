@@ -18,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('inbox')->name('inbox.')->group(function () {
         Route::get('/', InboxController::class)->name('index');
         Route::get('/board', [InboxBoardController::class, 'show'])->name('board');
+        Route::post('/board/task/{task}/update', [InboxBoardController::class, 'store'])->name('board.task.update');
         Route::get('/calendar', [InboxCalendarController::class, 'show'])->name('calendar');
     });
 

@@ -43,7 +43,7 @@ export default function Index({
 }) {
     const [search, setSearch] = useState(filter.search || '');
     const [tags, setTags] = useState(filter.tags || []);
-    const [status, setStatus] = useState<string | null>(filter.status || null);
+    const [status, setStatus] = useState<string | undefined>(filter.status);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.currentTarget.value.trim());
@@ -70,9 +70,6 @@ export default function Index({
     };
 
     const handleStatus = (value: string) => {
-        if (value === 'all') {
-            setStatus(null);
-        }
         setStatus(value);
     };
 
@@ -80,9 +77,9 @@ export default function Index({
         router.get(
             route('tasks.index'),
             {
-                search: search || undefined,
-                tags: tags.length > 0 ? tags : undefined,
-                status: status || undefined,
+                search,
+                tags,
+                status,
             },
             {
                 preserveState: true,
@@ -97,12 +94,12 @@ export default function Index({
             handleFilter();
         }, 300);
         return () => clearTimeout(timeout);
-    }, [tags, status]);
+    }, [tags, status, search]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tasks" />
-            <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
+            <div className="flex flex-row flex-wrap gap-4 rounded-xl px-4 pt-4">
                 <Button asChild>
                     <Link href={route('tasks.create')} prefetch>
                         <Plus />
@@ -110,7 +107,7 @@ export default function Index({
                     </Link>
                 </Button>
             </div>
-            <div className="flex h-full flex-1 flex-row flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
+            <div className="flex h-full flex-1 flex-row flex-wrap gap-4 rounded-xl p-4">
                 <ContentContainer>
                     <ContentHeader title="All Tasks" />
                     <ContentBody>
@@ -123,6 +120,11 @@ export default function Index({
                                 onKeyDown={handleSeachKeyDown}
                                 value={search}
                             />
+                            {search && (
+                                <Button size="icon" variant={'outline'} asChild onClick={() => setSearch('')}>
+                                    <CircleX className="h-6 w-6" />
+                                </Button>
+                            )}
                             <div className="flex-grow"></div>
                             {enabledTags.map((tag) => (
                                 <div className="flex flex-row items-center gap-2 rounded-lg bg-gray-300 px-3 py-2 dark:bg-gray-900">
@@ -148,7 +150,11 @@ export default function Index({
                                     ))}
                                 </SelectContent>
                             </Select>
-                            <CircleX className="h-6 w-6" />
+                            {status && (
+                                <Button size="icon" variant={'outline'} asChild onClick={() => setStatus(undefined)}>
+                                    <CircleX className="h-6 w-6" />
+                                </Button>
+                            )}
                         </div>
                         {tasks.data.length > 0 ? (
                             <>
