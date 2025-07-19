@@ -38,7 +38,7 @@ function Card({ task, columnId }: { task: Task; columnId: string }) {
             style={style}
             {...attributes}
             {...listeners}
-            className="relative flex w-full flex-col items-start rounded-lg border-2 border-sidebar bg-background p-3"
+            className="border-acccent relative flex w-full flex-col items-start rounded-lg border-2 bg-background p-3 dark:border-sidebar"
         >
             <div className="flex flex-row px-2 font-bold">
                 <div>{task.title}</div>
