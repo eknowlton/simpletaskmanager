@@ -8,24 +8,31 @@ import { Head, router } from '@inertiajs/react';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
 
-export default function Create({ projects, statuses }: { projects: Project[]; statuses: { name: string; value: string }[] | null }) {
+export default function Create({
+    project,
+    projects,
+    statuses,
+}: {
+    project: Project;
+    projects: Project[];
+    statuses: { name: string; value: string }[] | null;
+}) {
     const breadcrumbs: BreadcrumbItem[] = [];
 
-    breadcrumbs.push(
-        {
-            title: 'All Tasks',
-            href: route('tasks.index'),
-        },
-        {
-            title: 'Create Task',
-            href: route('tasks.create'),
-        },
-    );
+    breadcrumbs.push({
+        title: project.title,
+        href: route('projects.show', project.id),
+    });
+
+    breadcrumbs.push({
+        title: 'Create Task',
+        href: route('tasks.create'),
+    });
 
     const onSubmit = (data: z.infer<typeof TaskFormSchema>) => {
         const task = { ...data, due_date: data.due_date?.toISOString() };
         console.log('Submitting task:', task);
-        router.post(route('tasks.store'), task, {
+        router.post(route('projects.tasks.store', project.id), task, {
             onFinish: () => {
                 toast.success('Project created successfully!');
             },
@@ -39,7 +46,7 @@ export default function Create({ projects, statuses }: { projects: Project[]; st
                 <ContentContainer>
                     <ContentHeader title={`Create a Task`} />
                     <ContentBody>
-                        <TaskForm onSubmit={onSubmit} statuses={statuses} projects={projects} />
+                        <TaskForm onSubmit={onSubmit} statuses={statuses} projects={projects} project={project} />
                     </ContentBody>
                 </ContentContainer>
             </div>

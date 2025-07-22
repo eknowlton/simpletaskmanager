@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine AS app
+FROM php:8.3-fpm-alpine AS app
 
 ARG ENV
 RUN if [ "${ENV}" = "prod" ]; then mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"; fi

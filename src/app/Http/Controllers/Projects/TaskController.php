@@ -13,7 +13,7 @@ class TaskController extends Controller
 {
     public function create(Request $request, Project $project)
     {
-        return inertia('tasks/create')
+        return inertia('projects/tasks/create')
             ->with('projects', $request->user()->projects)
             ->with('project', $project)
             ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [

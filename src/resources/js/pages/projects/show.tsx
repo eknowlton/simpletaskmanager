@@ -31,7 +31,7 @@ export default function Show({ project, tasks }: { project: Project; tasks: Task
                     </Link>
                 </Button>
                 <Button asChild>
-                    <Link href={'#'} prefetch>
+                    <Link href={route('projects.edit', project.id)} prefetch>
                         Edit Project
                     </Link>
                 </Button>

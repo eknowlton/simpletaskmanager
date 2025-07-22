@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\ProjectStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -22,7 +24,16 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'due_date' => ['nullable', 'date'],
+            'status' => [
+                'required',
+                'string',
+                Rule::in(collect(ProjectStatus::cases())
+                    ->map(fn($status) => $status->value)->toArray())
+            ],
+            'color' => ['nullable', 'string', 'max:7'],
         ];
     }
 }

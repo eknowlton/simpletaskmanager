@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Projects\TaskController as ProjectTaskController;
@@ -15,10 +16,18 @@ Route::get('/', IndexController::class)->name('index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
+
     Route::prefix('inbox')->name('inbox.')->group(function () {
         Route::get('/', InboxController::class)->name('index');
+
         Route::get('/board', [InboxBoardController::class, 'show'])->name('board');
-        Route::post('/board/task/{task}/update', [InboxBoardController::class, 'store'])->name('board.task.update');
+        Route::post(
+            '/board/task/{task}/update',
+            [InboxBoardController::class, 'store']
+        )->name('board.task.update');
+
         Route::get('/calendar', [InboxCalendarController::class, 'show'])->name('calendar');
     });
 
@@ -35,7 +44,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/create', [ProjectController::class, 'store'])->name('store');
 
         Route::get('/{project}/board', [ProjectsBoardController::class, 'show'])->name('board');
-        Route::get('/{project}/calendar', [ProjectsCalendarController::class, 'show'])->name('calendar');
+        Route::post(
+            '/{project}/board/{task}/update',
+            [ProjectsBoardController::class, 'store']
+        )->name('board.task.update');
+
+        Route::get('/{project}/calendar', [ProjectsCalendarController::class, 'show'])
+            ->name('calendar');
         Route::get('/{project}/tasks/create', [ProjectTaskController::class, 'create'])
             ->name('tasks.create');
         Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])

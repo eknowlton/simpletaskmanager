@@ -23,7 +23,7 @@ export const TaskFormSchema = z.object({
     }),
     status: z.string().optional(),
     due_date: z.date().optional(),
-    priority: z.string().nullable().optional(),
+    priority: z.string().optional(),
     project_id: z.string().nullable().optional(),
     tags: z
         .array(
@@ -43,7 +43,7 @@ export const TaskForm = ({
     project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof TaskFormSchema>>;
-    task: Task;
+    task?: Task;
     statuses: { name: string; value: string }[] | null;
     projects?: Project[] | null;
     project?: Project | null;
@@ -126,13 +126,12 @@ export const TaskForm = ({
                         )}
                     />
                     <FormField
-                        disabled={!showProjectSelection}
                         control={form.control}
                         name="priority"
                         render={({ field, fieldState }) => (
                             <div className="grid gap-2">
                                 <Label htmlFor="priority">Priority</Label>
-                                <Select onValueChange={field.onChange} value={field?.value || undefined} name="status">
+                                <Select onValueChange={field.onChange} value={field.value} name="priority">
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select a Priority" />
                                     </SelectTrigger>
@@ -149,7 +148,6 @@ export const TaskForm = ({
                         )}
                     />
                     <FormField
-                        disabled={!showProjectSelection}
                         control={form.control}
                         name="project_id"
                         render={({ field, fieldState }) => (

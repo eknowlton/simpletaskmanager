@@ -22,7 +22,24 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'due_date' => 'nullable|date',
+            'status' => [
+                'required',
+                Rule::in(array_map(fn($status) => $status->value, \App\TaskStatus::cases()))
+            ],
+            'priority' => [
+                'nullable'
+            ],
+            'tags' => ['array'],
+            'tags.*' => ['string'],
+            'project_id' => [
+                'nullable',
+                Rule::exists('projects', 'id')->where(function ($query) {
+                    $query->where('user_id', $this->user()->id);
+                })
+            ]
         ];
     }
 }
