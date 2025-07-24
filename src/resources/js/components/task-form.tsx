@@ -50,7 +50,12 @@ export const TaskForm = ({
     const form = useForm<z.infer<typeof TaskFormSchema>>({
         resolver: zodResolver(TaskFormSchema),
         defaultValues: task
-            ? { ...task, due_date: parseISO(task.due_date), priority: `${task.priority}`, project_id: task.project_id ? `${task.project_id}` : null }
+            ? {
+                  ...task,
+                  due_date: task.due_date ? parseISO(task.due_date) : null,
+                  priority: `${task.priority}`,
+                  project_id: task.project_id ? `${task.project_id}` : null,
+              }
             : {
                   title: '',
                   description: '',

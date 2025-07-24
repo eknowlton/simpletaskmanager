@@ -9,12 +9,18 @@ use App\Models\Task;
 use App\TaskStatus;
 use Illuminate\Http\Request;
 
-class BoardController extends Controller 
+class BoardController extends Controller
 {
 
     public function show(Request $request)
     {
         return inertia('inbox/board', [
+            'statuses' => collect(TaskStatus::cases())->map(function (TaskStatus $status) {
+                return [
+                    'value' => $status->value,
+                    'label' => $status->label(),
+                ];
+            }),
             'columns' => collect(TaskStatus::cases())->map(function (TaskStatus $status) use ($request) {
                 return [
                     'id' => $status->value,
@@ -47,3 +53,4 @@ class BoardController extends Controller
         ], 206);
     }
 }
+
