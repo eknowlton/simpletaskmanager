@@ -19,6 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; twoMinute: Task[]; statuses: Status[] }) {
     const [addTask, setAddTask] = useState(false);
+    const [editTask, setEditTask] = useState<Task | null>(null);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -43,9 +44,9 @@ export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; t
                                         className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                     >
                                         <div className="flex flex-grow">
-                                            <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
+                                            <button onClick={() => setEditTask(task)} className="flex-grow text-left">
                                                 {task.title}
-                                            </Link>
+                                            </button>
                                             <div>
                                                 {task.status_label}{' '}
                                                 <span className="text-sm text-gray-700 dark:text-gray-400">( {task.priority} )</span>
@@ -62,7 +63,7 @@ export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; t
                                 ))}
                             </div>
                         ) : (
-                            <p className="p-4">No pending tasks.</p>
+                            <p className="p-4">No upcoming tasks.</p>
                         )}
                     </ContentBody>
                 </ContentContainer>
@@ -105,6 +106,13 @@ export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; t
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
                         <TaskForm onSubmit={() => {}} statuses={statuses} />
+                    </div>
+                </SheetContent>
+            </Sheet>
+            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <TaskForm task={editTask} onSubmit={() => {}} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>

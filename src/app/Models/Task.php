@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Data\BoardData;
+use App\Data\BoardItemData;
+use App\Data\TaskData;
 use App\Http\Requests\FilterTasksRequest;
 use App\TaskStatus;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -28,10 +31,6 @@ class Task extends Model implements Auditable
         'tags',
     ];
 
-    protected $appends = [
-        'status_label',
-    ];
-
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -40,11 +39,6 @@ class Task extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getStatusLabelAttribute()
-    {
-        return $this->status->label();
     }
 
     public function scopeWithStatus(Builder $query, TaskStatus $status)
@@ -84,28 +78,5 @@ class Task extends Model implements Auditable
             ->when($request->tags, function ($query) use ($request) {
                 return $query->whereJsonContains('tags', $request->tags);
             });
-    }
-
-    public function getCalendarAttribute()
-    {
-        return (object) [
-            'id' => $this->id,
-            'start' => $this->due_date,
-            'end' => $this->due_date,
-            'title' => $this->title,
-            'color' => $this->project?->color,
-        ];
-    }
-
-    public function getBoardAttribute()
-    {
-        return (object) [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'due_date' => $this->due_date,
-            'status' => $this->status,
-            'tags' => $this->tags,
-        ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Projects;
 
+use App\Data\BoardColumnData;
+use App\Data\ProjectData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoardStoreRequest;
 use App\Models\Project;
@@ -15,20 +17,21 @@ class BoardController extends Controller
     public function show(Request $request, Project $project)
     {
         return inertia('projects/board', [
-            'project' => $project,
+            'project' => ProjectData::from($project),
             'columns' => collect(TaskStatus::cases())
                 ->map(function (TaskStatus $status) use ($project, $request) {
-                    return [
-                        'id' => $status->value,
-                        'title' => $status->label(),
-                        'color' => '',
-                        'items' => Task::forUser($request->user())
+                    return new BoardColumnData(
+                        $status->value,
+                        $status->label(),
+                        "",
+                        Task::forUser($request->user())
                             ->forProject($project)
                             ->withStatus($status)
-                            ->get()->map(function (Task $task) {
+                            ->get()
+                            ->map(function (Task $task) {
                                 return $task->board;
                             }),
-                    ];
+                    );
                 }),
         ]);
     }
@@ -41,17 +44,18 @@ class BoardController extends Controller
         return response()->json([
             'columns' => collect(TaskStatus::cases())
                 ->map(function (TaskStatus $status) use ($project, $request) {
-                    return [
-                        'id' => $status->value,
-                        'title' => $status->label(),
-                        'color' => '',
-                        'items' => Task::forUser($request->user())
+                    return new BoardColumnData(
+                        $status->value,
+                        $status->label(),
+                        "",
+                        Task::forUser($request->user())
                             ->forProject($project)
                             ->withStatus($status)
-                            ->get()->map(function (Task $task) {
+                            ->get()
+                            ->map(function (Task $task) {
                                 return $task->board;
                             }),
-                    ];
+                    );
                 }),
 
         ], 206);

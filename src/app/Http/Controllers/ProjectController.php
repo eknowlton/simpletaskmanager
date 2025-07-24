@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\ProjectData;
+use App\Data\ProjectStatusData;
+use App\Data\TaskData;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
@@ -12,22 +15,19 @@ class ProjectController extends Controller
     public function index()
     {
         return inertia('projects/index', [
-            'projects' => Project::withCount('tasks')
+            'projects' => ProjectData::collect(Project::withCount('tasks')
                 ->withCount('completedTasks')
                 ->withCount('pendingTasks')
                 ->withCount('inProgressTasks')
                 ->withCount('cancelledTasks')
-                ->paginate(10),
+                ->paginate(10)),
         ]);
     }
 
     public function create()
     {
         return inertia('projects/create')
-            ->with('statuses', collect(ProjectStatus::cases())->map(fn($status) => [
-                'value' => $status->value,
-                'label' => $status->label(),
-            ]));
+            ->with('statuses', ProjectStatusData::collect(ProjectStatus::cases()));
     }
 
     public function store(StoreProjectRequest $request)
@@ -52,12 +52,9 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         return inertia('projects/show', [
-            'project' => $project,
-            'tasks' => $project->tasks,
-            'statuses' => collect(ProjectStatus::cases())->map(fn($status) => [
-                'value' => $status->value,
-                'label' => $status->label(),
-            ])->toArray(),
+            'project' => ProjectData::from($project),
+            'tasks' => TaskData::collect($project->tasks),
+            'statuses' => ProjectStatusData::collect(ProjectStatus::cases())
         ]);
     }
 

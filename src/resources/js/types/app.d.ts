@@ -1,43 +1,3 @@
-interface Task {
-    id: number;
-    title: string;
-    description: string;
-    due_date: string;
-    priority: number;
-    status: string;
-    status_label: string;
-    project_id?: number;
-    tags: Tag[];
-}
-
-interface Status {
-    label: string;
-    value: string;
-}
-
-interface Project {
-    id: number;
-    title: string;
-    description: string;
-    status: string;
-    status_label: string;
-    slug: string;
-    color: string;
-    icon?: string;
-    tasks: Task[];
-    tasks_count: number;
-    completed_tasks_count: number;
-    pending_tasks_count: number;
-    in_progress_tasks_count: number;
-    cancelled_tasks_count: number;
-}
-
-interface FlashMessage {
-    title: string;
-    message: string;
-    type: 'success' | 'error' | 'info';
-}
-
 interface PaginatedCollectionLink {
     url: string | null;
     label: string;
@@ -61,12 +21,3 @@ interface PaginatedCollection<T> {
     to: number;
     total: number;
 }
-
-interface CalendarEvent {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    color: VariantProps<typeof monthEventVariants>['variant'];
-}
-

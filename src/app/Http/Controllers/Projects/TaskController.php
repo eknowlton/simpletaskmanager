@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Projects;
 
+use App\Data\ProjectData;
+use App\Data\TaskStatusData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Models\Project;
@@ -14,12 +16,9 @@ class TaskController extends Controller
     public function create(Request $request, Project $project)
     {
         return inertia('projects/tasks/create')
-            ->with('projects', $request->user()->projects)
-            ->with('project', $project)
-            ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
-                'value' => $status->value,
-                'label' => $status->label(),
-            ]));
+            ->with('projects', ProjectData::collect($request->user()->projects))
+            ->with('project', ProjectData::from($project))
+            ->with('statuses', TaskStatusData::collect(TaskStatus::cases()));
     }
 
     public function store(StoreTaskRequest $request, Project $project)
@@ -44,9 +43,5 @@ class TaskController extends Controller
 
     public function update(StoreTaskRequest $request, Project $project, Task $task) {}
 
-    public function destroy(Request $request, Project $project, Task $task)
-    {
-        $task->delete();
-        return redirect()->route('projects.show', [$project]);
-    }
+    public function destroy(Request $request, Project $project, Task $task) {}
 }

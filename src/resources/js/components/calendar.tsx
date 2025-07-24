@@ -9,7 +9,6 @@ import {
     addMonths,
     addWeeks,
     addYears,
-    differenceInMinutes,
     format,
     getMonth,
     isSameDay,
@@ -83,6 +82,7 @@ export type CalendarEvent = {
     end: Date;
     title: string;
     color?: VariantProps<typeof monthEventVariants>['variant'];
+    onClick?: () => void;
 };
 
 type CalendarProps = {
@@ -185,19 +185,19 @@ const EventGroup = ({ events, hour }: { events: CalendarEvent[]; hour: Date }) =
             {events
                 .filter((event) => isSameHour(event.start, hour))
                 .map((event) => {
-                    const hoursDifference = differenceInMinutes(event.end, event.start) / 60;
                     const startPosition = event.start.getMinutes() / 60;
 
                     return (
-                        <div
+                        <button
+                            onClick={event.onClick}
                             key={event.id}
-                            className={cn('relative mb-4 bg-gray-100 dark:bg-gray-900', dayEventVariants({ variant: event.color }))}
+                            className={cn('relative w-full bg-gray-100 text-left dark:bg-gray-900', dayEventVariants({ variant: event.color }))}
                             style={{
                                 top: `${startPosition * 100}%`,
                             }}
                         >
                             {event.title}
-                        </div>
+                        </button>
                     );
                 })}
         </div>
@@ -324,7 +324,7 @@ const CalendarMonthView = () => {
                     return (
                         <div
                             className={cn(
-                                'overflow-auto p-2 text-sm text-muted-foreground ring-1 ring-border',
+                                'overflow-hide p-2 text-sm text-muted-foreground ring-1 ring-border',
                                 !isSameMonth(date, _date) && 'text-muted-foreground/50',
                             )}
                             key={_date.toString()}
@@ -340,13 +340,17 @@ const CalendarMonthView = () => {
 
                             {displayedEvents.map((event) => {
                                 return (
-                                    <div key={event.id} className="flex items-center gap-1 rounded px-1 text-sm">
+                                    <button
+                                        onClick={event.onClick}
+                                        key={event.id}
+                                        className="flex w-full flex-row items-center justify-between gap-1 rounded px-1 text-left text-sm hover:text-gray-100"
+                                    >
                                         <div className={cn('shrink-0', monthEventVariants({ variant: event.color }))}></div>
                                         <span className="flex-1 truncate" title={event.title}>
                                             {event.title}
                                         </span>
                                         <time className="text-xs text-muted-foreground/50 tabular-nums">{format(event.start, 'HH:mm')}</time>
-                                    </div>
+                                    </button>
                                 );
                             })}
                             {longerThanThree && (

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\ProjectStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -29,7 +31,7 @@ class UpdateProjectRequest extends FormRequest
                 'required',
                 'string',
                 Rule::in(collect(ProjectStatus::cases())
-                    ->map(fn($status) => $status->value)->toArray())
+                    ->map(fn($status) => $status->value))
             ],
             'color' => ['nullable', 'string', 'max:7'],
         ];

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\ProjectData;
+use App\Data\TaskData;
+use App\Data\TaskStatusData;
 use App\Http\Requests\FilterTasksRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
@@ -17,24 +20,18 @@ class TaskController extends Controller
         return inertia('tasks/index')
             ->with(
                 'tasks',
-                $request->user()->tasks()
+                TaskData::collect($request->user()->tasks()
                     ->orderBy('created_at', 'desc')
-                    ->paginate(5),
+                    ->paginate(5)),
             )
-            ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
-                'value' => $status->value,
-                'label' => $status->label(),
-            ]));
+            ->with('statuses', TaskStatusData::collect(TaskStatus::cases()));
     }
 
     public function create(Request $request)
     {
         return inertia('tasks/create')
-            ->with('projects', $request->user()->projects)
-            ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
-                'value' => $status->value,
-                'label' => $status->label(),
-            ]));
+            ->with('projects', ProjectData::collect($request->user()->projects))
+            ->with('statuses', TaskStatusData::collect(TaskStatus::cases()));
     }
 
     public function store(StoreTaskRequest $request)

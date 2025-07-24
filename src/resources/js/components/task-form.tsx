@@ -47,6 +47,7 @@ export const TaskForm = ({
     projects?: Project[] | null;
     project?: Project | null;
 }) => {
+    console.log(task);
     const form = useForm<z.infer<typeof TaskFormSchema>>({
         resolver: zodResolver(TaskFormSchema),
         defaultValues: task

@@ -19,7 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<Task>; statuses: Status[] }) {
-    const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
+    const [editTask, setEditTask] = useState<Task | null>(null);
     const [addTask, setAddTask] = useState<boolean>(false);
 
     return (
@@ -43,11 +43,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                         >
                                             <div className="flex flex-grow justify-between">
-                                                <button
-                                                    onClick={() => {
-                                                        setTaskToEdit(task);
-                                                    }}
-                                                >
+                                                <button onClick={() => setEditTask(task)} className="flex-grow text-left">
                                                     {task.title}
                                                 </button>
                                                 <div className="flex items-center gap-2">
@@ -92,10 +88,10 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                     </ContentBody>
                 </ContentContainer>
             </div>
-            <Sheet open={!!taskToEdit} onOpenChange={(open) => !open && setTaskToEdit(null)}>
+            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm task={taskToEdit} onSubmit={() => {}} statuses={statuses} />
+                        <TaskForm task={editTask} onSubmit={() => {}} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>
