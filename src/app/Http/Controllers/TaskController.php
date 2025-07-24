@@ -14,15 +14,11 @@ class TaskController extends Controller
     public function index(FilterTasksRequest $request)
     {
         return inertia('tasks/index')
-        ->with('filter', [
-                'status' => $request->status,
-                'search' => $request->search,
-                'tags' => $request->tags,
-            ])
-            ->with('tasks',  $request->user()->tasks()
-                ->byFilter($request)
-                ->orderBy('created_at', 'desc')
-                ->paginate(5),
+            ->with(
+                'tasks',
+                $request->user()->tasks()
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(5),
             )
             ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
                 'value' => $status->value,
@@ -36,7 +32,7 @@ class TaskController extends Controller
             ->with('projects', $request->user()->projects)
             ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
                 'value' => $status->value,
-                'name' => $status->label(),
+                'label' => $status->label(),
             ]));
     }
 
@@ -67,10 +63,10 @@ class TaskController extends Controller
             'task' => $task,
             'projects' => $request->user()->projects,
             'statuses' => collect(TaskStatus::cases())->map(fn($status) => [
-                    'value' => $status->value,
-                    'name' => $status->label(),
-                ])->toArray()
-            ]);
+                'value' => $status->value,
+                'label' => $status->label(),
+            ])->toArray()
+        ]);
     }
 
     public function edit(Task $task)

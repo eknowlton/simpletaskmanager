@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.6",
         "maestroerror/laragent": "^0.4.1",
+        "owen-it/laravel-auditing": "^14.0",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {

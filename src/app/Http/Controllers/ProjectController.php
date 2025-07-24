@@ -26,7 +26,7 @@ class ProjectController extends Controller
         return inertia('projects/create')
             ->with('statuses', collect(ProjectStatus::cases())->map(fn($status) => [
                 'value' => $status->value,
-                'name' => $status->label(),
+                'label' => $status->label(),
             ]));
     }
 
@@ -53,7 +53,11 @@ class ProjectController extends Controller
     {
         return inertia('projects/show', [
             'project' => $project,
-            'tasks' => $project->tasks
+            'tasks' => $project->tasks,
+            'statuses' => collect(ProjectStatus::cases())->map(fn($status) => [
+                'value' => $status->value,
+                'label' => $status->label(),
+            ])->toArray(),
         ]);
     }
 

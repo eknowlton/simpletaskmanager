@@ -8,7 +8,7 @@ import { Head, router } from '@inertiajs/react';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
 
-export default function Create({ projects, statuses }: { projects: Project[]; statuses: { name: string; value: string }[] | null }) {
+export default function Create({ projects, statuses }: { projects: Project[]; statuses: Status[] | null }) {
     const breadcrumbs: BreadcrumbItem[] = [];
 
     breadcrumbs.push(
@@ -24,10 +24,10 @@ export default function Create({ projects, statuses }: { projects: Project[]; st
 
     const onSubmit = (data: z.infer<typeof TaskFormSchema>) => {
         const task = { ...data, due_date: data.due_date?.toISOString() };
-        console.log('Submitting task:', task);
         router.post(route('tasks.store'), task, {
             onFinish: () => {
-                toast.success('Project created successfully!');
+                toast.success('Task created successfully!');
+                router.visit(route('tasks.index'));
             },
         });
     };

@@ -21,13 +21,12 @@ services:
       dockerfile: docker/app.Dockerfile
     ports:
       - '9000:9000'
-    develop:
-      watch:
-        - action: sync
-          path: ./src
-          target: /var/www/html
     networks:
       - app-net
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/php.conf:/usr/local/etc/php-fpm.d/zzz-docker.conf
+    command: php-fpm -R
 
   database:
     image: 'postgres:latest'

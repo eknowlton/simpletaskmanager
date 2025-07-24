@@ -1,15 +1,18 @@
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
+import { ProjectForm } from '@/components/project-form';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Calendar, ChartNoAxesCombined, Plus, Sparkles } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,7 +21,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Show({ project, tasks }: { project: Project; tasks: Task[] }) {
+export default function Show({ project, tasks, statuses }: { project: Project; tasks: Task[]; statuses: Status[] }) {
+    const [editProject, setEditProject] = useState<boolean>(false);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
             <Head title={`${project.title}`} />
@@ -30,10 +35,8 @@ export default function Show({ project, tasks }: { project: Project; tasks: Task
                         New Task
                     </Link>
                 </Button>
-                <Button asChild>
-                    <Link href={route('projects.edit', project.id)} prefetch>
-                        Edit Project
-                    </Link>
+                <Button onClick={() => setEditProject(true)} variant="outline">
+                    Edit Project
                 </Button>
             </div>
 
@@ -119,6 +122,13 @@ export default function Show({ project, tasks }: { project: Project; tasks: Task
                     </ContentBody>
                 </ContentContainer>
             </div>
+            <Sheet open={editProject} onOpenChange={(open) => !open && setEditProject(false)}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <ProjectForm project={project} onSubmit={() => {}} statuses={statuses} />
+                    </div>
+                </SheetContent>
+            </Sheet>
         </AppLayout>
     );
 }

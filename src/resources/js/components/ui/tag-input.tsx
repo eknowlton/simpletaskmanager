@@ -25,6 +25,7 @@ interface TagInputProps<T> {
   AllTagsLabel?: ({ value }: { value: T }) => React.ReactNode;
   placeholder?: string;
   className?: string;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const CommandInput = React.forwardRef<
@@ -46,6 +47,7 @@ const CommandInput = React.forwardRef<
 CommandInput.displayName = "CommandInput";
 
 export function TagInput<T>({
+  onKeyDown,
   tags,
   setTags,
   allTags,
@@ -75,6 +77,18 @@ export function TagInput<T>({
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+    if (event.key === "Enter" && inputValue.trim() !== "") {
+      event.preventDefault();
+      setInputValue("");
+      setOpen(false);
+    } else if (event.key === "Escape") {
+      setOpen(false);
+    }
+    handleBackSpace(event);
+  }
 
   const handleBackSpace = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Backspace" && inputValue === "") {
@@ -138,7 +152,7 @@ export function TagInput<T>({
                 placeholder={filteredTags.length ? placeholder : "No more tags available"}
                 value={inputValue}
                 onValueChange={handleValueChange}
-                onKeyDown={handleBackSpace}
+                onKeyDown={handleKeyDown}
                 className="h-2 w-full"
                 ref={commandInput}
               />

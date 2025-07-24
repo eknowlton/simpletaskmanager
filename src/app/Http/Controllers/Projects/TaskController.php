@@ -18,7 +18,7 @@ class TaskController extends Controller
             ->with('project', $project)
             ->with('statuses', collect(TaskStatus::cases())->map(fn($status) => [
                 'value' => $status->value,
-                'name' => $status->label(),
+                'label' => $status->label(),
             ]));
     }
 

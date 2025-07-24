@@ -21,6 +21,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 FROM node:18.20-alpine AS node
 
 COPY ./src /var/www/html/
+
 WORKDIR /var/www/html
 
 RUN npm install
@@ -29,15 +30,13 @@ RUN npm run build
 
 FROM app
 
-COPY --from=node /var/www/html /var/www/html/
+COPY --from=node /var/www/html /var/www/html
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
-
-RUN chown -R www-data:www-data /var/www
-
 WORKDIR /var/www/html
+
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 RUN php artisan clear-compiled  \
         && composer dump-autoload\

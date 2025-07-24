@@ -6,9 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from '@inertiajs/react';
 import { add, parseISO } from 'date-fns';
-import { MessageCircleQuestion } from 'lucide-react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { DateTimeInput } from './ui/date-time-input';
@@ -22,7 +21,7 @@ export const TaskFormSchema = z.object({
         message: 'Description must be at least 2 characters long',
     }),
     status: z.string().optional(),
-    due_date: z.date().optional(),
+    due_date: z.date().nullable().optional(),
     priority: z.string().optional(),
     project_id: z.string().nullable().optional(),
     tags: z
@@ -43,8 +42,8 @@ export const TaskForm = ({
     project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof TaskFormSchema>>;
-    task?: Task;
-    statuses: { name: string; value: string }[] | null;
+    task?: Task | null;
+    statuses: Status[] | null;
     projects?: Project[] | null;
     project?: Project | null;
 }) => {
@@ -64,6 +63,7 @@ export const TaskForm = ({
                   tags: [],
               },
     });
+    const [hasDueDate, setHasDueDate] = useState<boolean>(!!form.getValues('due_date'));
 
     const showProjectSelection = !project && projects && projects.length > 0;
 
@@ -116,7 +116,7 @@ export const TaskForm = ({
                                         {statuses &&
                                             statuses.map((status, idx) => (
                                                 <SelectItem value={status.value} key={idx}>
-                                                    {status.name}
+                                                    {status.label}
                                                 </SelectItem>
                                             ))}
                                     </SelectContent>
@@ -147,55 +147,83 @@ export const TaskForm = ({
                             </div>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="project_id"
-                        render={({ field, fieldState }) => (
-                            <div className="grid gap-2">
-                                <Label htmlFor="project_id">Project</Label>
-                                <Select onValueChange={field.onChange} value={field?.value || undefined} name="status">
-                                    <SelectTrigger>
-                                        <SelectValue placeholder={!project ? `No project selected` : 'Select a Project'} />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {projects &&
-                                            projects.map((project) => (
-                                                <SelectItem value={`${project.id}`} key={project.id}>
-                                                    {project.title}
-                                                </SelectItem>
-                                            ))}
-                                    </SelectContent>
-                                </Select>
-                                {fieldState.error && <InputError message={fieldState.error.message} />}
-                            </div>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="due_date"
-                        render={({ field, fieldState }) => (
-                            <div>
-                                <Label htmlFor="due_date">Due Date</Label>
-                                <DateTimeInput
-                                    value={field.value}
-                                    onChange={(date) => {
-                                        console.log(date);
-                                        field.onChange(date);
-                                    }}
-                                />
-                            </div>
-                        )}
-                    />
+                    {showProjectSelection && (
+                        <FormField
+                            control={form.control}
+                            name="project_id"
+                            render={({ field, fieldState }) => (
+                                <div className="grid gap-2">
+                                    <Label htmlFor="project_id">Project</Label>
+                                    <Select onValueChange={field.onChange} value={field?.value || undefined} name="status">
+                                        <SelectTrigger>
+                                            <SelectValue placeholder={!project ? `No project selected` : 'Select a Project'} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {projects &&
+                                                projects.map((project) => (
+                                                    <SelectItem value={`${project.id}`} key={project.id}>
+                                                        {project.title}
+                                                    </SelectItem>
+                                                ))}
+                                        </SelectContent>
+                                    </Select>
+                                    {fieldState.error && <InputError message={fieldState.error.message} />}
+                                </div>
+                            )}
+                        />
+                    )}
+
+                    {hasDueDate ? (
+                        <>
+                            <FormField
+                                control={form.control}
+                                name="due_date"
+                                render={({ field, fieldState }) => {
+                                    console.log(field);
+                                    return (
+                                        <div>
+                                            <Label htmlFor="due_date">Due Date</Label>
+                                            <DateTimeInput
+                                                value={field.value}
+                                                onChange={(date) => {
+                                                    console.log(date);
+                                                    field.onChange(date);
+                                                }}
+                                            />
+                                        </div>
+                                    );
+                                }}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    form.setValue('due_date', null);
+                                    setHasDueDate(false);
+                                }}
+                            >
+                                Clear due date
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                form.setValue('due_date', new Date());
+                                setHasDueDate(true);
+                            }}
+                        >
+                            Set due date
+                        </button>
+                    )}
                     <FormField
                         control={form.control}
                         name="tags"
                         render={({ field, fieldState }) => (
-                            <div className={`grid items-start gap-2 ${!showProjectSelection ? 'col-span-2' : 'col-span-1'}`}>
+                            <div
+                                className={`grid items-start gap-2 ${(!showProjectSelection && hasDueDate) || (showProjectSelection && !hasDueDate) ? 'col-span-2' : 'col-span-1'}`}
+                            >
                                 <Label htmlFor="tags" className="flex">
                                     <span className="flex-grow">Tags</span>
-                                    <Link className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-300" href="#">
-                                        <MessageCircleQuestion className="h-4 w-4" /> Read more about the tags available and why.
-                                    </Link>
                                 </Label>
                                 <TagInput<string>
                                     tags={field.value || []}
@@ -206,6 +234,18 @@ export const TaskForm = ({
                                         { label: '2-Minute Task', value: 'two-minute' },
                                     ]}
                                     placeholder="eg. Urgent, Important, 2-Minute Task"
+                                    onKeyDown={(e) => {
+                                        if (
+                                            e.key === 'Enter' &&
+                                            !field.value?.some((tag) => tag.label.toLowerCase() === e.currentTarget.value.toLowerCase())
+                                        ) {
+                                            field.onChange([
+                                                ...(field.value || []),
+                                                { label: e.currentTarget.value, value: e.currentTarget.value.toLowerCase() },
+                                            ]);
+                                            e.currentTarget.value = '';
+                                        }
+                                    }}
                                 />
                                 {fieldState.error && <InputError message={fieldState.error.message} />}
                             </div>

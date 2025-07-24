@@ -10,6 +10,11 @@ interface Task {
     tags: Tag[];
 }
 
+interface Status {
+    label: string;
+    value: string;
+}
+
 interface Project {
     id: number;
     title: string;
@@ -18,7 +23,7 @@ interface Project {
     status_label: string;
     slug: string;
     color: string;
-    icon?: string ;
+    icon?: string;
     tasks: Task[];
     tasks_count: number;
     completed_tasks_count: number;
@@ -62,5 +67,6 @@ interface CalendarEvent {
     title: string;
     start: Date;
     end: Date;
-    color: VariantProps<typeof monthEventVariants>['variant']
+    color: VariantProps<typeof monthEventVariants>['variant'];
 }
+

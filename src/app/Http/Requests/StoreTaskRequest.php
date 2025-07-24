@@ -25,7 +25,10 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'due_date' => 'nullable|date',
+            'due_date' => [
+                'nullable',
+                'date'
+            ],
             'status' => [
                 'required',
                 Rule::in(array_map(fn($status) => $status->value, \App\TaskStatus::cases()))
@@ -34,7 +37,6 @@ class StoreTaskRequest extends FormRequest
                 'nullable'
             ],
             'tags' => ['array'],
-            'tags.*' => ['string'],
             'project_id' => [
                 'nullable',
                 Rule::exists('projects', 'id')->where(function ($query) {

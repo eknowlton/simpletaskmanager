@@ -19,7 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Create({ statuses }: { statuses: { name: string; value: string }[] | null }) {
+export default function Create({ statuses }: { statuses: Status[] | null }) {
     const onSubmit = (data: z.infer<typeof ProjectFormSchema>) => {
         console.log('Submitting project data:', data);
         router.post(route('projects.store'), data, {

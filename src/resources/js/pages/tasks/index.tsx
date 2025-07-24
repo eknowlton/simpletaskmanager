@@ -2,16 +2,14 @@ import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
 import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
+import { TaskForm } from '@/components/task-form';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/react';
-import { Calendar, ChartNoAxesCombined, CircleX, Plus, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Head, Link } from '@inertiajs/react';
+import { Calendar, ChartNoAxesCombined, Plus, Sparkles } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,81 +18,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-interface TaskFilter {
-    search?: string;
-    tags?: string[];
-    status?: string;
-}
-
-const enabledTags = [
-    { value: 'two-minute', label: '2-Minute' },
-    { value: 'urgent', label: 'Urgent' },
-    { value: 'important', label: 'Important' },
-];
-
-export default function Index({
-    tasks,
-    statuses,
-    filter,
-}: {
-    tasks: PaginatedCollection<Task>;
-    statuses: { value: string; label: string }[];
-    filter: TaskFilter;
-}) {
-    const [search, setSearch] = useState(filter.search || '');
-    const [tags, setTags] = useState(filter.tags || []);
-    const [status, setStatus] = useState<string | undefined>(filter.status);
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.currentTarget.value.trim());
-    };
-
-    const handleSeachKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            setSearch(e.currentTarget.value.trim());
-            handleFilter();
-        }
-    };
-
-    const handleTag = (tag: string) => {
-        return (e: React.MouseEvent<HTMLButtonElement>) => {
-            setTags((prevTags) => {
-                if (tags.includes(tag)) {
-                    return prevTags.filter((t) => t !== tag);
-                } else {
-                    return [...prevTags, tag];
-                }
-            });
-        };
-    };
-
-    const handleStatus = (value: string) => {
-        setStatus(value);
-    };
-
-    const handleFilter = () => {
-        router.get(
-            route('tasks.index'),
-            {
-                search,
-                tags,
-                status,
-            },
-            {
-                preserveState: true,
-                preserveScroll: true,
-                replace: true,
-            },
-        );
-    };
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            handleFilter();
-        }, 300);
-        return () => clearTimeout(timeout);
-    }, [tags, status, search]);
+export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<Task>; statuses: Status[] }) {
+    const [task, setTask] = useState<Task | null>(null);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -111,51 +36,6 @@ export default function Index({
                 <ContentContainer>
                     <ContentHeader title="All Tasks" />
                     <ContentBody>
-                        <div className="mx-4 flex flex-grow flex-row items-center gap-2">
-                            <Input
-                                name="search"
-                                className="w-1/5"
-                                placeholder="Search tasks..."
-                                onChange={handleSearchChange}
-                                onKeyDown={handleSeachKeyDown}
-                                value={search}
-                            />
-                            {search && (
-                                <Button size="icon" variant={'outline'} asChild onClick={() => setSearch('')}>
-                                    <CircleX className="h-6 w-6" />
-                                </Button>
-                            )}
-                            <div className="flex-grow"></div>
-                            {enabledTags.map((tag) => (
-                                <div className="flex flex-row items-center gap-2 rounded-lg bg-gray-300 px-3 py-2 dark:bg-gray-900">
-                                    <Checkbox
-                                        id={tag.value}
-                                        value={tag.value}
-                                        className="border-gray-400"
-                                        onClick={handleTag(tag.value)}
-                                        checked={tags?.includes(tag.value)}
-                                    />
-                                    <Label htmlFor={tag.value}>{tag.label}</Label>
-                                </div>
-                            ))}
-                            <Select name="status" onValueChange={handleStatus} value={status}>
-                                <SelectTrigger className="w-1/5">
-                                    <SelectValue placeholder="Filter by Status" />
-                                </SelectTrigger>
-                                <SelectContent className="">
-                                    {statuses.map((status) => (
-                                        <SelectItem key={status.value} value={status.value}>
-                                            {status.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {status && (
-                                <Button size="icon" variant={'outline'} asChild onClick={() => setStatus(undefined)}>
-                                    <CircleX className="h-6 w-6" />
-                                </Button>
-                            )}
-                        </div>
                         {tasks.data.length > 0 ? (
                             <>
                                 <div className="p-4">
@@ -164,10 +44,14 @@ export default function Index({
                                             key={task.id}
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                         >
-                                            <div className="flex flex-grow">
-                                                <Link href={route('tasks.show', task.id)} className="flex-grow text-lg">
+                                            <div className="flex flex-grow justify-between">
+                                                <button
+                                                    onClick={() => {
+                                                        setTask(task);
+                                                    }}
+                                                >
                                                     {task.title}
-                                                </Link>
+                                                </button>
                                                 <div className="flex items-center gap-2">
                                                     <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                                                         <ChartNoAxesCombined className="h-4 w-4" /> {task.status_label}
@@ -181,7 +65,7 @@ export default function Index({
                                                 <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
                                                 <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                                                     <Calendar className="h-4 w-4" />
-                                                    <span className="">{new Date(task.due_date).toLocaleString()}</span>
+                                                    <span className="">{task.due_date ? new Date(task.due_date).toLocaleString() : null}</span>
                                                 </div>
                                             </div>
                                             <div className="flex flex-grow pt-2">
@@ -210,6 +94,13 @@ export default function Index({
                     </ContentBody>
                 </ContentContainer>
             </div>
+            <Sheet open={!!task} onOpenChange={(open) => !open && setTask(null)}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <TaskForm task={task} onSubmit={() => {}} statuses={statuses} />
+                    </div>
+                </SheetContent>
+            </Sheet>
         </AppLayout>
     );
 }

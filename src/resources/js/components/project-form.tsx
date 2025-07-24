@@ -18,24 +18,26 @@ export const ProjectFormSchema = z.object({
     }),
     status: z.string().optional(),
     color: z.string().optional(),
-    icon: z.number().nullable().optional(),
+    icon: z.string().nullable().optional(),
 });
 
 export const ProjectForm = ({
     onSubmit,
     statuses,
+    project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof ProjectFormSchema>>;
-    statuses: { name: string; value: string }[] | null;
+    project?: Project;
+    statuses: Status[] | null;
 }) => {
     const form = useForm<z.infer<typeof ProjectFormSchema>>({
         resolver: zodResolver(ProjectFormSchema),
         defaultValues: {
-            title: '',
-            description: '',
-            status: 'in_progress',
-            color: '#2596be',
-            icon: null,
+            title: project?.title || '',
+            description: project?.description || '',
+            status: project?.status || '',
+            color: project?.color || '#2596be',
+            icon: project?.icon || null,
         },
     });
 
@@ -85,7 +87,7 @@ export const ProjectForm = ({
                                         <SelectValue placeholder="Project" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {statuses && statuses.map((status) => <SelectItem value={status.value}>{status.name}</SelectItem>)}
+                                        {statuses && statuses.map((status) => <SelectItem value={status.value}>{status.label}</SelectItem>)}
                                     </SelectContent>
                                 </Select>
                                 {fieldState.error && <InputError message={fieldState.error.message} />}

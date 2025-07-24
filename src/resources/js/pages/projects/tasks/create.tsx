@@ -8,15 +8,7 @@ import { Head, router } from '@inertiajs/react';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
 
-export default function Create({
-    project,
-    projects,
-    statuses,
-}: {
-    project: Project;
-    projects: Project[];
-    statuses: { name: string; value: string }[] | null;
-}) {
+export default function Create({ project, projects, statuses }: { project: Project; projects: Project[]; statuses: Status[] | null }) {
     const breadcrumbs: BreadcrumbItem[] = [];
 
     breadcrumbs.push({
