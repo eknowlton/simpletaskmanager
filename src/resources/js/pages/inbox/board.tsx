@@ -1,11 +1,13 @@
 import { Board as BoardComponent, CustomDragEndEvent } from '@/components/board';
 import { TaskForm } from '@/components/task-form';
+import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { DragStartEvent } from '@dnd-kit/core';
 import { Head } from '@inertiajs/react';
 import axios from 'axios';
+import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -72,7 +74,26 @@ export default function Board({ columns: apiColumns, statuses }: { columns: { id
         <AppLayout breadcrumbs={breadcrumbs} header={false}>
             <Head title="Tasks" />
 
-            <BoardComponent isDragging={isDragging} columns={columns} handleDragEnd={handleDragEnd} handleDragStart={handleDragStart} />
+            <BoardComponent
+                isDragging={isDragging}
+                columns={columns}
+                handleDragEnd={handleDragEnd}
+                handleDragStart={handleDragStart}
+                columnHeaderButton={(column) => {
+                    return () => (
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="ml-2"
+                            onClick={() => {
+                                setAddTask(true);
+                            }}
+                        >
+                            <PlusCircle />
+                        </Button>
+                    );
+                }}
+            />
             <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">

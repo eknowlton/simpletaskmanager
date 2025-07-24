@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { Calendar, ChartNoAxesCombined, Plus, Sparkles } from 'lucide-react';
+import { Head } from '@inertiajs/react';
+import { Calendar, ChartNoAxesCombined, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -19,17 +19,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<Task>; statuses: Status[] }) {
-    const [task, setTask] = useState<Task | null>(null);
+    const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
+    const [addTask, setAddTask] = useState<boolean>(false);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tasks" />
             <div className="flex flex-row flex-wrap gap-4 rounded-xl px-4 pt-4">
-                <Button asChild>
-                    <Link href={route('tasks.create')} prefetch>
-                        <Plus />
-                        New Task
-                    </Link>
+                <Button variant={'default'} onClick={() => setAddTask(true)}>
+                    New Task
                 </Button>
             </div>
             <div className="flex h-full flex-1 flex-row flex-wrap gap-4 rounded-xl p-4">
@@ -47,7 +45,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                             <div className="flex flex-grow justify-between">
                                                 <button
                                                     onClick={() => {
-                                                        setTask(task);
+                                                        setTaskToEdit(task);
                                                     }}
                                                 >
                                                     {task.title}
@@ -94,10 +92,17 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                     </ContentBody>
                 </ContentContainer>
             </div>
-            <Sheet open={!!task} onOpenChange={(open) => !open && setTask(null)}>
+            <Sheet open={!!taskToEdit} onOpenChange={(open) => !open && setTaskToEdit(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm task={task} onSubmit={() => {}} statuses={statuses} />
+                        <TaskForm task={taskToEdit} onSubmit={() => {}} statuses={statuses} />
+                    </div>
+                </SheetContent>
+            </Sheet>
+            <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <TaskForm onSubmit={() => {}} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>

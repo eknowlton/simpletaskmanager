@@ -41,4 +41,12 @@ class TaskController extends Controller
 
         return redirect()->route('projects.show', [$project]);
     }
+
+    public function update(StoreTaskRequest $request, Project $project, Task $task) {}
+
+    public function destroy(Request $request, Project $project, Task $task)
+    {
+        $task->delete();
+        return redirect()->route('projects.show', [$project]);
+    }
 }

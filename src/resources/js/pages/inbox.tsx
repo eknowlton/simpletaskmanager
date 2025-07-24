@@ -1,11 +1,14 @@
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
+import { TaskForm } from '@/components/task-form';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,16 +17,18 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Inbox({ inbox, twoMinute }: { inbox: Task[]; twoMinute: Task[] }) {
+export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; twoMinute: Task[]; statuses: Status[] }) {
+    const [addTask, setAddTask] = useState(false);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Inbox" />
             <div className="flex flex-row flex-wrap gap-4 rounded-xl px-4 pt-4">
                 <Button asChild>
-                    <Link href={route('tasks.create')} prefetch>
+                    <Button onClick={() => setAddTask(true)}>
                         <Plus />
                         New Task
-                    </Link>
+                    </Button>
                 </Button>
             </div>
             <div className="flex h-full flex-row gap-4 rounded-xl p-4">
@@ -96,6 +101,13 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Task[]; twoMinute: 
                     </ContentBody>
                 </ContentContainer>
             </div>
+            <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <TaskForm onSubmit={() => {}} statuses={statuses} />
+                    </div>
+                </SheetContent>
+            </Sheet>
         </AppLayout>
     );
 }

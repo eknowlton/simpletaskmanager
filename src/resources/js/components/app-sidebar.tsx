@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, BotMessageSquare, Calendar, Columns, FolderCheck, LayoutGrid } from 'lucide-react';
+import { BookOpen, BotMessageSquare, Calendar, Columns, Edit, FolderCheck, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -43,7 +43,7 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Help',
-        href: '#',
+        href: 'mailto:eknowlton@gmail.com',
         icon: BookOpen,
     },
 ];
@@ -93,7 +93,17 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain title="Tasks" items={mainNavItems} />
-                {(props.project as Project | null) && <NavMain items={projectMenuItems} title={project?.title} />}
+                {(props.project as Project | null) && (
+                    <NavMain
+                        titleAction={
+                            <Link href="#">
+                                <Edit size={15} />
+                            </Link>
+                        }
+                        items={projectMenuItems}
+                        title={project?.title}
+                    />
+                )}
             </SidebarContent>
 
             <SidebarFooter>

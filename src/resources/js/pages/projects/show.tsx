@@ -3,10 +3,6 @@ import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
 import { ProjectForm } from '@/components/project-form';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -44,31 +40,6 @@ export default function Show({ project, tasks, statuses }: { project: Project; t
                 <ContentContainer>
                     <ContentHeader title={project.title} description={`Inbox`} />
                     <ContentBody>
-                        <div className="mx-4 flex flex-grow flex-row gap-2">
-                            <Input className="w-1/5" placeholder="Search tasks..." />
-                            <div className="flex-grow"></div>
-                            <div className="flex flex-row items-center gap-2 rounded-lg bg-gray-300 px-3 dark:bg-gray-900">
-                                <Checkbox id="two-minute" className="border-gray-400" />
-                                <Label htmlFor="two-minute">2-Minute</Label>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 rounded-lg bg-gray-300 px-3 dark:bg-gray-900">
-                                <Checkbox id="urgent" className="border-gray-400" />
-                                <Label htmlFor="urgent">Urgent</Label>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 rounded-lg bg-gray-300 px-3 dark:bg-gray-900">
-                                <Checkbox id="important" className="border-gray-400" />
-                                <Label htmlFor="important">Important</Label>
-                            </div>
-                            <Select name="status">
-                                <SelectTrigger className="w-1/5">
-                                    <SelectValue placeholder="Filter by Status" />
-                                </SelectTrigger>
-                                <SelectContent className="">
-                                    <SelectItem value={'1'}>Test 1</SelectItem>
-                                    <SelectItem value={'2'}>Test 2</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
                         {tasks.length > 0 ? (
                             <>
                                 <div className="p-4">

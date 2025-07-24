@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FilterTasksRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\DeleteTaskRequest;
 use App\Models\Task;
 use App\TaskStatus;
 use Illuminate\Http\Request;
@@ -57,29 +58,12 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function show(Request $request, Task $task)
-    {
-        return inertia('tasks/show', [
-            'task' => $task,
-            'projects' => $request->user()->projects,
-            'statuses' => collect(TaskStatus::cases())->map(fn($status) => [
-                'value' => $status->value,
-                'label' => $status->label(),
-            ])->toArray()
-        ]);
-    }
-
-    public function edit(Task $task)
-    {
-        //
-    }
-
     public function update(UpdateTaskRequest $request, Task $task)
     {
         //
     }
 
-    public function destroy(Task $task)
+    public function destroy(DeleteTaskRequest $request, Task $task)
     {
         //
     }

@@ -33,9 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('tasks')->name('tasks.')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('index');
-        Route::get('/create', [TaskController::class, 'create'])->name('create');
         Route::post('/create', [TaskController::class, 'store'])->name('store');
-        Route::get('/{task}', [TaskController::class, 'show'])->name('show');
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
@@ -51,8 +49,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/{project}/calendar', [ProjectsCalendarController::class, 'show'])
             ->name('calendar');
-        Route::get('/{project}/tasks/create', [ProjectTaskController::class, 'create'])
-            ->name('tasks.create');
         Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])
             ->name('tasks.store');
         Route::get('/{project}', [ProjectController::class, 'show'])->name('show');

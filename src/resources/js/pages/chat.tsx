@@ -10,7 +10,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
-import { Calendar, ChartNoAxesColumnIcon, MessageCircleQuestion, Sparkles } from 'lucide-react';
+import { Calendar, ChartNoAxesColumnIcon, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -127,9 +127,6 @@ export default function Chat({ sessionId, message }: { sessionId: string; messag
                                 }
                             }}
                         ></Textarea>
-                        <Link href="#" className="flex flex-row gap-2 pt-2 text-sm hover:underline">
-                            <MessageCircleQuestion className="h-5 w-5" /> Ask to update a task status, or change tags...
-                        </Link>
                     </ContentBody>
                 </ContentContainer>
 
