@@ -20,7 +20,7 @@ export const TaskFormSchema = z.object({
     description: z.string().min(2, {
         message: 'Description must be at least 2 characters long',
     }),
-    status: z.string().optional(),
+    status: z.string().nullable().optional(),
     due_date: z.date().nullable().optional(),
     priority: z.string().optional(),
     project_id: z.string().nullable().optional(),
@@ -31,6 +31,7 @@ export const TaskFormSchema = z.object({
                 value: z.string(),
             }),
         )
+        .nullable()
         .optional(),
 });
 
@@ -53,6 +54,7 @@ export const TaskForm = ({
         defaultValues: task
             ? {
                   ...task,
+                  status: task.status.value,
                   due_date: task.due_date ? parseISO(task.due_date) : null,
                   priority: `${task.priority}`,
                   project_id: task.project_id ? `${task.project_id}` : null,
@@ -60,7 +62,7 @@ export const TaskForm = ({
             : {
                   title: '',
                   description: '',
-                  status: 'in_progress',
+                  status: null,
                   due_date: add(new Date(), {
                       weeks: 1,
                   }),

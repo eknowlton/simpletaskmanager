@@ -48,7 +48,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                                 </button>
                                                 <div className="flex items-center gap-2">
                                                     <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
-                                                        <ChartNoAxesCombined className="h-4 w-4" /> {task.status_label}
+                                                        <ChartNoAxesCombined className="h-4 w-4" /> {task.status.label}
                                                     </span>
                                                     <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                                                         <Sparkles className="h-4 w-4" /> {task.priority}
@@ -67,7 +67,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                                 <div className="text-gray-700 dark:text-gray-400">
                                                     {task.tags &&
                                                         task.tags.length > 0 &&
-                                                        task.tags.map(({ label, value }) => (
+                                                        task.tags.map(({ label, value }: App.Data.TaskStatus) => (
                                                             <span
                                                                 key={value}
                                                                 className="ml-2 inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 dark:bg-gray-600 dark:text-gray-200"
