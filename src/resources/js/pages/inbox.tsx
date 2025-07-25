@@ -33,7 +33,7 @@ export default function Inbox({
     const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
 
     const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        router.post(route('tasks.update', editTask?.id), task);
+        router.put(route('tasks.update', editTask?.id), task);
         setEditTask(null);
         toast.success('Task updated successfully');
     };
@@ -41,7 +41,7 @@ export default function Inbox({
     const submitAddTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
         router.post(route('tasks.store'), task);
         setAddTask(false);
-        toast.success('Task addded successfully');
+        toast.success('Task added successfully');
     };
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
