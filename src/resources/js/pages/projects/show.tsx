@@ -23,10 +23,10 @@ export default function Show({
     project_statuses,
     task_statuses,
 }: {
-    project: App.Data.Project;
-    tasks: App.Data.Task[];
-    project_statuses: App.Data.ProjectStatus[];
-    task_statuses: App.Data.TaskStatus[];
+    project: Shared.Data.Project;
+    tasks: Shared.Data.Task[];
+    project_statuses: Shared.Data.ProjectStatus[];
+    task_statuses: Shared.Data.TaskStatus[];
 }) {
     const [editProject, setEditProject] = useState<boolean>(false);
 

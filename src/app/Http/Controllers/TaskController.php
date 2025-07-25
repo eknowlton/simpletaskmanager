@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\ProjectData;
-use App\Data\TaskData;
-use App\Data\TaskStatusData;
+use Shared\Data\ProjectData;
+use Shared\Data\TaskData;
+use Shared\Data\TaskStatusData;
+use Shared\Models\Task;
+use Shared\TaskStatus;
+
 use App\Http\Requests\FilterTasksRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Requests\DeleteTaskRequest;
-use App\Models\Task;
-use App\TaskStatus;
+
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -68,7 +70,10 @@ class TaskController extends Controller
 
         $task->project()->associate($request->project_id);
 
-        return redirect()->back();
+        return response([
+            'success' => true,
+            'task' => TaskData::from($task),
+        ], 204);
     }
 
     public function destroy(DeleteTaskRequest $request, Task $task)

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Projects;
 
-use App\Data\BoardColumnData;
-use App\Data\BoardItemData;
-use App\Data\ProjectData;
+use Shared\Data\BoardColumnData;
+use Shared\Data\BoardItemData;
+use Shared\Data\ProjectData;
+use Shared\Models\Project;
+use Shared\Models\Task;
+use Shared\TaskStatus;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoardStoreRequest;
-use App\Models\Project;
-use App\Models\Task;
-use App\TaskStatus;
+
 use Illuminate\Http\Request;
 
 class BoardController extends Controller

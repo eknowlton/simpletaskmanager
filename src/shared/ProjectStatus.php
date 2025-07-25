@@ -1,10 +1,9 @@
 <?php
 
-namespace App;
+namespace Shared;
 
-enum TaskStatus: string
+enum ProjectStatus: string
 {
-    case Pending = 'pending';
     case InProgress = 'in_progress';
     case Completed = 'completed';
     case Cancelled = 'cancelled';
@@ -12,7 +11,6 @@ enum TaskStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Pending => 'Pending',
             self::InProgress => 'In Progress',
             self::Completed => 'Completed',
             self::Cancelled => 'Cancelled',

@@ -3,14 +3,15 @@
 
 namespace App\Http\Controllers\Inbox;
 
-use App\Data\CalendarEventData;
-use App\Data\TaskStatusData;
+use Shared\Data\CalendarEventData;
+use Shared\Data\TaskStatusData;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Shared\TaskStatus;
 
 class CalendarController extends Controller
 {
-
     public function show(Request $request)
     {
         return inertia('inbox/calendar', [
@@ -18,7 +19,7 @@ class CalendarController extends Controller
                 ->tasks()
                 ->doesntHave('project')
                 ->get()),
-            'statuses' => collect(\App\TaskStatus::cases())->map(fn($status) => TaskStatusData::from($status)),
+            'statuses' => TaskStatusData::collect(TaskStatus::cases()),
         ]);
     }
 }

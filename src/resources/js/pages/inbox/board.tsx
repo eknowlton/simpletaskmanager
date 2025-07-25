@@ -21,13 +21,13 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Board({ columns: apiColumns, statuses }: { columns: App.Data.BoardColumn[]; statuses: App.Data.TaskStatus[] }) {
+export default function Board({ columns: apiColumns, statuses }: { columns: Shared.Data.BoardColumn[]; statuses: Shared.Data.TaskStatus[] }) {
     console.log('Board component rendered with columns:', apiColumns);
-    const [columns, setColumns] = useState<App.Data.BoardColumn[]>(apiColumns);
+    const [columns, setColumns] = useState<Shared.Data.BoardColumn[]>(apiColumns);
     const [isDragging, setIsDragging] = useState<any>(null);
     const [addTask, setAddTask] = useState(false);
 
-    const handleDragEnd = ({ active, over }: CustomDragEndEvent<{ item: App.Data.BoardItem; currentColumnId: string }>) => {
+    const handleDragEnd = ({ active, over }: CustomDragEndEvent<{ item: Shared.Data.BoardItem; currentColumnId: string }>) => {
         const {
             data: {
                 current: { item: task, currentColumnId },

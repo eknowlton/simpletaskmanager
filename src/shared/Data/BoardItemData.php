@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
-use App\Models\Task;
+use Shared\Models\Task;
 use Spatie\LaravelData\Data;
 
 /** 

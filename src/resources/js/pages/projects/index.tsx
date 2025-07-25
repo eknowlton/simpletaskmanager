@@ -15,7 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ projects }: { projects: PaginatedCollection<App.Data.Project> }) {
+export default function Index({ projects }: { projects: PaginatedCollection<Shared.Data.Project> }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Projects" />
@@ -34,7 +34,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<App.
                         {projects.data.length > 0 ? (
                             <>
                                 <div className="p-4">
-                                    {projects.data.map((project: App.Data.Project) => (
+                                    {projects.data.map((project: Shared.Data.Project) => (
                                         <div
                                             key={project.id}
                                             className="mb-2 flex flex-col rounded-md border border-l-8 p-4 hover:bg-gray-100 dark:hover:bg-gray-900"

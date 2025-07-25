@@ -12,6 +12,7 @@
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.6",
         "maestroerror/laragent": "^0.4.1",
@@ -35,6 +36,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Api\\": "api/",
+            "Shared\\": "shared/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }

@@ -25,15 +25,18 @@ export default function Inbox({
     twoMinute,
     statuses,
 }: {
-    inbox: App.Data.Task[];
-    twoMinute: App.Data.Task[];
-    statuses: App.Data.TaskStatus[];
+    inbox: Shared.Data.Task[];
+    twoMinute: Shared.Data.Task[];
+    statuses: Shared.Data.TaskStatus[];
 }) {
     const [addTask, setAddTask] = useState(false);
-    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
+    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
 
     const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        router.put(route('tasks.update', editTask?.id), task);
+        if (!editTask) {
+            return;
+        }
+        router.put(route('tasks.update', editTask.id), task);
         setEditTask(null);
         toast.success('Task updated successfully');
     };

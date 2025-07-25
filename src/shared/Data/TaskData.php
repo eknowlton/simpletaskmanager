@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
 use Carbon\CarbonImmutable;
 use Spatie\LaravelData\Data;
@@ -21,7 +21,7 @@ class TaskData extends Data
         public int $priority,
         public ?int $project_id = null,
 
-        /** @var \App\Data\TagData[] */
+        /** @var \Shared\Data\TagData[] */
         public ?array  $tags = null,
 
         public CarbonImmutable $created_at,

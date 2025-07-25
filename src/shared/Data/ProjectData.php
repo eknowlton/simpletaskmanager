@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
 use App\Models\Project;
 use Carbon\Carbon;

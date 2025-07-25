@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace Shared\Models;
+
+use Shared\TaskStatus;
 
 use App\Http\Requests\FilterTasksRequest;
-use App\TaskStatus;
+
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Task extends Model implements Auditable
@@ -50,7 +53,9 @@ class Task extends Model implements Auditable
 
     public function scopeInboxFor(Builder $query, User $user)
     {
-        return $query->where('user_id', $user->id);
+        return $query->where('user_id', $user->id)
+            ->orderBy('due_date')
+            ->orderBy('created_at');
     }
 
     public function scopeForProject(Builder $query, Project $project)
