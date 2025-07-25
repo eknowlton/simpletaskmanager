@@ -9,6 +9,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\ProjectStatus;
+use App\TaskStatus;
 
 class ProjectController extends Controller
 {
@@ -54,7 +55,8 @@ class ProjectController extends Controller
         return inertia('projects/show', [
             'project' => ProjectData::from($project),
             'tasks' => TaskData::collect($project->tasks),
-            'statuses' => ProjectStatusData::collect(ProjectStatus::cases())
+            'project_statuses' => ProjectStatusData::collect(ProjectStatus::cases()),
+            'task_statuses' => ProjectStatusData::collect(TaskStatus::cases())
         ]);
     }
 

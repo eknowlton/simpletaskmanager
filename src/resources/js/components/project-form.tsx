@@ -27,15 +27,15 @@ export const ProjectForm = ({
     project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof ProjectFormSchema>>;
-    project?: Project;
-    statuses: Status[] | null;
+    project?: App.Data.Project;
+    statuses: App.Data.ProjectStatus[] | null;
 }) => {
     const form = useForm<z.infer<typeof ProjectFormSchema>>({
         resolver: zodResolver(ProjectFormSchema),
         defaultValues: {
             title: project?.title || '',
             description: project?.description || '',
-            status: project?.status || '',
+            status: project?.status.value || '',
             color: project?.color || '#2596be',
             icon: project?.icon || null,
         },

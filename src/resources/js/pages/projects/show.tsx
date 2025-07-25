@@ -17,7 +17,17 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Show({ project, tasks, statuses }: { project: App.Data.Project; tasks: App.Data.Task[]; statuses: App.Data.TaskStatus[] }) {
+export default function Show({
+    project,
+    tasks,
+    project_statuses,
+    task_statuses,
+}: {
+    project: App.Data.Project;
+    tasks: App.Data.Task[];
+    project_statuses: App.Data.ProjectStatus[];
+    task_statuses: App.Data.TaskStatus[];
+}) {
     const [editProject, setEditProject] = useState<boolean>(false);
 
     return (
@@ -96,7 +106,7 @@ export default function Show({ project, tasks, statuses }: { project: App.Data.P
             <Sheet open={editProject} onOpenChange={(open) => !open && setEditProject(false)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <ProjectForm project={project} onSubmit={() => {}} statuses={statuses} />
+                        <ProjectForm project={project} onSubmit={() => {}} statuses={project_statuses} />
                     </div>
                 </SheetContent>
             </Sheet>
