@@ -62,7 +62,7 @@ export const TaskForm = ({
             : {
                   title: '',
                   description: '',
-                  status: null,
+                  status: 'in_progress',
                   due_date: add(new Date(), {
                       weeks: 1,
                   }),

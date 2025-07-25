@@ -52,12 +52,23 @@ class TaskController extends Controller
         $request->user()->tasks()->save($task);
 
 
-        return redirect()->route('tasks.index');
+        return redirect()->back();
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+            'priority' => $request->priority,
+            'tags' => $request->tags,
+        ]);
+
+        $task->project()->associate($request->project_id);
+
+        return redirect()->back();
     }
 
     public function destroy(DeleteTaskRequest $request, Task $task)

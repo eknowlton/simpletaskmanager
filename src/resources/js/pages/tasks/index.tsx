@@ -2,14 +2,16 @@ import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
 import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
-import { TaskForm } from '@/components/task-form';
+import { TaskForm, TaskFormSchema } from '@/components/task-form';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { Calendar, ChartNoAxesCombined, Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,9 +20,18 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<Task>; statuses: Status[] }) {
-    const [editTask, setEditTask] = useState<Task | null>(null);
+export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<App.Data.Task>; statuses: App.Data.TaskStatus[] }) {
+    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
     const [addTask, setAddTask] = useState<boolean>(false);
+
+    const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
+        router.post(route('tasks.update', editTask?.id), task);
+        setEditTask(null);
+    };
+    const submitAddTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
+        router.post(route('tasks.store'), task);
+        setAddTask(false);
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -67,7 +78,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                                 <div className="text-gray-700 dark:text-gray-400">
                                                     {task.tags &&
                                                         task.tags.length > 0 &&
-                                                        task.tags.map(({ label, value }: App.Data.TaskStatus) => (
+                                                        task.tags.map(({ label, value }: App.Data.Tag) => (
                                                             <span
                                                                 key={value}
                                                                 className="ml-2 inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 dark:bg-gray-600 dark:text-gray-200"
@@ -91,14 +102,14 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
             <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm task={editTask} onSubmit={() => {}} statuses={statuses} />
+                        <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>
             <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm onSubmit={() => {}} statuses={statuses} />
+                        <TaskForm onSubmit={submitAddTask} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>
