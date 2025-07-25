@@ -25,7 +25,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
     const [addTask, setAddTask] = useState<boolean>(false);
 
     const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        router.post(route('tasks.update', editTask?.id), task);
+        router.put(route('tasks.update', editTask?.id), task);
         setEditTask(null);
     };
     const submitAddTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {

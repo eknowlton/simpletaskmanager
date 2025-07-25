@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('tasks')->name('tasks.')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('index');
         Route::post('/create', [TaskController::class, 'store'])->name('store');
-        Route::post('/{task}', [TaskController::class, 'update'])->name('update');
+        Route::put('/{task}', [TaskController::class, 'update'])->name('update');
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
