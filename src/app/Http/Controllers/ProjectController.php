@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Data\ProjectData;
 use App\Data\ProjectStatusData;
 use App\Data\TaskData;
+use App\Data\TaskStatusData;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
@@ -56,7 +57,7 @@ class ProjectController extends Controller
             'project' => ProjectData::from($project),
             'tasks' => TaskData::collect($project->tasks),
             'project_statuses' => ProjectStatusData::collect(ProjectStatus::cases()),
-            'task_statuses' => ProjectStatusData::collect(TaskStatus::cases())
+            'task_statuses' => TaskStatusData::collect(TaskStatus::cases())
         ]);
     }
 
