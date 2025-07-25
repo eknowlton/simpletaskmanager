@@ -19,9 +19,10 @@ class TaskData extends Data
         public ?CarbonImmutable $due_date = null,
         public TaskStatusData $status,
         public int $priority,
+        public ?int $project_id = null,
 
         /** @var \App\Data\TagData[] */
-        public array  $tags,
+        public ?array  $tags = null,
 
         public CarbonImmutable $created_at,
         public CarbonImmutable $updated_at,

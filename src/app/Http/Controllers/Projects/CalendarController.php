@@ -14,7 +14,7 @@ class CalendarController extends Controller
     {
         return inertia('projects/calendar', [
             'project' => ProjectData::from($project),
-            'tasks' => CalendarEventData::collect($project->tasks),
+            'events' => CalendarEventData::collect($project->tasks),
         ]);
     }
 }

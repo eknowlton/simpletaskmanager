@@ -24,16 +24,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Calendar({ tasks }: { tasks: CalendarEvent[] }) {
+export default function Calendar({ events }: { events: App.Data.CalendarEvent[] }) {
     return (
         <AppLayout header={false}>
             <CCalendar
-                events={tasks.map((task) => ({
-                    id: task.id,
-                    title: task.title,
-                    start: new Date(task.start),
-                    end: new Date(task.end),
-                    color: task.color,
+                events={events.map((event) => ({
+                    ...event,
                     allDay: true,
                 }))}
             >

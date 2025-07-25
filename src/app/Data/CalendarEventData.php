@@ -3,7 +3,7 @@
 namespace App\Data;
 
 use App\Models\Task;
-use Carbon\CarbonImmutable;
+use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 
 /** 
@@ -15,8 +15,9 @@ class CalendarEventData extends Data
     public function __construct(
         public string $id,
         public string $title,
-        public CarbonImmutable $start,
-        public CarbonImmutable $end,
+        public string $color,
+        public ?Carbon $start = null,
+        public ?Carbon $end = null,
         public TaskData $data
     ) {}
 
@@ -25,6 +26,7 @@ class CalendarEventData extends Data
         return new self(
             $task->id,
             $task->title,
+            'white',
             $task->due_date,
             $task->due_date,
             TaskData::from($task)

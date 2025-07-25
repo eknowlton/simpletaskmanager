@@ -6,7 +6,7 @@ use App\TaskStatus;
 use Spatie\LaravelData\Data;
 
 /** 
- * @typescript
+ * @typescript TaskStatus
  * @typescript-transformer Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptTransformer
  */
 class TaskStatusData extends Data

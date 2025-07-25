@@ -15,12 +15,12 @@ export default function Board({
     project,
     statuses,
 }: {
-    columns: { id: string; title: string; items: Task[] }[];
-    project: Project;
-    statuses: Status[];
+    columns: App.Data.BoardColumn[];
+    project: App.Data.Project;
+    statuses: App.Data.TaskStatus[];
 }) {
     console.log('columns', apiColumns);
-    const [columns, setColumns] = useState<{ id: string; title: string; items: Task[] }[]>(apiColumns);
+    const [columns, setColumns] = useState<App.Data.BoardColumn[]>(apiColumns);
     const [isDragging, setIsDragging] = useState<any>(null);
     const [addTask, setAddTask] = useState<boolean>(false);
 
@@ -39,10 +39,10 @@ export default function Board({
         },
     ];
 
-    const handleDragEnd = ({ active, over }: CustomDragEndEvent<{ task: Task; currentColumnId: string }>) => {
+    const handleDragEnd = ({ active, over }: CustomDragEndEvent<{ item: App.Data.BoardItem; currentColumnId: string }>) => {
         const {
             data: {
-                current: { task, currentColumnId },
+                current: { item: task, currentColumnId },
             },
         } = active;
         const { id: overId } = over || { id: null };

@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Inbox;
 
 use App\Data\BoardColumnData;
+use App\Data\BoardItemData;
 use App\Data\TaskStatusData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoardStoreRequest;
@@ -23,10 +24,9 @@ class BoardController extends Controller
                     $status->value,
                     $status->label(),
                     "",
-                    Task::forUser($request->user())
-                        ->doesntHave('project')
+                    BoardItemData::collect(Task::forUser($request->user())
                         ->withStatus($status)
-                        ->get(),
+                        ->get()),
                 );
             }),
         ]);
@@ -43,12 +43,9 @@ class BoardController extends Controller
                     $status->value,
                     $status->label(),
                     "",
-                    Task::forUser($request->user())
+                    BoardItemData::collect(Task::forUser($request->user())
                         ->withStatus($status)
-                        ->get()
-                        ->map(function (Task $task) {
-                            return $task->board;
-                        }),
+                        ->get()),
                 );
             })
         ], 206);

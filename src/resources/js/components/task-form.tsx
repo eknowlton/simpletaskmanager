@@ -42,10 +42,10 @@ export const TaskForm = ({
     project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof TaskFormSchema>>;
-    task?: Task | null;
-    statuses: Status[] | null;
-    projects?: Project[] | null;
-    project?: Project | null;
+    task?: App.Data.Task | null;
+    statuses: App.Data.TaskStatus[] | null;
+    projects?: App.Data.Project[] | null;
+    project?: App.Data.Project | null;
 }) => {
     console.log(task);
     const form = useForm<z.infer<typeof TaskFormSchema>>({

@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Show({ project, tasks, statuses }: { project: Project; tasks: Task[]; statuses: Status[] }) {
+export default function Show({ project, tasks, statuses }: { project: App.Data.Project; tasks: App.Data.Task[]; statuses: App.Data.TaskStatus[] }) {
     const [editProject, setEditProject] = useState<boolean>(false);
 
     return (
@@ -26,7 +26,7 @@ export default function Show({ project, tasks, statuses }: { project: Project; t
 
             <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
                 <Button asChild>
-                    <Link href={route('projects.tasks.create', project.id)} prefetch>
+                    <Link href={'#'} prefetch>
                         <Plus />
                         New Task
                     </Link>
@@ -49,12 +49,12 @@ export default function Show({ project, tasks, statuses }: { project: Project; t
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                         >
                                             <div className="flex flex-grow">
-                                                <Link href={route('tasks.show', task.id)} className="flex-grow text-lg">
+                                                <button className="flex-grow text-left text-lg" onClick={() => {}}>
                                                     {task.title}
-                                                </Link>
+                                                </button>
                                                 <div className="flex items-center gap-2">
                                                     <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
-                                                        <ChartNoAxesCombined className="h-4 w-4" /> {task.status_label}
+                                                        <ChartNoAxesCombined className="h-4 w-4" /> {task.status.label}
                                                     </span>
                                                     <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                                                         <Sparkles className="h-4 w-4" /> {task.priority}

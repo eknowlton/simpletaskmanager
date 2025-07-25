@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { VariantProps, cva } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import {
     Locale,
     addDays,
@@ -28,6 +28,10 @@ import { enUS } from 'date-fns/locale/en-US';
 import { ReactNode, createContext, forwardRef, useCallback, useContext, useMemo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+export type CalendarEvent = App.Data.CalendarEvent & {
+    onClick?: () => void;
+};
+
 const monthEventVariants = cva('size-2 rounded-full', {
     variants: {
         variant: {
@@ -42,6 +46,8 @@ const monthEventVariants = cva('size-2 rounded-full', {
         variant: 'default',
     },
 });
+
+type variantType = 'default' | 'blue' | 'green' | 'pink' | 'purple';
 
 const dayEventVariants = cva('font-bold border-l-4 rounded p-2 text-xs', {
     variants: {
@@ -75,15 +81,6 @@ type ContextType = {
 };
 
 const Context = createContext<ContextType>({} as ContextType);
-
-export type CalendarEvent = {
-    id: string;
-    start: Date;
-    end: Date;
-    title: string;
-    color?: VariantProps<typeof monthEventVariants>['variant'];
-    onClick?: () => void;
-};
 
 type CalendarProps = {
     children: ReactNode;
@@ -185,13 +182,17 @@ const EventGroup = ({ events, hour }: { events: CalendarEvent[]; hour: Date }) =
             {events
                 .filter((event) => isSameHour(event.start, hour))
                 .map((event) => {
-                    const startPosition = event.start.getMinutes() / 60;
+                    const start = new Date(event.start);
+                    const startPosition = start.getMinutes() / 60;
 
                     return (
                         <button
                             onClick={event.onClick}
                             key={event.id}
-                            className={cn('relative w-full bg-gray-100 text-left dark:bg-gray-900', dayEventVariants({ variant: event.color }))}
+                            className={cn(
+                                'relative w-full bg-gray-100 text-left dark:bg-gray-900',
+                                dayEventVariants({ variant: event.color as variantType }),
+                            )}
                             style={{
                                 top: `${startPosition * 100}%`,
                             }}
@@ -345,7 +346,7 @@ const CalendarMonthView = () => {
                                         key={event.id}
                                         className="flex w-full flex-row items-center justify-between gap-1 rounded px-1 text-left text-sm hover:text-gray-100"
                                     >
-                                        <div className={cn('shrink-0', monthEventVariants({ variant: event.color }))}></div>
+                                        <div className={cn('shrink-0', monthEventVariants({ variant: event.color as variantType }))}></div>
                                         <span className="flex-1 truncate" title={event.title}>
                                             {event.title}
                                         </span>

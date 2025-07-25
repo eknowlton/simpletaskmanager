@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Projects;
 
 use App\Data\BoardColumnData;
+use App\Data\BoardItemData;
 use App\Data\ProjectData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoardStoreRequest;
@@ -24,13 +25,10 @@ class BoardController extends Controller
                         $status->value,
                         $status->label(),
                         "",
-                        Task::forUser($request->user())
+                        BoardItemData::collect(Task::forUser($request->user())
                             ->forProject($project)
                             ->withStatus($status)
-                            ->get()
-                            ->map(function (Task $task) {
-                                return $task->board;
-                            }),
+                            ->get()),
                     );
                 }),
         ]);
@@ -48,13 +46,10 @@ class BoardController extends Controller
                         $status->value,
                         $status->label(),
                         "",
-                        Task::forUser($request->user())
+                        BoardItemData::collect(Task::forUser($request->user())
                             ->forProject($project)
                             ->withStatus($status)
-                            ->get()
-                            ->map(function (Task $task) {
-                                return $task->board;
-                            }),
+                            ->get()),
                     );
                 }),
 

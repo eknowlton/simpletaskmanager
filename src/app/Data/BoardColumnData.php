@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Data;
@@ -12,11 +11,11 @@ use Spatie\LaravelData\Data;
 class BoardColumnData extends Data
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public string $title,
         public string $color,
 
         /** @var \App\Data\BoardItemData[] */
-        public array $items
+        public $items
     ) {}
 }

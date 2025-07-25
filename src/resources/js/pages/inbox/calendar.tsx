@@ -16,20 +16,15 @@ import { Head } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
-export default function Calendar({ events, statuses }: { events: CalendarEvent<Task>[]; statuses: Status[] }) {
-    const [editTask, setEditTask] = useState<Task | null>(null);
+export default function Calendar({ events, statuses }: { events: App.Data.CalendarEvent[]; statuses: App.Data.TaskStatus[] }) {
+    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
 
     return (
         <AppLayout header={false}>
             <Head title="Tasks" />
             <CCalendar
                 events={events.map((event) => ({
-                    id: event.id,
-                    title: event.title,
-                    start: new Date(event.start),
-                    end: new Date(event.end),
-                    color: event.color,
-                    allDay: true,
+                    ...event,
                     onClick: () => setEditTask(event.data),
                 }))}
             >
@@ -69,7 +64,7 @@ export default function Calendar({ events, statuses }: { events: CalendarEvent<T
                     </div>
                 </div>
             </CCalendar>
-            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(false)}>
+            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
                         <TaskForm onSubmit={() => {}} statuses={statuses} task={editTask} />

@@ -3,16 +3,20 @@ declare namespace App {
     export type TaskStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled';
 }
 declare namespace App.Data {
+    export type BoardColumn = {
+        id: string;
+        title: string;
+        color: string;
+        items: Array<App.Data.BoardItem>;
+    };
     export type BoardItem = {
         id: number;
-        title: string;
-        description: string;
-        due_date: string;
-        status: any;
+        data: App.Data.Task;
     };
     export type CalendarEvent = {
         id: string;
         title: string;
+        color: string;
         start: string;
         end: string;
         data: App.Data.Task;
@@ -24,11 +28,11 @@ declare namespace App.Data {
         description: string | null;
         color: string | null;
         icon: string | null;
-        status: App.Data.ProjectStatusData;
+        status: App.Data.ProjectStatus;
         created_at: string;
         updated_at: string;
     };
-    export type ProjectStatusData = {
+    export type ProjectStatus = {
         label: string;
         value: App.ProjectStatus;
     };
@@ -37,15 +41,18 @@ declare namespace App.Data {
         value: string;
     };
     export type Task = {
+        id: number;
         title: string;
         description: string;
+        due_date: string | null;
+        status: App.Data.TaskStatus;
+        priority: number;
+        project_id: number | null;
+        tags: Array<App.Data.Tag> | null;
         created_at: string;
         updated_at: string;
-        due_date: string;
-        status: App.Data.TaskStatusData;
-        tags: Array<App.Data.Tag>;
     };
-    export type TaskStatusData = {
+    export type TaskStatus = {
         label: string;
         value: App.TaskStatus;
     };

@@ -6,7 +6,7 @@ use App\ProjectStatus;
 use Spatie\LaravelData\Data;
 
 /** 
- * @typescript
+ * @typescript ProjectStatus
  * @typescript-transformer Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptTransformer
  */
 class ProjectStatusData extends Data

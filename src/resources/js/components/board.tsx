@@ -7,10 +7,11 @@ import { DndContext, DragEndEvent, DragOverlay, useDraggable, useDroppable } fro
 import { ClockAlert } from 'lucide-react';
 import React from 'react';
 
-function Card({ task, columnId }: { task: Task; columnId: string }) {
+function Card({ item, columnId }: { item: App.Data.BoardItem; columnId: string }) {
+    const task = item.data as App.Data.Task;
     const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-        id: task.id,
-        data: { task, currentColumnId: columnId },
+        id: item.id,
+        data: { item, currentColumnId: columnId },
     });
 
     const style = {
@@ -28,21 +29,25 @@ function Card({ task, columnId }: { task: Task; columnId: string }) {
             <div className="flex flex-row px-2 font-bold">
                 <div>{task.title}</div>
                 {task.tags &&
-                    task.tags.map((tag) => (
-                        <Badge key={tag.id} variant={`default`} className="ml-2">
+                    task.tags.map((tag: App.Data.Tag) => (
+                        <Badge key={tag.value} variant={`default`} className="ml-2">
                             {tag.label}
                         </Badge>
                     ))}
             </div>
             <div className="flex items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
                 <div className="flex-grow">&nbsp;</div>
-                <ClockAlert className="h-4 w-4" /> {new Date(task.due_date).toLocaleString()}
+                {task.due_date && (
+                    <>
+                        <ClockAlert className="h-4 w-4" /> {new Date(task.due_date ?? '').toLocaleString()}
+                    </>
+                )}
             </div>
         </button>
     );
 }
 
-function Column({ id, title, items, columnHeaderButton }: { id: string; title: string; items: Task[]; columnHeaderButton?: () => React.ReactNode }) {
+function Column({ id, title, items, columnHeaderButton }: App.Data.BoardColumn & { columnHeaderButton?: () => React.ReactNode }) {
     const { isOver, setNodeRef } = useDroppable({
         id,
     });
@@ -51,7 +56,7 @@ function Column({ id, title, items, columnHeaderButton }: { id: string; title: s
         <ContentContainer ref={setNodeRef} className={cn('scroll-hide w-1/4', isOver ? 'bg-gray-100 dark:bg-white/10' : '')}>
             <ContentHeader title={`${title} ( ${items.length} )`} right={columnHeaderButton?.()} />
             <ContentBody className="flex flex-col gap-3">
-                {items && items.map((item) => <Card columnId={id} key={item.id} task={item} />)}
+                {items && items.map((item) => <Card columnId={id} key={item.id} item={item} />)}
             </ContentBody>
         </ContentContainer>
     );
@@ -72,8 +77,8 @@ export function Board({
     isDragging,
     columnHeaderButton,
 }: {
-    columns: { id: string; title: string; items: Task[] }[];
-    handleDragEnd: (event: CustomDragEndEvent<{ task: Task; currentColumnId: string }>) => void;
+    columns: App.Data.BoardColumn[];
+    handleDragEnd: (event: CustomDragEndEvent<{ item: App.Data.Task; currentColumnId: string }>) => void;
     handleDragStart: (event: DragEndEvent) => void;
     isDragging: any;
     columnHeaderButton?: (props: { id: string; title: string }) => () => React.ReactNode;
@@ -82,13 +87,13 @@ export function Board({
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className="flex flex-grow flex-row gap-4 rounded-xl p-4">
                 {columns &&
-                    columns.map(({ id, title, items }: { id: string; title: string; items: Task[] }) => (
-                        <Column key={id} id={id} title={title} items={items} columnHeaderButton={columnHeaderButton?.({ id, title })} />
+                    columns.map(({ id, title, items, color }: App.Data.BoardColumn) => (
+                        <Column color={color} key={id} id={id} title={title} items={items} columnHeaderButton={columnHeaderButton?.({ id, title })} />
                     ))}
             </div>
             {isDragging && (
                 <DragOverlay>
-                    <Card task={isDragging.data.current.task} columnId={isDragging.data.current.currentColumnId} />
+                    <Card item={isDragging.data.current.item} columnId={isDragging.data.current.currentColumnId} />
                 </DragOverlay>
             )}
         </DndContext>
