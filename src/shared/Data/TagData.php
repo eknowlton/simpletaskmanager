@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
 use Spatie\LaravelData\Data;
 

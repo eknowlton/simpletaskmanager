@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\TaskStatus;
+use Shared\TaskStatus;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class FilterTasksRequest extends FormRequest 
+class FilterTasksRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +31,7 @@ class FilterTasksRequest extends FormRequest
                 'nullable',
                 Rule::in(['pending', 'completed', 'in-progress']),
             ],
-            'status' =>[
+            'status' => [
                 'nullable',
                 'string',
                 Rule::in(collect(TaskStatus::cases())->map(fn($status) => $status->value)),

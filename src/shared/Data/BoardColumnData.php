@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
 use Spatie\LaravelData\Data;
 
@@ -15,7 +15,7 @@ class BoardColumnData extends Data
         public string $title,
         public string $color,
 
-        /** @var \App\Data\BoardItemData[] */
+        /** @var \Shared\Data\BoardItemData[] */
         public $items
     ) {}
 }

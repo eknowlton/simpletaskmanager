@@ -15,8 +15,8 @@ import AppLayout from '@/layouts/app-layout';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
-export default function Calendar({ events, statuses }: { events: App.Data.CalendarEvent[]; statuses: App.Data.TaskStatus[] }) {
-    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
+export default function Calendar({ events, statuses }: { events: Shared.Data.CalendarEvent[]; statuses: Shared.Data.TaskStatus[] }) {
+    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
 
     return (
         <AppLayout header={false}>

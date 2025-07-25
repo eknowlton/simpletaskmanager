@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
-use App\Models\Task;
+use Shared\Models\Task;
 use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 

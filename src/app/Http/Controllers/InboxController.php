@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\TaskData;
-use App\Data\TaskStatusData;
-use App\Models\Task;
-use App\TaskStatus;
+use Shared\Data\TaskData;
+use Shared\Data\TaskStatusData;
+use Shared\Models\Task;
+use Shared\TaskStatus;
+
 use Illuminate\Http\Request;
 
 class InboxController extends Controller

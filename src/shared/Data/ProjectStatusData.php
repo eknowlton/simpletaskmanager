@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Data;
+namespace Shared\Data;
 
-use App\ProjectStatus;
+use Shared\ProjectStatus;
 use Spatie\LaravelData\Data;
 
 /** 

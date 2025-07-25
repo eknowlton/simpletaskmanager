@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\TaskStatus;
+use Shared\TaskStatus;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,8 +26,8 @@ class BoardStoreRequest extends FormRequest
             'status' => [
                 'required',
                 'string',
-                Rule::in(TaskStatus::cases()), 
-            ], 
+                Rule::in(TaskStatus::cases()),
+            ],
         ];
     }
 
@@ -42,3 +43,4 @@ class BoardStoreRequest extends FormRequest
         ];
     }
 }
+

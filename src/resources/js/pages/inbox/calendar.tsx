@@ -9,16 +9,33 @@ import {
     CalendarWeekView,
     Calendar as CCalendar,
 } from '@/components/calendar';
-import { TaskForm } from '@/components/task-form';
+import { TaskForm, TaskFormSchema } from '@/components/task-form';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
+import axios from 'axios';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
 
-export default function Calendar({ events, statuses }: { events: App.Data.CalendarEvent[]; statuses: App.Data.TaskStatus[] }) {
-    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
+export default function Calendar({ events, statuses }: { events: Shared.Data.CalendarEvent[]; statuses: Shared.Data.TaskStatus[] }) {
+    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
 
+    const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = async (task) => {
+        if (!editTask) {
+            return;
+        }
+        const response = await axios.put(route('tasks.update', editTask.id), task);
+        if (response.status == 204) {
+            toast.success('Task updated successfully');
+            setEditTask(null);
+            return;
+        }
+
+        toast.error('Task update failed');
+    };
     return (
         <AppLayout header={false}>
             <Head title="Tasks" />
@@ -67,7 +84,7 @@ export default function Calendar({ events, statuses }: { events: App.Data.Calend
             <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm onSubmit={() => {}} statuses={statuses} task={editTask} />
+                        <TaskForm onSubmit={submitEditTask} statuses={statuses} task={editTask} />
                     </div>
                 </SheetContent>
             </Sheet>

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace Shared\Models;
+
+use Shared\ProjectStatus;
+use Shared\TaskStatus;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\ProjectStatus;
-use App\TaskStatus;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 
 class Project extends Model

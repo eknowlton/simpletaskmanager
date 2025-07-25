@@ -7,8 +7,8 @@ import { DndContext, DragEndEvent, DragOverlay, useDraggable, useDroppable } fro
 import { ClockAlert } from 'lucide-react';
 import React from 'react';
 
-function Card({ item, columnId }: { item: App.Data.BoardItem; columnId: string }) {
-    const task = item.data as App.Data.Task;
+function Card({ item, columnId }: { item: Shared.Data.BoardItem; columnId: string }) {
+    const task = item.data as Shared.Data.Task;
     const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
         id: item.id,
         data: { item, currentColumnId: columnId },
@@ -29,7 +29,7 @@ function Card({ item, columnId }: { item: App.Data.BoardItem; columnId: string }
             <div className="flex flex-row px-2 font-bold">
                 <div>{task.title}</div>
                 {task.tags &&
-                    task.tags.map((tag: App.Data.Tag) => (
+                    task.tags.map((tag: Shared.Data.Tag) => (
                         <Badge key={tag.value} variant={`default`} className="ml-2">
                             {tag.label}
                         </Badge>
@@ -47,7 +47,7 @@ function Card({ item, columnId }: { item: App.Data.BoardItem; columnId: string }
     );
 }
 
-function Column({ id, title, items, columnHeaderButton }: App.Data.BoardColumn & { columnHeaderButton?: () => React.ReactNode }) {
+function Column({ id, title, items, columnHeaderButton }: Shared.Data.BoardColumn & { columnHeaderButton?: () => React.ReactNode }) {
     const { isOver, setNodeRef } = useDroppable({
         id,
     });
@@ -77,8 +77,8 @@ export function Board({
     isDragging,
     columnHeaderButton,
 }: {
-    columns: App.Data.BoardColumn[];
-    handleDragEnd: (event: CustomDragEndEvent<{ item: App.Data.Task; currentColumnId: string }>) => void;
+    columns: Shared.Data.BoardColumn[];
+    handleDragEnd: (event: CustomDragEndEvent<{ item: Shared.Data.Task; currentColumnId: string }>) => void;
     handleDragStart: (event: DragEndEvent) => void;
     isDragging: any;
     columnHeaderButton?: (props: { id: string; title: string }) => () => React.ReactNode;
@@ -87,7 +87,7 @@ export function Board({
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className="flex flex-grow flex-row gap-4 rounded-xl p-4">
                 {columns &&
-                    columns.map(({ id, title, items, color }: App.Data.BoardColumn) => (
+                    columns.map(({ id, title, items, color }: Shared.Data.BoardColumn) => (
                         <Column color={color} key={id} id={id} title={title} items={items} columnHeaderButton={columnHeaderButton?.({ id, title })} />
                     ))}
             </div>

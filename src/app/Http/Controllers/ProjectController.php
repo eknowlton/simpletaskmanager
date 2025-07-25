@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\ProjectData;
-use App\Data\ProjectStatusData;
-use App\Data\TaskData;
-use App\Data\TaskStatusData;
+use Shared\Data\ProjectData;
+use Shared\Data\ProjectStatusData;
+use Shared\Data\TaskData;
+use Shared\Data\TaskStatusData;
+use Shared\Models\Project;
+use Shared\ProjectStatus;
+use Shared\TaskStatus;
+
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-use App\Models\Project;
-use App\ProjectStatus;
-use App\TaskStatus;
 
 class ProjectController extends Controller
 {

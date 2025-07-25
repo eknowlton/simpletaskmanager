@@ -27,8 +27,8 @@ export const ProjectForm = ({
     project,
 }: {
     onSubmit: SubmitHandler<z.infer<typeof ProjectFormSchema>>;
-    project?: App.Data.Project;
-    statuses: App.Data.ProjectStatus[] | null;
+    project?: Shared.Data.Project;
+    statuses: Shared.Data.ProjectStatus[] | null;
 }) => {
     const form = useForm<z.infer<typeof ProjectFormSchema>>({
         resolver: zodResolver(ProjectFormSchema),

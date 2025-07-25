@@ -8,6 +8,8 @@ return [
 
     'auto_discover_types' => [
         app_path(),
+        base_path('api'),
+        base_path('shared')
     ],
 
     /*

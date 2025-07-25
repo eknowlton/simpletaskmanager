@@ -20,8 +20,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<App.Data.Task>; statuses: App.Data.TaskStatus[] }) {
-    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
+export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<Shared.Data.Task>; statuses: Shared.Data.TaskStatus[] }) {
+    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
     const [addTask, setAddTask] = useState<boolean>(false);
 
     const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
@@ -78,7 +78,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                                 <div className="text-gray-700 dark:text-gray-400">
                                                     {task.tags &&
                                                         task.tags.length > 0 &&
-                                                        task.tags.map(({ label, value }: App.Data.Tag) => (
+                                                        task.tags.map(({ label, value }: Shared.Data.Tag) => (
                                                             <span
                                                                 key={value}
                                                                 className="ml-2 inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 dark:bg-gray-600 dark:text-gray-200"

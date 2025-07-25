@@ -51,7 +51,7 @@ const footerNavItems: NavItem[] = [
 export function AppSidebar() {
     const { props } = usePage();
     let projectMenuItems: NavItem[] = [];
-    const project = props.project as App.Data.Project | null;
+    const project = props.project as Shared.Data.Project | null;
     if (project) {
         projectMenuItems = [
             {
@@ -93,7 +93,7 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain title="Tasks" items={mainNavItems} />
-                {(props.project as App.Data.Project | null) && <NavMain items={projectMenuItems} title={project?.title} />}
+                {(props.project as Shared.Data.Project | null) && <NavMain items={projectMenuItems} title={project?.title} />}
             </SidebarContent>
 
             <SidebarFooter>

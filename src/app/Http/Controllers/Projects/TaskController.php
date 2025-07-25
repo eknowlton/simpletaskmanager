@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Projects;
 
-use App\Data\ProjectData;
-use App\Data\TaskStatusData;
+use Shared\Data\ProjectData;
+use Shared\Data\TaskStatusData;
+use Shared\Models\Project;
+use Shared\Models\Task;
+use Shared\TaskStatus;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
-use App\Models\Project;
-use App\Models\Task;
-use App\TaskStatus;
+
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -40,8 +42,4 @@ class TaskController extends Controller
 
         return redirect()->route('projects.show', [$project]);
     }
-
-    public function update(StoreTaskRequest $request, Project $project, Task $task) {}
-
-    public function destroy(Request $request, Project $project, Task $task) {}
 }

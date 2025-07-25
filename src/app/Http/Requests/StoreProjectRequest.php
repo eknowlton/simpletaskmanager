@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\ProjectStatus;
+use Shared\ProjectStatus;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

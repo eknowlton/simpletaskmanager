@@ -1,17 +1,17 @@
-declare namespace App {
+declare namespace Shared {
 export type ProjectStatus = 'in_progress' | 'completed' | 'cancelled';
 export type TaskStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled';
 }
-declare namespace App.Data {
+declare namespace Shared.Data {
 export type BoardColumn = {
 id: string;
 title: string;
 color: string;
-items: Array<App.Data.BoardItem>;
+items: Array<Shared.Data.BoardItem>;
 };
 export type BoardItem = {
 id: number;
-data: App.Data.Task;
+data: Shared.Data.Task;
 };
 export type CalendarEvent = {
 id: string;
@@ -19,7 +19,7 @@ title: string;
 color: string;
 start: string | null;
 end: string | null;
-data: App.Data.Task;
+data: Shared.Data.Task;
 };
 export type Project = {
 id: string;
@@ -28,13 +28,15 @@ slug: string;
 description: string | null;
 color: string | null;
 icon: string | null;
-status: App.Data.ProjectStatus;
+status: Shared.Data.ProjectStatus;
 created_at: string;
 updated_at: string;
+tasks_count: number;
+completed_tasks_count: number;
 };
 export type ProjectStatus = {
 label: string;
-value: App.ProjectStatus;
+value: Shared.ProjectStatus;
 };
 export type Tag = {
 label: string;
@@ -45,15 +47,15 @@ id: number;
 title: string;
 description: string;
 due_date: string | null;
-status: App.Data.TaskStatus;
+status: Shared.Data.TaskStatus;
 priority: number;
 project_id: number | null;
-tags: Array<App.Data.Tag> | null;
+tags: Array<Shared.Data.Tag> | null;
 created_at: string;
 updated_at: string;
 };
 export type TaskStatus = {
 label: string;
-value: App.TaskStatus;
+value: Shared.TaskStatus;
 };
 }

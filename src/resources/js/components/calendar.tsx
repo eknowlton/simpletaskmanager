@@ -28,7 +28,7 @@ import { enUS } from 'date-fns/locale/en-US';
 import { ReactNode, createContext, forwardRef, useCallback, useContext, useMemo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-export type CalendarEvent = App.Data.CalendarEvent & {
+export type CalendarEvent = Shared.Data.CalendarEvent & {
     onClick?: () => void;
 };
 
