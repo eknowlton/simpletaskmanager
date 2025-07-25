@@ -2,7 +2,8 @@
 
 namespace App\Data;
 
-use Carbon\CarbonImmutable;
+use App\Models\Project;
+use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 
 /** 
@@ -19,7 +20,26 @@ class ProjectData extends Data
         public ?string $color = '#2596be',
         public ?string $icon = null,
         public ProjectStatusData $status,
-        public CarbonImmutable $created_at,
-        public CarbonImmutable $updated_at,
+        public Carbon $created_at,
+        public Carbon $updated_at,
+        public int $tasks_count = 0,
+        public int $completed_tasks_count = 0,
     ) {}
+
+    public static function fromProject(Project $project): self
+    {
+        return new self(
+            $project->id,
+            $project->title,
+            $project->slug,
+            $project->description,
+            $project->color,
+            $project->icon,
+            ProjectStatusData::from($project->status),
+            $project->created_at,
+            $project->updated_at,
+            $project->tasks()->count() ?? 0,
+            $project->tasks()->completed()->count() ?? 0,
+        );
+    }
 }

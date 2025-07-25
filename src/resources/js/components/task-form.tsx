@@ -187,12 +187,11 @@ export const TaskForm = ({
                                 control={form.control}
                                 name="due_date"
                                 render={({ field, fieldState }) => {
-                                    console.log(field);
                                     return (
                                         <div>
                                             <Label htmlFor="due_date">Due Date</Label>
                                             <DateTimeInput
-                                                value={field.value}
+                                                value={field.value || new Date()}
                                                 onChange={(date) => {
                                                     console.log(date);
                                                     field.onChange(date);

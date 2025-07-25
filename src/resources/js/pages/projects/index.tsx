@@ -44,7 +44,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<App.
                                                 <Link href={route('projects.show', project.id)} className="flex-grow text-xl">
                                                     {project.title}
                                                 </Link>
-                                                <div>{project.status_label}</div>
+                                                <div>{project.status.label}</div>
                                             </div>
                                             <div className="flex">
                                                 <div className="flex-grow text-gray-700 dark:text-gray-400">{project.description}</div>

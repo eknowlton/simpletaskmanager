@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Data\BoardData;
-use App\Data\BoardItemData;
-use App\Data\TaskData;
 use App\Http\Requests\FilterTasksRequest;
 use App\TaskStatus;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -39,6 +36,11 @@ class Task extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeCompleted(Builder $query)
+    {
+        return $query->where('status', TaskStatus::Completed);
     }
 
     public function scopeWithStatus(Builder $query, TaskStatus $status)

@@ -14,7 +14,7 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {Calendar1} from "lucide-react";
  
-export function DateTimeInput() {
+export function DateTimeInput({ value, onChange }: { value: Date | undefined; onChange?: (date: Date | undefined) => void }) {
   const [date, setDate] = React.useState<Date>();
   const [isOpen, setIsOpen] = React.useState(false);
  
