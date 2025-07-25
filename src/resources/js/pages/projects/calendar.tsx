@@ -9,28 +9,21 @@ import {
     CalendarWeekView,
     Calendar as CCalendar,
 } from '@/components/calendar';
+import { TaskForm } from '@/components/task-form';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Project',
-        href: '#',
-    },
-    {
-        title: 'Calendar',
-        href: '#',
-    },
-];
+export default function Calendar({ events, statuses }: { events: App.Data.CalendarEvent[]; statuses: App.Data.TaskStatus[] }) {
+    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
 
-export default function Calendar({ events }: { events: App.Data.CalendarEvent[] }) {
     return (
         <AppLayout header={false}>
             <CCalendar
                 events={events.map((event) => ({
                     ...event,
-                    allDay: true,
+                    onClick: () => setEditTask(event.data),
                 }))}
             >
                 <div className="flex h-dvh flex-col py-6">
@@ -69,6 +62,13 @@ export default function Calendar({ events }: { events: App.Data.CalendarEvent[] 
                     </div>
                 </div>
             </CCalendar>
+            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <TaskForm onSubmit={() => {}} statuses={statuses} task={editTask} />
+                    </div>
+                </SheetContent>
+            </Sheet>
         </AppLayout>
     );
 }
