@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Api\Http\Requests;
 
 use Shared\ProjectStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateProjectRequest extends FormRequest
+class StoreProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

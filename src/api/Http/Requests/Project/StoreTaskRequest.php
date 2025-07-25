@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Api\Http\Requests\Projects;
 
 use Shared\TaskStatus;
 

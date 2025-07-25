@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Shared\TaskStatus;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +30,7 @@ class UpdateTaskRequest extends FormRequest
             'due_date' => 'nullable|date',
             'status' => [
                 'required',
-                Rule::in(array_map(fn($status) => $status->value, \App\TaskStatus::cases()))
+                Rule::in(array_map(fn($status) => $status->value, TaskStatus::cases()))
             ],
             'priority' => [
                 'nullable'

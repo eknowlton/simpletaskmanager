@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Api\Http\Requests\Projects;
 
 use Shared\TaskStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreTaskRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
