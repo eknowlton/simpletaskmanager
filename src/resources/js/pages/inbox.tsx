@@ -1,14 +1,17 @@
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
-import { TaskForm } from '@/components/task-form';
+import { TaskForm, TaskFormSchema } from '@/components/task-form';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -17,10 +20,29 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; twoMinute: Task[]; statuses: Status[] }) {
+export default function Inbox({
+    inbox,
+    twoMinute,
+    statuses,
+}: {
+    inbox: App.Data.Task[];
+    twoMinute: App.Data.Task[];
+    statuses: App.Data.TaskStatus[];
+}) {
     const [addTask, setAddTask] = useState(false);
-    const [editTask, setEditTask] = useState<Task | null>(null);
+    const [editTask, setEditTask] = useState<App.Data.Task | null>(null);
 
+    const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
+        router.post(route('tasks.update', editTask?.id), task);
+        setEditTask(null);
+        toast.success('Task updated successfully');
+    };
+
+    const submitAddTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
+        router.post(route('tasks.store'), task);
+        setAddTask(false);
+        toast.success('Task addded successfully');
+    };
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Inbox" />
@@ -105,14 +127,14 @@ export default function Inbox({ inbox, twoMinute, statuses }: { inbox: Task[]; t
             <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm onSubmit={() => {}} statuses={statuses} />
+                        <TaskForm onSubmit={submitAddTask} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>
             <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm task={editTask} onSubmit={() => {}} statuses={statuses} />
+                        <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
                     </div>
                 </SheetContent>
             </Sheet>
