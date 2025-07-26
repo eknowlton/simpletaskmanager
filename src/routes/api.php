@@ -27,10 +27,6 @@ Route::name('api.')->group(function () {
         Route::prefix('/{project}/tasks')->name('tasks.')->group(function () {
 
             Route::get('/', [Api\Http\Controllers\Projects\TaskController::class, 'index'])->name('index');
-            Route::get('/{task}', [Api\Http\Controllers\Projects\TaskController::class, 'show'])->name('show');
-            Route::post('/', [Api\Http\Controllers\Projects\TaskController::class, 'store'])->name('store');
-            Route::put('/{task}', [Api\Http\Controllers\Projects\TaskController::class, 'update'])->name('update');
-            Route::delete('/{task}', [Api\Http\Controllers\Projects\TaskController::class, 'destroy'])->name('destroy');
         });
     });
 });

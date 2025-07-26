@@ -4,27 +4,26 @@ namespace Api\Http\Controllers;
 
 class Controller
 {
-    public function result(bool $result, $status = 200)
+    public function success($data = [], $code = 200)
     {
         return response()->json([
             'success' => true,
-            'result' => $result
-        ], $status);
+            'data' => $data,
+        ], $code);
     }
 
-    public function success($data, $status = 200)
-    {
-        return response()->json([
-            'success' => true,
-            'data' => $data
-        ], $status);
-    }
-
-    public function error($error, $status = 200)
+    public function error($message = 'An error occurred', $code = 400)
     {
         return response()->json([
             'success' => false,
-            'error' => $error
-        ], $status);
+            'message' => $message,
+        ], $code);
+    }
+
+    public function result(bool $result, $code = 200)
+    {
+        return response()->json([
+            'success' => $result,
+        ], $code);
     }
 }

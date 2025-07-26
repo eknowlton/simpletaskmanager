@@ -11,13 +11,24 @@ use Illuminate\Support\Facades\Request;
 
 class ProjectController extends Controller
 {
+    /**
+     * Show All Projects
+     * @response array{success: bool, data: array<ProjectData>}
+     */
     public function index(Request $request)
     {
         return $this->success(
-            ProjectData::collect(Project::query()->paginate($request->get('per_page', 10)))
+            ProjectData::collect(
+                Project::forUser($request->user())
+                    ->paginate()
+            )
         );
     }
 
+    /**
+     * Show Project
+     * @response array{success: bool, data: ProjectData}
+     */
     public function show(Project $project)
     {
         return $this->success(
@@ -25,6 +36,10 @@ class ProjectController extends Controller
         );
     }
 
+    /**
+     * Store Project
+     * @response array{success: bool, data: ProjectData}
+     */
     public function store(StoreProjectRequest $request)
     {
         $project = new Project($request->all());
@@ -37,6 +52,10 @@ class ProjectController extends Controller
         );
     }
 
+    /**
+     * Update Project
+     * @response array{success: bool, data: ProjectData}
+     */
     public function update(Project $project, UpdateProjectRequest $request)
     {
         return $this->success(
@@ -47,6 +66,10 @@ class ProjectController extends Controller
         );
     }
 
+    /**
+     * Delete Project
+     * @response array{success: bool}
+     */
     public function destroy(Project $project)
     {
         return $this->result(

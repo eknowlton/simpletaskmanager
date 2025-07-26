@@ -10,7 +10,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "dedoc/scramble": "^0.12.24",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
@@ -21,6 +20,7 @@
         "spatie/calendar-links": "^1.11",
         "spatie/icalendar-generator": "^3.0",
         "spatie/laravel-data": "^4.17",
+        "spatie/laravel-typescript-transformer": "^2.5",
         "spatie/typescript-transformer": "^2.5",
         "tightenco/ziggy": "^2.4"
     },
@@ -37,7 +37,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Api\\": "api/",
+            "Api\\": "Api/",
             "Shared\\": "shared/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"

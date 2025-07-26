@@ -2,7 +2,7 @@
 
 namespace Shared\Data;
 
-use App\Models\Project;
+use Shared\Models\Project;
 use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 

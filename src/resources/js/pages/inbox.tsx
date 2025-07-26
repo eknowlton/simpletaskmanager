@@ -137,7 +137,8 @@ export default function Inbox({
             <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
+                      <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
+                      {editTask && editTask.audits && editTask.audits.length > 0 && editTask.audits.map((audit) => ()}
                     </div>
                 </SheetContent>
             </Sheet>

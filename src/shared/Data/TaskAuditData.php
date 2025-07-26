@@ -5,27 +5,27 @@ namespace Shared\Data;
 use Carbon\CarbonImmutable;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+use Spatie\TypeScriptTransformer\Attributes\TypeScriptType;
 
 /** 
- * @typescript Task
+ * @typescript TaskAudit
  * @typescript-transformer Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptTransformer
  */
-class TaskData extends Data
+class TaskAuditData extends Data
 {
     public function __construct(
         public int $id,
-        public string $title,
+        public string $event,
         public string $description,
-        public ?CarbonImmutable $due_date = null,
-        public TaskStatusData $status,
-        public int $priority,
-        public ?int $project_id = null,
+        #[TypeScriptType([
+            '[key: string]' => 'value: string',
+        ])]
+        public array $old_values,
 
-        /** @var \Shared\Data\TaskAuditData[] */
-        public ?array $audits = null,
-
-        /** @var \Shared\Data\TagData[] */
-        public ?array  $tags = null,
+        #[TypeScriptType([
+            '[key: string]' => 'value: string',
+        ])]
+        public array $new_values,
 
         public CarbonImmutable $created_at,
         public CarbonImmutable $updated_at,

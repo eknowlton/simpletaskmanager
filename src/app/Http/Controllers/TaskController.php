@@ -8,7 +8,6 @@ use Shared\Data\TaskStatusData;
 use Shared\Models\Task;
 use Shared\TaskStatus;
 
-use App\Http\Requests\FilterTasksRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Requests\DeleteTaskRequest;
@@ -17,7 +16,7 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index(FilterTasksRequest $request)
+    public function index(Request $request)
     {
         return inertia('tasks/index')
             ->with(
