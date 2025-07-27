@@ -22,10 +22,10 @@ class TaskData extends Data
         public ?int $project_id = null,
 
         /** @var \Shared\Data\TaskAuditData[] */
-        public ?array $audits = null,
+        public ?array $audits = [],
 
         /** @var \Shared\Data\TagData[] */
-        public ?array  $tags = null,
+        public ?array $tags = [],
 
         public CarbonImmutable $created_at,
         public CarbonImmutable $updated_at,

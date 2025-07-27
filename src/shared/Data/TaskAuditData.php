@@ -15,8 +15,11 @@ class TaskAuditData extends Data
 {
     public function __construct(
         public int $id,
+
+        public ?UserData $user = null,
+
         public string $event,
-        public string $description,
+
         #[TypeScriptType([
             '[key: string]' => 'value: string',
         ])]

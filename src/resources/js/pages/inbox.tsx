@@ -24,10 +24,14 @@ export default function Inbox({
     inbox,
     twoMinute,
     statuses,
+    auth,
 }: {
     inbox: Shared.Data.Task[];
     twoMinute: Shared.Data.Task[];
     statuses: Shared.Data.TaskStatus[];
+    auth: {
+        user: Shared.Data.User;
+    };
 }) {
     const [addTask, setAddTask] = useState(false);
     const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
@@ -135,10 +139,34 @@ export default function Inbox({
                 </SheetContent>
             </Sheet>
             <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
-                <SheetContent className="w-1/2 xl:w-1/3">
+                <SheetContent className="w-1/2 overflow-y-auto xl:w-1/3">
                     <div className="mt-10 px-5">
-                      <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
-                      {editTask && editTask.audits && editTask.audits.length > 0 && editTask.audits.map((audit) => ()}
+                        <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
+                        <div className="mt-5 flex flex-col gap-2 px-4">
+                            {editTask &&
+                                editTask.audits &&
+                                editTask.audits.length > 0 &&
+                                editTask.audits.map((audit) => (
+                                    <div className="mb-3">
+                                        <div className="flex flex-row gap-1 text-sm text-gray-500 dark:text-gray-500">
+                                            <span className="font-semibold">{auth.user.id == audit.user.id ? 'You' : audit.user.name}</span>
+                                            <span>{audit.event}</span>
+                                            <span className="font-semibold">&apos;{editTask.title}&apos;</span>
+                                            <span>at</span>
+                                            <span>{new Date(audit.created_at).toLocaleString()}</span>
+                                        </div>
+
+                                        {audit.old_values &&
+                                            Object.keys(audit.old_values).map((key) => (
+                                                <div className="mt-2 ml-4 flex flex-row gap-1 text-sm text-xs text-gray-700 dark:text-gray-300">
+                                                    <span className="font-semibold">{key}</span>
+                                                    <span>to</span>
+                                                    <span className="">{audit.old_values[key]}</span>
+                                                </div>
+                                            ))}
+                                    </div>
+                                ))}
+                        </div>
                     </div>
                 </SheetContent>
             </Sheet>

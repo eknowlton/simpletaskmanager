@@ -1,5 +1,7 @@
 <?php
 
+use OwenIt\Auditing\Models\Audit;
+
 return [
 
     'enabled' => env('AUDITING_ENABLED', true),
@@ -13,7 +15,7 @@ return [
     |
     */
 
-    'implementation' => OwenIt\Auditing\Models\Audit::class,
+    'implementation' => Audit::class,
 
     /*
     |--------------------------------------------------------------------------
