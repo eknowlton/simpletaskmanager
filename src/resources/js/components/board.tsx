@@ -23,22 +23,16 @@ function Card({ item, columnId, onClick }: { item: Shared.Data.BoardItem; column
             ref={setNodeRef}
             style={style}
             {...attributes}
-            className="border-acccent relative ml-1 flex w-full flex-row items-center rounded-lg border-2 bg-background p-3 transition-all transition-discrete dark:border-sidebar"
+            className="border-acccent relative ml-1 flex w-full flex-row items-center rounded-lg border-2 bg-background bg-white p-3 transition-all transition-discrete dark:border-sidebar dark:bg-background"
         >
             <button className="relative w-1 outline-none focus:outline-none" {...listeners}>
-                <div className="-ml-8 inline-block border-t border-b border-l bg-black p-1">
+                <div className="-ml-8 inline-block border-t border-b border-l bg-white p-1 dark:bg-black">
                     <GripVertical size={15} />
                 </div>
             </button>
             <div className="flex-grow">
                 <div className="flex flex-row px-2 font-bold">
                     <button onClick={() => onClick?.()}>{task.title}</button>
-                    {task.tags &&
-                        task.tags.map((tag: Shared.Data.Tag) => (
-                            <Badge key={tag.value} variant={`default`} className="ml-2">
-                                {tag.label}
-                            </Badge>
-                        ))}
                 </div>
                 <div className="flex items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
                     <div className="flex-grow">&nbsp;</div>
@@ -48,6 +42,12 @@ function Card({ item, columnId, onClick }: { item: Shared.Data.BoardItem; column
                         </>
                     )}
                 </div>
+                {task.tags &&
+                    task.tags.map((tag: Shared.Data.Tag) => (
+                        <Badge key={tag.value} variant={`default`} className="ml-2">
+                            {tag.label}
+                        </Badge>
+                    ))}
             </div>
         </div>
     );

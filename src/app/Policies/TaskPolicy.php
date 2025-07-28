@@ -38,7 +38,10 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): Response
     {
-        return $user->id === $task->user_id
+        $ownsProject = $task->project->user->id === $user->id;
+        $ownsTask = $user->id === $task->user_id;
+
+        return $ownsProject || $ownsTask
             ? Response::allow()
             : Response::deny('You do not own this task.');
     }

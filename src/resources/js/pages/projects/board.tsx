@@ -75,6 +75,10 @@ export default function Board({ columns, project }: { columns: Shared.Data.Board
                 columns={columns}
                 handleDragEnd={handleDragEnd}
                 handleDragStart={handleDragStart}
+                onItemClick={(item: Shared.Data.BoardItem) => {
+                    setTask(item.data as Shared.Data.Task);
+                    setView('edit');
+                }}
                 columnHeaderButton={({ id: status }) => {
                     return () => {
                         return (

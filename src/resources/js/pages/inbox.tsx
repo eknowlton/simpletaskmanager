@@ -121,9 +121,7 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Shared.Data.Task[];
             </div>
             <Sheet open={view === 'add'} onOpenChange={(open) => !open && setView('inbox')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
-                    <div className="mt-10 px-5">
-                        <AddTask onSuccess={() => setView('inbox')} />
-                    </div>
+                    <AddTask onSuccess={() => setView('inbox')} />
                 </SheetContent>
             </Sheet>
             <Sheet open={view === 'edit'} onOpenChange={(open) => !open && setView('inbox')}>

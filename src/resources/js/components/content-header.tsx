@@ -17,7 +17,7 @@ export const ContentHeader: React.FC<{
                 {title}
                 {right}
             </h3>
-            {description && <div className="px-4 pb-2 text-sm text-gray-300 dark:text-gray-500">{description}</div>}
+            {description && <div className="px-4 pb-2 text-sm text-gray-500 dark:text-gray-500">{description}</div>}
         </div>
     );
 };

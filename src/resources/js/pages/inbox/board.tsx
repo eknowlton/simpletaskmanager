@@ -74,6 +74,7 @@ export default function Board({ columns }: { columns: Shared.Data.BoardColumn[] 
                 handleDragStart={handleDragStart}
                 onItemClick={(item: Shared.Data.BoardItem) => {
                     setTask(item.data as Shared.Data.Task);
+                    setView('edit');
                 }}
                 columnHeaderButton={({ id: status }) => {
                     return () => {
@@ -95,14 +96,12 @@ export default function Board({ columns }: { columns: Shared.Data.BoardColumn[] 
             />
             <Sheet open={view === 'add'} onOpenChange={(open) => !open && setView('board')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
-                    <div className="mt-10 px-5">
-                        <AddTask
-                            task={{
-                                status: addTaskStatusId ?? '',
-                            }}
-                            onSuccess={() => setView('add')}
-                        />
-                    </div>
+                    <AddTask
+                        task={{
+                            status: addTaskStatusId ?? '',
+                        }}
+                        onSuccess={() => setView('add')}
+                    />
                 </SheetContent>
             </Sheet>
             <Sheet open={view === 'edit'} onOpenChange={(open) => !open && setView('board')}>

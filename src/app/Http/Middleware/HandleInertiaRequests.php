@@ -66,10 +66,13 @@ class HandleInertiaRequests extends Middleware
 
             'sidebar_pen' => $sidebar_open,
 
-            'task_statuses' => TaskStatusData::collect(TaskStatus::cases()),
-            'project_statuses' => ProjectStatusData::collect(ProjectStatus::cases()),
+            ...($request->user() ? [
 
-            'projects' => ProjectData::collect(Project::forUser($user)->get())
+                'task_statuses' => TaskStatusData::collect(TaskStatus::cases()),
+                'project_statuses' => ProjectStatusData::collect(ProjectStatus::cases()),
+
+                'projects' => ProjectData::collect(Project::forUser($user)->get())
+            ] : [])
         ];
     }
 }

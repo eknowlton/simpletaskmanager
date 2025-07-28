@@ -112,9 +112,7 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
             </Sheet>
             <Sheet open={view === 'add-task'} onOpenChange={(open) => !open && setView('show')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
-                    <div className="mt-10 px-5">
-                        <AddTask onSuccess={() => setView('show')} task={{ project_id: parseInt(project.id, 10) }} />
-                    </div>
+                    <AddTask onSuccess={() => setView('show')} task={{ project_id: parseInt(project.id, 10) }} />
                 </SheetContent>
             </Sheet>
         </AppLayout>

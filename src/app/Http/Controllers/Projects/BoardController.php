@@ -27,10 +27,11 @@ class BoardController extends Controller
                         $status->value,
                         $status->label(),
                         "",
-                        BoardItemData::collect(Task::forUser($request->user())
-                            ->forProject($project)
-                            ->withStatus($status)
-                            ->get()),
+                        BoardItemData::collect(
+                            Task::forProject($project)
+                                ->where('status', $status)
+                                ->get()
+                        ),
                     );
                 }),
         ]);

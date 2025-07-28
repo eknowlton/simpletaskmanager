@@ -66,7 +66,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<Shar
                                             style={{ borderColor: project.color ?? '#4F46E5' }}
                                         >
                                             <div className="flex flex-grow flex-row">
-                                                <Link href={route('projects.show', project.id)} className="flex-grow text-left text-xl">
+                                                <Link href={route('projects.inbox', project.id)} className="flex-grow text-left text-xl">
                                                     {project.title}
                                                 </Link>
                                                 <div>{project.status.label}</div>
