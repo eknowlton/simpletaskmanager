@@ -1,17 +1,16 @@
+import { AddTask } from '@/components/add-task';
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
 import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
-import { TaskForm, TaskFormSchema } from '@/components/task-form';
+import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, router } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { Calendar, ChartNoAxesCombined, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { SubmitHandler } from 'react-hook-form';
-import { z } from 'zod';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,18 +19,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<Shared.Data.Task>; statuses: Shared.Data.TaskStatus[] }) {
-    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
+export default function Index({ tasks }: { tasks: PaginatedCollection<Shared.Data.Task> }) {
+    const [task, setTask] = useState<Shared.Data.Task | null>(null);
     const [addTask, setAddTask] = useState<boolean>(false);
-
-    const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        router.put(route('tasks.update', editTask?.id), task);
-        setEditTask(null);
-    };
-    const submitAddTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        router.post(route('tasks.store'), task);
-        setAddTask(false);
-    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -54,7 +44,7 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                         >
                                             <div className="flex flex-grow justify-between">
-                                                <button onClick={() => setEditTask(task)} className="flex-grow text-left">
+                                                <button onClick={() => setTask(task)} className="flex-grow text-left">
                                                     {task.title}
                                                 </button>
                                                 <div className="flex items-center gap-2">
@@ -99,19 +89,15 @@ export default function Index({ tasks, statuses }: { tasks: PaginatedCollection<
                     </ContentBody>
                 </ContentContainer>
             </div>
-            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
-                <SheetContent className="w-1/2 xl:w-1/3">
-                    <div className="mt-10 px-5">
-                        <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
-                    </div>
-                </SheetContent>
-            </Sheet>
             <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm onSubmit={submitAddTask} statuses={statuses} />
+                        <AddTask onSuccess={() => setAddTask(false)} />
                     </div>
                 </SheetContent>
+            </Sheet>
+            <Sheet open={!!task} onOpenChange={(open) => !open && setTask(null)}>
+                <SheetContent className="w-1/2 overflow-y-auto xl:w-1/3">{!!task && <TaskView task={task as Shared.Data.Task} />}</SheetContent>
             </Sheet>
         </AppLayout>
     );

@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Shared\Data\ProjectData;
 use Shared\Data\TaskData;
-use Shared\Data\TaskStatusData;
 use Shared\Models\Task;
-use Shared\TaskStatus;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
@@ -18,61 +16,36 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        return inertia('tasks/index')
-            ->with(
-                'tasks',
-                TaskData::collect($request->user()->tasks()
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(5)),
-            )
-            ->with('statuses', TaskStatusData::collect(TaskStatus::cases()));
+        return inertia('tasks/index', [
+            'tasks' => TaskData::collect($request->user()->tasks()
+                ->orderBy('created_at', 'desc')
+                ->paginate(5)),
+        ]);
     }
 
     public function create(Request $request)
     {
-        return inertia('tasks/create')
-            ->with('projects', ProjectData::collect($request->user()->projects))
-            ->with('statuses', TaskStatusData::collect(TaskStatus::cases()));
+        return inertia('tasks/create', [
+            'projects' => ProjectData::collect($request->user()->projects)
+        ]);
     }
 
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::make([
-            'title' => $request->title,
-            'description' => $request->description,
-            'due_date' => $request->due_date,
-            'status' => $request->status,
-            'priority' => $request->priority,
-            'tags' => $request->tags,
-        ]);
+        $task = new Task($request->except('project_id'));
 
-        if ($request->has('project_id')) {
-            $task->project()->associate($request->project_id);
-        }
+        $task->project()->associate($request->project_id);
 
         $request->user()->tasks()->save($task);
-
-
-        return redirect()->back();
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $task->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'due_date' => $request->due_date,
-            'status' => $request->status,
-            'priority' => $request->priority,
-            'tags' => $request->tags,
-        ]);
+        $task->fill($request->except('project_id'));
 
         $task->project()->associate($request->project_id);
 
-        return response([
-            'success' => true,
-            'task' => TaskData::from($task),
-        ], 204);
+        $task->save();
     }
 
     public function destroy(DeleteTaskRequest $request, Task $task)

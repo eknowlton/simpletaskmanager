@@ -132,7 +132,7 @@ export default function Chat({ sessionId, message }: { sessionId: string; messag
 
                 {project && (
                     <ContentContainer className="flex h-full flex-grow flex-col">
-                        <ContentHeader color="red" title={`${project.title}`} />
+                        <ContentHeader title={`${project.title}`} />
                         <ContentBody className="flex max-h-[calc(100vh-170px)] flex-grow flex-col gap-4">
                             <div className="px-2 text-gray-500 dark:text-gray-400">{project.description}</div>
                             <div className="flex-grow overflow-y-auto">

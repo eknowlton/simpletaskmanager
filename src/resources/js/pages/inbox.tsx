@@ -1,17 +1,15 @@
+import { AddTask } from '@/components/add-task';
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
-import { TaskForm, TaskFormSchema } from '@/components/task-form';
+import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-import { SubmitHandler } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { z } from 'zod';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,42 +18,16 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Inbox({
-    inbox,
-    twoMinute,
-    statuses,
-    auth,
-}: {
-    inbox: Shared.Data.Task[];
-    twoMinute: Shared.Data.Task[];
-    statuses: Shared.Data.TaskStatus[];
-    auth: {
-        user: Shared.Data.User;
-    };
-}) {
-    const [addTask, setAddTask] = useState(false);
-    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
+export default function Inbox({ inbox, twoMinute }: { inbox: Shared.Data.Task[]; twoMinute: Shared.Data.Task[] }) {
+    const [view, setView] = useState<'inbox' | 'add' | 'edit'>('inbox');
+    const [task, setTask] = useState<Shared.Data.Task | null>(null);
 
-    const submitEditTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        if (!editTask) {
-            return;
-        }
-        router.put(route('tasks.update', editTask.id), task);
-        setEditTask(null);
-        toast.success('Task updated successfully');
-    };
-
-    const submitAddTask: SubmitHandler<z.infer<typeof TaskFormSchema>> = (task) => {
-        router.post(route('tasks.store'), task);
-        setAddTask(false);
-        toast.success('Task added successfully');
-    };
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Inbox" />
             <div className="flex flex-row flex-wrap gap-4 rounded-xl px-4 pt-4">
                 <Button asChild>
-                    <Button onClick={() => setAddTask(true)}>
+                    <Button onClick={() => setView('add')}>
                         <Plus />
                         New Task
                     </Button>
@@ -73,20 +45,28 @@ export default function Inbox({
                                         className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                     >
                                         <div className="flex flex-grow">
-                                            <button onClick={() => setEditTask(task)} className="flex-grow text-left">
+                                            <button
+                                                onClick={() => {
+                                                    setTask(task);
+                                                    setView('edit');
+                                                }}
+                                                className="flex-grow text-left"
+                                            >
                                                 {task.title}
                                             </button>
                                             <div>
-                                                {task.status_label}{' '}
+                                                {task.status.label}{' '}
                                                 <span className="text-sm text-gray-700 dark:text-gray-400">( {task.priority} )</span>
                                             </div>
                                         </div>
                                         <div className="flex flex-grow">
                                             <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                            <div>
-                                                <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                <span className="pl-4">{new Date(task.due_date).toLocaleString()}</span>
-                                            </div>
+                                            {task.due_date && (
+                                                <div>
+                                                    <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
+                                                    <span className="pl-4">{task.due_date && new Date(task.due_date).toLocaleString()}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
@@ -107,20 +87,28 @@ export default function Inbox({
                                         className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                     >
                                         <div className="flex flex-grow">
-                                            <Link href={`/tasks/${task.id}/show`} className="flex-grow text-lg">
+                                            <button
+                                                onClick={() => {
+                                                    setTask(task);
+                                                    setView('edit');
+                                                }}
+                                                className="flex-grow text-left"
+                                            >
                                                 {task.title}
-                                            </Link>
+                                            </button>
                                             <div>
-                                                {task.status_label}{' '}
+                                                {task.status.label}{' '}
                                                 <span className="text-sm text-gray-700 dark:text-gray-400">( {task.priority} )</span>
                                             </div>
                                         </div>
                                         <div className="flex flex-grow">
                                             <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                            <div>
-                                                <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                <span className="pl-4">{new Date(task.due_date).toLocaleString()}</span>
-                                            </div>
+                                            {task.due_date && (
+                                                <div>
+                                                    <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
+                                                    <span className="pl-4">{task.due_date && new Date(task.due_date).toLocaleString()}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
@@ -131,44 +119,15 @@ export default function Inbox({
                     </ContentBody>
                 </ContentContainer>
             </div>
-            <Sheet open={addTask} onOpenChange={(open) => !open && setAddTask(false)}>
+            <Sheet open={view === 'add'} onOpenChange={(open) => !open && setView('inbox')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <TaskForm onSubmit={submitAddTask} statuses={statuses} />
+                        <AddTask onSuccess={() => setView('inbox')} />
                     </div>
                 </SheetContent>
             </Sheet>
-            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
-                <SheetContent className="w-1/2 overflow-y-auto xl:w-1/3">
-                    <div className="mt-10 px-5">
-                        <TaskForm task={editTask} onSubmit={submitEditTask} statuses={statuses} />
-                        <div className="mt-5 flex flex-col gap-2 px-4">
-                            {editTask &&
-                                editTask.audits &&
-                                editTask.audits.length > 0 &&
-                                editTask.audits.map((audit) => (
-                                    <div className="mb-3">
-                                        <div className="flex flex-row gap-1 text-sm text-gray-500 dark:text-gray-500">
-                                            <span className="font-semibold">{auth.user.id == audit.user.id ? 'You' : audit.user.name}</span>
-                                            <span>{audit.event}</span>
-                                            <span className="font-semibold">&apos;{editTask.title}&apos;</span>
-                                            <span>at</span>
-                                            <span>{new Date(audit.created_at).toLocaleString()}</span>
-                                        </div>
-
-                                        {audit.old_values &&
-                                            Object.keys(audit.old_values).map((key) => (
-                                                <div className="mt-2 ml-4 flex flex-row gap-1 text-sm text-xs text-gray-700 dark:text-gray-300">
-                                                    <span className="font-semibold">{key}</span>
-                                                    <span>to</span>
-                                                    <span className="">{audit.old_values[key]}</span>
-                                                </div>
-                                            ))}
-                                    </div>
-                                ))}
-                        </div>
-                    </div>
-                </SheetContent>
+            <Sheet open={view === 'edit'} onOpenChange={(open) => !open && setView('inbox')}>
+                <SheetContent className="w-1/2 overflow-y-auto xl:w-1/3">{task && <TaskView task={task as Shared.Data.Task} />}</SheetContent>
             </Sheet>
         </AppLayout>
     );

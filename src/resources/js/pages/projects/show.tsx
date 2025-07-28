@@ -1,12 +1,14 @@
+import { AddTask } from '@/components/add-task';
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
-import { ProjectForm } from '@/components/project-form';
+import { ProjectView } from '@/components/project-view';
+import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { Calendar, ChartNoAxesCombined, Plus, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
@@ -17,31 +19,20 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Show({
-    project,
-    tasks,
-    project_statuses,
-    task_statuses,
-}: {
-    project: Shared.Data.Project;
-    tasks: Shared.Data.Task[];
-    project_statuses: Shared.Data.ProjectStatus[];
-    task_statuses: Shared.Data.TaskStatus[];
-}) {
-    const [editProject, setEditProject] = useState<boolean>(false);
+export default function Show({ project, tasks }: { project: Shared.Data.Project; tasks: Shared.Data.Task[] }) {
+    const [view, setView] = useState<'show' | 'edit' | 'add-task' | 'edit-task'>('show');
+    const [task, setTask] = useState<Shared.Data.Task | null>(null);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
             <Head title={`${project.title}`} />
 
             <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
-                <Button asChild>
-                    <Link href={'#'} prefetch>
-                        <Plus />
-                        New Task
-                    </Link>
+                <Button onClick={() => setView('add-task')}>
+                    <Plus />
+                    New Task
                 </Button>
-                <Button onClick={() => setEditProject(true)} variant="outline">
+                <Button onClick={() => setView('edit')} variant="outline">
                     Edit Project
                 </Button>
             </div>
@@ -59,7 +50,13 @@ export default function Show({
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
                                         >
                                             <div className="flex flex-grow">
-                                                <button className="flex-grow text-left text-lg" onClick={() => {}}>
+                                                <button
+                                                    className="flex-grow text-left text-lg"
+                                                    onClick={() => {
+                                                        setTask(task);
+                                                        setView('edit-task');
+                                                    }}
+                                                >
                                                     {task.title}
                                                 </button>
                                                 <div className="flex items-center gap-2">
@@ -103,10 +100,18 @@ export default function Show({
                     </ContentBody>
                 </ContentContainer>
             </div>
-            <Sheet open={editProject} onOpenChange={(open) => !open && setEditProject(false)}>
+            <Sheet open={view === 'edit'} onOpenChange={(open) => !open && setView('show')}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <ProjectView project={project} />
+                </SheetContent>
+            </Sheet>
+            <Sheet open={view === 'edit-task'} onOpenChange={(open) => !open && setView('show')}>
+                <SheetContent className="w-1/2 xl:w-1/3">{task && <TaskView task={task} />}</SheetContent>
+            </Sheet>
+            <Sheet open={view === 'add-task'} onOpenChange={(open) => !open && setView('show')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <ProjectForm project={project} onSubmit={() => {}} statuses={project_statuses} />
+                        <AddTask onSuccess={() => setView('show')} task={{ project_id: parseInt(project.id, 10) }} />
                     </div>
                 </SheetContent>
             </Sheet>

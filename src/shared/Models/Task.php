@@ -6,7 +6,7 @@ use Shared\TaskStatus;
 
 use App\Http\Requests\FilterTasksRequest;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -70,20 +70,7 @@ class Task extends Model implements Auditable
 
     public function scopeTwoMinuteFor(Builder $query, User $user)
     {
-        return $this->inboxFor($user)
+        return $query->inboxFor($user)
             ->whereJsonContains('tags', ['value' => 'two-minute']);
-    }
-
-    public function scopeByFilter(Builder $query, FilterTasksRequest $request)
-    {
-        return $query->when($request->status, function ($query) use ($request) {
-            return $query->where('status', $request->status);
-        })
-            ->when($request->search, function ($query) use ($request) {
-                return $query->where('title', 'like', '%' . $request->search . '%');
-            })
-            ->when($request->tags, function ($query) use ($request) {
-                return $query->whereJsonContains('tags', $request->tags);
-            });
     }
 }

@@ -12,7 +12,7 @@ export const ContentHeader: React.FC<{
 }> = ({ title, description, variant = 'primary', color, right }) => {
     return (
         <div className={`flex flex-col items-start justify-between border-b p-4 ${variantStyles[variant]}`}>
-            <h3 className="flex w-full flex-row justify-between gap-4 px-4 py-2 text-lg font-semibold">
+            <h3 className="flex w-full flex-row items-start justify-between gap-4 px-4 py-2 text-lg font-semibold">
                 {color && <div className={`h-6 w-6 rounded-full bg-${color}-400`}></div>}
                 {title}
                 {right}

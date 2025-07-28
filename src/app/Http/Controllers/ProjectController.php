@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Shared\Data\ProjectData;
-use Shared\Data\ProjectStatusData;
 use Shared\Data\TaskData;
-use Shared\Data\TaskStatusData;
 use Shared\Models\Project;
-use Shared\ProjectStatus;
-use Shared\TaskStatus;
 
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -29,13 +25,12 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return inertia('projects/create')
-            ->with('statuses', ProjectStatusData::collect(ProjectStatus::cases()));
+        return inertia('projects/create');
     }
 
     public function store(StoreProjectRequest $request)
     {
-        $project = Project::make($request->only([
+        $project = new Project($request->only([
             'title',
             'description',
             'status',
@@ -57,8 +52,6 @@ class ProjectController extends Controller
         return inertia('projects/show', [
             'project' => ProjectData::from($project),
             'tasks' => TaskData::collect($project->tasks),
-            'project_statuses' => ProjectStatusData::collect(ProjectStatus::cases()),
-            'task_statuses' => TaskStatusData::collect(TaskStatus::cases())
         ]);
     }
 
@@ -69,7 +62,16 @@ class ProjectController extends Controller
 
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $project->fill($request->only([
+            'title',
+            'description',
+            'status',
+            'color',
+            'icon'
+        ]));
+
+        $project->slug = str($request->title)->slug();
+        $project->save();
     }
 
     public function destroy(Project $project)

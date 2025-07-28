@@ -21,3 +21,14 @@ interface PaginatedCollection<T> {
     to: number;
     total: number;
 }
+
+type SharedProps = {
+    auth: SharedAuth;
+    task_statuses: Shared.Data.TaskStatus[];
+    project_statuses: Shared.Data.ProjectStatus[];
+    projects: Shared.Data.Project[];
+};
+
+interface SharedAuth {
+    user: App.Data.User;
+}

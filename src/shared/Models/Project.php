@@ -7,7 +7,7 @@ use Shared\TaskStatus;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
 class Project extends Model
 {
@@ -66,11 +66,15 @@ class Project extends Model
         return $this->status->label();
     }
 
-    #[Scope]
-    public function tasksWithStatus($query, TaskStatus $status)
+    public function scopeTasksWithStatus(Builder $query, TaskStatus $status)
     {
         return $query->whereHas('tasks', function ($q) use ($status) {
             $q->where('status', $status);
         });
+    }
+
+    public function scopeForUser(Builder $query, User $user)
+    {
+        return $query->where('user_id', $user->id);
     }
 }

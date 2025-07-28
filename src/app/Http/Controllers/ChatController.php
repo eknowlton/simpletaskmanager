@@ -12,7 +12,7 @@ class ChatController extends Controller
     {
         $sessionId = Hash::make($request->session()->getId());
 
-        return inertia('chat')->with([
+        return inertia('chat', [
             'sessionId' => $sessionId,
             'message' => (object) [
                 'id' => time(),

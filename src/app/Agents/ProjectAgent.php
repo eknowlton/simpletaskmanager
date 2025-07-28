@@ -2,7 +2,7 @@
 
 namespace App\Agents;
 
-use App\TaskStatus;
+use Shared\TaskStatus;
 use LarAgent\Agent;
 
 class ProjectAgent extends Agent

@@ -14,7 +14,7 @@ class BoardStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // Update this logic as needed for authorization
+        return $this->user()->can('update', $this->route('task'));
     }
 
     /**
@@ -43,4 +43,3 @@ class BoardStoreRequest extends FormRequest
         ];
     }
 }
-

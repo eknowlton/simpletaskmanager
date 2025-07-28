@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, BotMessageSquare, Calendar, Columns, FolderCheck, LayoutGrid } from 'lucide-react';
+import { BookOpen, BotMessageSquare, Calendar, Columns, FolderCheck, LayoutGrid, ListCheck } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -26,7 +26,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'All Tasks',
         href: route('tasks.index'),
-        icon: Columns,
+        icon: ListCheck,
     },
     {
         title: 'Projects',

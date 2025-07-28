@@ -2,11 +2,15 @@ import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
 import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
+import { ProjectForm, ProjectFormData } from '@/components/project-form';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { Check, CheckCheck, Plus } from 'lucide-react';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -16,15 +20,36 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ projects }: { projects: PaginatedCollection<Shared.Data.Project> }) {
+    const [view, setView] = useState<'index' | 'add'>('index');
+    const form = useForm<ProjectFormData>({
+        title: '',
+        description: '',
+        status: 'active',
+        icon: '',
+        color: '',
+        id: 0,
+    });
+
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        form.post(route('projects.store'), {
+            onSuccess: () => {
+                setView('index');
+                toast.success('Project created successfully!');
+            },
+            onError: (errors) => {
+                console.log(errors);
+            },
+        });
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Projects" />
             <div className="flex flex-row flex-wrap gap-4 overflow-x-auto rounded-xl px-4 pt-4">
-                <Button asChild>
-                    <Link href={route('projects.create')} prefetch>
-                        <Plus />
-                        New Project
-                    </Link>
+                <Button onClick={() => setView('add')}>
+                    <Plus />
+                    New Project
                 </Button>
             </div>
             <div className="flex h-full flex-1 flex-row flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
@@ -41,7 +66,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<Shar
                                             style={{ borderColor: project.color ?? '#4F46E5' }}
                                         >
                                             <div className="flex flex-grow flex-row">
-                                                <Link href={route('projects.show', project.id)} className="flex-grow text-xl">
+                                                <Link href={route('projects.show', project.id)} className="flex-grow text-left text-xl">
                                                     {project.title}
                                                 </Link>
                                                 <div>{project.status.label}</div>
@@ -70,6 +95,13 @@ export default function Index({ projects }: { projects: PaginatedCollection<Shar
                     </ContentBody>
                 </ContentContainer>
             </div>
+            <Sheet open={view === 'add'} onOpenChange={(open) => !open && setView('index')}>
+                <SheetContent className="w-1/2 xl:w-1/3">
+                    <div className="mt-10 px-5">
+                        <ProjectForm form={form} onSubmit={onSubmit} />
+                    </div>
+                </SheetContent>
+            </Sheet>
         </AppLayout>
     );
 }

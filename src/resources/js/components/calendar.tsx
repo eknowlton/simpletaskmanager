@@ -190,7 +190,7 @@ const EventGroup = ({ events, hour }: { events: CalendarEvent[]; hour: Date }) =
                             onClick={event.onClick}
                             key={event.id}
                             className={cn(
-                                'relative w-full bg-gray-100 text-left dark:bg-gray-900',
+                                'relative w-full truncate bg-gray-100 text-left dark:bg-gray-900',
                                 dayEventVariants({ variant: event.color as variantType }),
                             )}
                             style={{

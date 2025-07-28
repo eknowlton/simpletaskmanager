@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Project;
-use App\Models\User;
+use Shared\Models\Project;
+use Shared\Models\User;
+
 use Illuminate\Auth\Access\Response;
 
 class ProjectPolicy
@@ -35,9 +36,11 @@ class ProjectPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Project $project): bool
+    public function update(User $user, Project $project): Response
     {
-        return false;
+        return $user->id === $project->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this project.');
     }
 
     /**

@@ -11,6 +11,7 @@ use Shared\TaskStatus;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoardStoreRequest;
+
 use Illuminate\Http\Request;
 
 class BoardController extends Controller

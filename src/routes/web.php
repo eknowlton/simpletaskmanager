@@ -33,14 +33,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('tasks')->name('tasks.')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('index');
-        Route::post('/create', [TaskController::class, 'store'])->name('store');
+        Route::post('/', [TaskController::class, 'store'])->name('store');
         Route::put('/{task}', [TaskController::class, 'update'])->name('update');
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
         Route::get('/', [ProjectController::class, 'index'])->name('index');
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
-        Route::post('/create', [ProjectController::class, 'store'])->name('store');
+        Route::put('/create', [ProjectController::class, 'store'])->name('store');
+        Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
 
         Route::get('/{project}/board', [ProjectsBoardController::class, 'show'])->name('board');
         Route::post(

@@ -14,7 +14,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('update', $this->route('project'));
     }
 
     /**
@@ -25,7 +25,7 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'due_date' => ['nullable', 'date'],
             'status' => [
@@ -34,7 +34,7 @@ class UpdateProjectRequest extends FormRequest
                 Rule::in(collect(ProjectStatus::cases())
                     ->map(fn($status) => $status->value))
             ],
-            'color' => ['nullable', 'string', 'max:7'],
+            'color' => ['nullable', 'string', 'max:7', 'min:7'],
         ];
     }
 }

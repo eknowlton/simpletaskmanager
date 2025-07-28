@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Projects;
 
 use Shared\Data\ProjectData;
-use Shared\Data\TaskStatusData;
 use Shared\Models\Project;
 use Shared\Models\Task;
-use Shared\TaskStatus;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
@@ -17,10 +15,10 @@ class TaskController extends Controller
 {
     public function create(Request $request, Project $project)
     {
-        return inertia('projects/tasks/create')
-            ->with('projects', ProjectData::collect($request->user()->projects))
-            ->with('project', ProjectData::from($project))
-            ->with('statuses', TaskStatusData::collect(TaskStatus::cases()));
+        return inertia('projects/tasks/create', [
+            'projects' => ProjectData::collect($request->user()->projects),
+            'project' => ProjectData::from($project),
+        ]);
     }
 
     public function store(StoreTaskRequest $request, Project $project)

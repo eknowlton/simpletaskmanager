@@ -25,16 +25,16 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'due_date' => ['nullable', 'date'],
+            'icon' => ['nullable', 'string', 'max:255'],
             'status' => [
                 'required',
                 'string',
                 Rule::in(collect(ProjectStatus::cases())
                     ->map(fn($status) => $status->value))
             ],
-            'color' => ['nullable', 'string', 'max:7'],
+            'color' => ['nullable', 'string', 'min:7', 'max:7'],
         ];
     }
 }

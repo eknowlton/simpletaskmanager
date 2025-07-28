@@ -4,6 +4,13 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Shared\Data\ProjectData;
+use Shared\Data\ProjectStatusData;
+use Shared\Data\TaskStatusData;
+use Shared\Data\UserData;
+use Shared\Models\Project;
+use Shared\ProjectStatus;
+use Shared\TaskStatus;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -36,16 +43,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $sidebarOpen =
+        $sidebar_open =
             !$request->hasCookie('sidebar_state')
             || $request->cookie('sidebar_state') === 'true';
+
+        $user = $request->user();
 
         return [
             ...parent::share($request),
 
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? UserData::from($user) : null,
             ],
 
             'ziggy' => fn(): array => [
@@ -55,7 +64,12 @@ class HandleInertiaRequests extends Middleware
 
             'flash' => session('flash'),
 
-            'sidebarOpen' => $sidebarOpen,
+            'sidebar_pen' => $sidebar_open,
+
+            'task_statuses' => TaskStatusData::collect(TaskStatus::cases()),
+            'project_statuses' => ProjectStatusData::collect(ProjectStatus::cases()),
+
+            'projects' => ProjectData::collect(Project::forUser($user)->get())
         ];
     }
 }

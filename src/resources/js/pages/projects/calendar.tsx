@@ -9,21 +9,25 @@ import {
     CalendarWeekView,
     Calendar as CCalendar,
 } from '@/components/calendar';
-import { TaskForm } from '@/components/task-form';
+import { TaskView } from '@/components/task-view';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
-export default function Calendar({ events, statuses }: { events: Shared.Data.CalendarEvent[]; statuses: Shared.Data.TaskStatus[] }) {
-    const [editTask, setEditTask] = useState<Shared.Data.Task | null>(null);
+export default function Calendar({ events }: { events: Shared.Data.CalendarEvent[] }) {
+    const [task, setTask] = useState<Shared.Data.Task | null>(null);
+    const [view, setView] = useState<'calendar' | 'edit'>('calendar');
 
     return (
         <AppLayout header={false}>
             <CCalendar
                 events={events.map((event) => ({
                     ...event,
-                    onClick: () => setEditTask(event.data),
+                    onClick: () => {
+                        setTask(event.data);
+                        setView('edit');
+                    },
                 }))}
             >
                 <div className="flex h-dvh flex-col py-6">
@@ -62,12 +66,8 @@ export default function Calendar({ events, statuses }: { events: Shared.Data.Cal
                     </div>
                 </div>
             </CCalendar>
-            <Sheet open={!!editTask} onOpenChange={(open) => !open && setEditTask(null)}>
-                <SheetContent className="w-1/2 xl:w-1/3">
-                    <div className="mt-10 px-5">
-                        <TaskForm onSubmit={() => {}} statuses={statuses} task={editTask} />
-                    </div>
-                </SheetContent>
+            <Sheet open={view === 'edit'} onOpenChange={(open) => !open && setView('calendar')}>
+                <SheetContent className="w-1/2 overflow-y-auto xl:w-1/3">{task && <TaskView task={task as Shared.Data.Task} />}</SheetContent>
             </Sheet>
         </AppLayout>
     );
