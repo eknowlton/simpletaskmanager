@@ -31,8 +31,7 @@ class StoreProjectRequest extends FormRequest
             'status' => [
                 'required',
                 'string',
-                Rule::in(collect(ProjectStatus::cases())
-                    ->map(fn($status) => $status->value))
+                Rule::in(array_map(fn($status) => $status->value, ProjectStatus::cases()))
             ],
             'color' => ['nullable', 'string', 'min:7', 'max:7'],
         ];

@@ -13,15 +13,15 @@ use Spatie\LaravelData\Data;
 class ProjectData extends Data
 {
     public function __construct(
-        public string $id,
+        public ?string $id = null,
         public string $title,
         public string $slug,
         public ?string $description = null,
         public ?string $color = '#2596be',
         public ?string $icon = null,
         public ProjectStatusData $status,
-        public Carbon $created_at,
-        public Carbon $updated_at,
+        public ?Carbon $created_at = null,
+        public ?Carbon $updated_at = null,
         public int $tasks_count = 0,
         public int $completed_tasks_count = 0,
     ) {}

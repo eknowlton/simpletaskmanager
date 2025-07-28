@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Agents\ProjectAgent;
+use App\Http\Requests\StoreChatProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Shared\Models\Project;
 
 class ChatController extends Controller
 {
@@ -23,7 +25,7 @@ class ChatController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function message(Request $request)
     {
         $agent = ProjectAgent::for($request->user()->id . "_" . $request->sessionId);
         $response = $agent->respond($request->message);
@@ -42,6 +44,32 @@ class ChatController extends Controller
                 'isLoading' => false,
             ],
             'project' => $response['project'],
+        ]);
+    }
+
+    public function store(StoreChatProjectRequest $request)
+    {
+        $project = new Project($request->only('project'));
+
+        collect($request->tasks)->each(function ($task) use ($project) {
+            $project->tasks()->create($task);
+        });
+
+        $project->save();
+
+        return response()->json([
+            'message' => (object) [
+                'id' => time(),
+                'message' => "Project created successfully!",
+                'action' => [
+                    'type' => 'link',
+                    'url' => route('projects.show', $project->id),
+                    'text' => 'View Project',
+                ],
+                'sender' => 'assistant',
+                'isLoading' => false,
+            ],
+            'project' => $project,
         ]);
     }
 }

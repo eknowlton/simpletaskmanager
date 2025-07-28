@@ -49,11 +49,30 @@ class ProjectAgent extends Agent
                                 'type' => 'string',
                                 'description' => 'A summary of the project and its objectives.',
                             ],
+                            'color' => [
+                                'type' => 'string',
+                                'description' => 'The color associated with the project, used for visual representation. A HTML Hexidecimal color code.',
+                                'default' => '#2596be',
+                            ],
+                            'tasks_count' => [
+                                'type' => 'integer',
+                                'description' => 'The total number of tasks in the project.',
+                                'default' => 0,
+                            ],
+                            'completed_tasks_count' => [
+                                'type' => 'integer',
+                                'description' => 'The number of tasks that have been completed in the project.',
+                                'default' => 0,
+                            ],
                             'tasks' => [
                                 'type' => 'array',
                                 'items' => [
                                     'type' => 'object',
                                     'properties' => [
+                                        'id' => [
+                                            'type' => 'string',
+                                            'description' => 'A unique identifier for the task.',
+                                        ],
                                         'title' => [
                                             'type' => 'string',
                                             'description' => 'The name of the task.',

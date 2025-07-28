@@ -18,6 +18,7 @@ Route::get('/', IndexController::class)->name('index');
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::put('/chat', [ChatController::class, 'message'])->name('chat.message');
     Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
 
     Route::prefix('inbox')->name('inbox.')->group(function () {
