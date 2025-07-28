@@ -13,7 +13,7 @@ class InboxController extends Controller
     {
         return inertia('inbox', [
             'inbox' => TaskData::collect(
-                Task::inboxFor($request->user())
+                $request->user()->inbox()
                     ->with('audits', 'audits.user')
                     ->limit(10)
                     ->get()

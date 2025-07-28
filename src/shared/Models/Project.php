@@ -77,4 +77,9 @@ class Project extends Model
     {
         return $query->where('user_id', $user->id);
     }
+
+    public function inbox()
+    {
+        return $this->tasks()->inbox();
+    }
 }

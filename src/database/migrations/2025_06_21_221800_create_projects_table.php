@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('active');
+            $table->string('status')->default('in_progress');
             $table->softDeletes();
             $table->string('color')->default('#2596be');
             $table->string('icon')->nullable();

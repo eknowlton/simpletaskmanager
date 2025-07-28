@@ -56,7 +56,7 @@ export function AppSidebar() {
         projectMenuItems = [
             {
                 title: 'Inbox',
-                href: route('projects.show', { project: project.id }),
+                href: route('projects.inbox', { project: project.id }),
                 icon: FolderCheck,
             },
             {
@@ -72,7 +72,7 @@ export function AppSidebar() {
             {
                 title: 'All Tasks',
                 href: route('projects.show', { project: project.id }),
-                icon: FolderCheck,
+                icon: ListCheck,
             },
         ];
     }

@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function inbox()
+    {
+        return $this->tasks()->inbox();
+    }
 }

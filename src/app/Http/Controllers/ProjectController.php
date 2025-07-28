@@ -51,13 +51,8 @@ class ProjectController extends Controller
     {
         return inertia('projects/show', [
             'project' => ProjectData::from($project),
-            'tasks' => TaskData::collect($project->tasks),
+            'tasks' => TaskData::collect($project->tasks()->paginate()),
         ]);
-    }
-
-    public function edit(Project $project)
-    {
-        //
     }
 
     public function update(UpdateProjectRequest $request, Project $project)

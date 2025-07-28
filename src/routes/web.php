@@ -10,6 +10,7 @@ use App\Http\Controllers\Inbox\BoardController as InboxBoardController;
 use App\Http\Controllers\Inbox\CalendarController as InboxCalendarController;
 use App\Http\Controllers\Projects\BoardController as ProjectsBoardController;
 use App\Http\Controllers\Projects\CalendarController as ProjectsCalendarController;
+use App\Http\Controllers\Projects\InboxController as ProjectsInboxController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -54,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])
             ->name('tasks.store');
         Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
+        Route::get('/{project}/inbox', ProjectsInboxController::class)->name('inbox');
     });
 });
 

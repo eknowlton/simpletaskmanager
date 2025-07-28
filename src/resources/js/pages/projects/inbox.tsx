@@ -2,7 +2,6 @@ import { AddTask } from '@/components/add-task';
 import { ContentBody } from '@/components/content-body';
 import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
-import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
 import { ProjectView } from '@/components/project-view';
 import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
@@ -20,7 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Show({ project, tasks }: { project: Shared.Data.Project; tasks: PaginatedCollection<Shared.Data.Task> }) {
+export default function Show({ project, tasks }: { project: Shared.Data.Project; tasks: Shared.Data.Task[] }) {
     const [view, setView] = useState<'show' | 'edit' | 'add-task' | 'edit-task'>('show');
     const [task, setTask] = useState<Shared.Data.Task | null>(null);
 
@@ -40,12 +39,12 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
 
             <div className="flex h-full flex-1 flex-col flex-wrap gap-4 overflow-x-auto rounded-xl p-4">
                 <ContentContainer>
-                    <ContentHeader title={project.title} description={`All Tasks`} />
+                    <ContentHeader title={project.title} description={`Inbox`} />
                     <ContentBody>
-                        {tasks.data.length > 0 ? (
+                        {tasks.length > 0 ? (
                             <>
                                 <div className="p-4">
-                                    {tasks.data.map((task) => (
+                                    {tasks.map((task) => (
                                         <div
                                             key={task.id}
                                             className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
@@ -94,7 +93,6 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
                                         </div>
                                     ))}
                                 </div>
-                                <PaginatedCollectionPaging collection={tasks} />
                             </>
                         ) : (
                             <p className="p-6">No tasks in project.</p>
