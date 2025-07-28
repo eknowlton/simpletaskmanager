@@ -27,12 +27,6 @@ class StoreChatProjectRequest extends FormRequest
         return [
             'project.title' => ['required', 'string', 'max:255'],
             'project.description' => ['nullable', 'string'],
-            'project.icon' => ['nullable', 'string', 'max:255'],
-            'project.status' => [
-                'required',
-                'string',
-                Rule::in(array_map(fn($status) => $status->value, ProjectStatus::cases()))
-            ],
             'project.color' => ['nullable', 'string', 'min:7', 'max:7'],
 
             'tasks.*.title' => ['required', 'string', 'max:255'],

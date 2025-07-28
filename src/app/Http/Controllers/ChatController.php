@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Agents\ProjectAgent;
 use App\Http\Requests\StoreChatProjectRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Shared\Models\Project;
+use Shared\ProjectStatus;
 
 class ChatController extends Controller
 {
@@ -49,13 +51,24 @@ class ChatController extends Controller
 
     public function store(StoreChatProjectRequest $request)
     {
-        $project = new Project($request->only('project'));
+
+        DB::beginTransaction();
+
+        $project = new Project([
+            ...$request->project,
+            'slug' => str($request->project['title'])->slug(),
+            'status' => ProjectStatus::InProgress
+        ]);
+
+        $project->user()->associate($request->user());
+
+        $project->save();
 
         collect($request->tasks)->each(function ($task) use ($project) {
             $project->tasks()->create($task);
         });
 
-        $project->save();
+        DB::commit();
 
         return response()->json([
             'message' => (object) [

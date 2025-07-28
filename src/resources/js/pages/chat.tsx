@@ -82,7 +82,7 @@ interface ChatAgentProject {
 }
 
 export default function Chat({ sessionId, message }: { sessionId: string; message: Message }) {
-    const [create, setCreate] = useState(true);
+    const [create, setCreate] = useState(false);
     const [messages, setMessages] = useState<Message[]>([message]);
     const [project, setProject] = useState<ChatAgentProject>();
     const [finished, setFinished] = useState(false);

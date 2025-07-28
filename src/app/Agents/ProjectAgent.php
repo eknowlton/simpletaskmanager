@@ -95,11 +95,6 @@ class ProjectAgent extends Agent
                                             'enum' => collect(TaskStatus::cases())->map(fn($status) => $status->value)->toArray(),
                                             'description' => 'The current status of the task.',
                                         ],
-                                        'status_label' => [
-                                            'type' => 'string',
-                                            'enum' => collect(TaskStatus::cases())->map(fn($status) => $status->label())->toArray(),
-                                            'description' => 'The display label for the task status, used for user-friendly representation.',
-                                        ],
                                         'tags' => [
                                             'type' => 'array',
                                             'items' => [
