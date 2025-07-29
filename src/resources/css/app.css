@@ -78,34 +78,23 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
-  :root {
-    --color-kanban-board-circle-blue:
-        var(--kanban-board-circle-blue);
-    --color-kanban-board-circle-cyan:
-        var(--kanban-board-circle-cyan);
-    --color-kanban-board-circle-gray:
-        var(--kanban-board-circle-gray);
-    --color-kanban-board-circle-green:
-        var(--kanban-board-circle-green);
-    --color-kanban-board-circle-indigo:
-        var(--kanban-board-circle-indigo);
-    --color-kanban-board-circle-pink:
-        var(--kanban-board-circle-pink);
-    --color-kanban-board-circle-primary:
-        var(--kanban-board-circle-primary);
-    --color-kanban-board-circle-purple:
-        var(--kanban-board-circle-purple);
-    --color-kanban-board-circle-red:
-        var(--kanban-board-circle-red);
-    --color-kanban-board-circle-violet:
-        var(--kanban-board-circle-violet);
-    --color-kanban-board-circle-yellow:
-        var(--kanban-board-circle-yellow);
+    :root {
+        --color-kanban-board-circle-blue: var(--kanban-board-circle-blue);
+        --color-kanban-board-circle-cyan: var(--kanban-board-circle-cyan);
+        --color-kanban-board-circle-gray: var(--kanban-board-circle-gray);
+        --color-kanban-board-circle-green: var(--kanban-board-circle-green);
+        --color-kanban-board-circle-indigo: var(--kanban-board-circle-indigo);
+        --color-kanban-board-circle-pink: var(--kanban-board-circle-pink);
+        --color-kanban-board-circle-primary: var(--kanban-board-circle-primary);
+        --color-kanban-board-circle-purple: var(--kanban-board-circle-purple);
+        --color-kanban-board-circle-red: var(--kanban-board-circle-red);
+        --color-kanban-board-circle-violet: var(--kanban-board-circle-violet);
+        --color-kanban-board-circle-yellow: var(--kanban-board-circle-yellow);
     }
 }
 
 :root {
-    --background: "#171717";
+    --background: '#171717';
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
@@ -121,7 +110,7 @@
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: oklch(0.577 0.245 27.325);
-    --success: oklch(67.0% 0.229 164.6);
+    --success: oklch(67% 0.229 164.6);
     --success-foreground: oklch(47.9% 0.204 125.1);
     --border: oklch(0.922 0 0);
     --input: oklch(0.922 0 0);
@@ -140,26 +129,16 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.87 0 0);
-    --kanban-board-circle-blue:
-        oklch(0.6232 0.1879 259.80);
-    --kanban-board-circle-cyan:
-        oklch(0.7146 0.1256 215.13);
-    --kanban-board-circle-gray:
-        oklch(0.5513 0.0233 264.36);
-    --kanban-board-circle-green:
-        oklch(0.7229 0.1921 149.58);
-    --kanban-board-circle-indigo:
-        oklch(0.5860 0.2037 277.12);
-    --kanban-board-circle-pink:
-        oklch(0.6559 0.2117 354.34);
-    --kanban-board-circle-purple:
-        oklch(0.6267 0.2325 303.86);
-    --kanban-board-circle-red:
-        oklch(0.6368 0.2078 25.33);
-    --kanban-board-circle-violet:
-        oklch(0.6059 0.2187 292.72);
-    --kanban-board-circle-yellow:
-        oklch(0.7959 0.1618 86.05);
+    --kanban-board-circle-blue: oklch(0.6232 0.1879 259.8);
+    --kanban-board-circle-cyan: oklch(0.7146 0.1256 215.13);
+    --kanban-board-circle-gray: oklch(0.5513 0.0233 264.36);
+    --kanban-board-circle-green: oklch(0.7229 0.1921 149.58);
+    --kanban-board-circle-indigo: oklch(0.586 0.2037 277.12);
+    --kanban-board-circle-pink: oklch(0.6559 0.2117 354.34);
+    --kanban-board-circle-purple: oklch(0.6267 0.2325 303.86);
+    --kanban-board-circle-red: oklch(0.6368 0.2078 25.33);
+    --kanban-board-circle-violet: oklch(0.6059 0.2187 292.72);
+    --kanban-board-circle-yellow: oklch(0.7959 0.1618 86.05);
 }
 
 .dark {
@@ -179,7 +158,7 @@
     --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.396 0.141 25.723);
     --destructive-foreground: oklch(0.637 0.237 25.331);
-    --success: oklch(67.0% 0.229 164.6);
+    --success: oklch(67% 0.229 164.6);
     --success-foreground: oklch(47.9% 0.204 125.1);
     --border: oklch(0.269 0 0);
     --input: oklch(0.269 0 0);
@@ -197,26 +176,16 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(0.269 0 0);
     --sidebar-ring: oklch(0.439 0 0);
-    --kanban-board-circle-blue:
-        oklch(0.7135 0.1435 254.61);
-    --kanban-board-circle-cyan:
-        oklch(0.7973 0.1339 211.45);
-    --kanban-board-circle-gray:
-        oklch(0.7137 0.0192 261.33);
-    --kanban-board-circle-green:
-        oklch(0.8003 0.1823 151.70);
-    --kanban-board-circle-indigo:
-        oklch(0.6797 0.1586 276.96);
-    --kanban-board-circle-pink:
-        oklch(0.7253 0.1752 349.74);
-    --kanban-board-circle-purple:
-        oklch(0.7218 0.1766 305.51);
-    --kanban-board-circle-red:
-        oklch(0.7108 0.1660 22.21);
-    --kanban-board-circle-violet:
-        oklch(0.7093 0.1589 293.52);
-    --kanban-board-circle-yellow:
-        oklch(0.8601 0.1730 91.84);
+    --kanban-board-circle-blue: oklch(0.7135 0.1435 254.61);
+    --kanban-board-circle-cyan: oklch(0.7973 0.1339 211.45);
+    --kanban-board-circle-gray: oklch(0.7137 0.0192 261.33);
+    --kanban-board-circle-green: oklch(0.8003 0.1823 151.7);
+    --kanban-board-circle-indigo: oklch(0.6797 0.1586 276.96);
+    --kanban-board-circle-pink: oklch(0.7253 0.1752 349.74);
+    --kanban-board-circle-purple: oklch(0.7218 0.1766 305.51);
+    --kanban-board-circle-red: oklch(0.7108 0.166 22.21);
+    --kanban-board-circle-violet: oklch(0.7093 0.1589 293.52);
+    --kanban-board-circle-yellow: oklch(0.8601 0.173 91.84);
 }
 
 @layer base {
@@ -234,28 +203,17 @@
 */
 
 @theme inline {
-    --kanban-board-circle-primary:
-        var(--primary);
-    --color-kanban-board-circle-yellow:
-        var(--kanban-board-circle-yellow);
-    --color-kanban-board-circle-violet:
-        var(--kanban-board-circle-violet);
-    --color-kanban-board-circle-red:
-        var(--kanban-board-circle-red);
-    --color-kanban-board-circle-purple:
-        var(--kanban-board-circle-purple);
-    --color-kanban-board-circle-pink:
-        var(--kanban-board-circle-pink);
-    --color-kanban-board-circle-indigo:
-        var(--kanban-board-circle-indigo);
-    --color-kanban-board-circle-green:
-        var(--kanban-board-circle-green);
-    --color-kanban-board-circle-gray:
-        var(--kanban-board-circle-gray);
-    --color-kanban-board-circle-cyan:
-        var(--kanban-board-circle-cyan);
-    --color-kanban-board-circle-blue:
-        var(--kanban-board-circle-blue);
+    --kanban-board-circle-primary: var(--primary);
+    --color-kanban-board-circle-yellow: var(--kanban-board-circle-yellow);
+    --color-kanban-board-circle-violet: var(--kanban-board-circle-violet);
+    --color-kanban-board-circle-red: var(--kanban-board-circle-red);
+    --color-kanban-board-circle-purple: var(--kanban-board-circle-purple);
+    --color-kanban-board-circle-pink: var(--kanban-board-circle-pink);
+    --color-kanban-board-circle-indigo: var(--kanban-board-circle-indigo);
+    --color-kanban-board-circle-green: var(--kanban-board-circle-green);
+    --color-kanban-board-circle-gray: var(--kanban-board-circle-gray);
+    --color-kanban-board-circle-cyan: var(--kanban-board-circle-cyan);
+    --color-kanban-board-circle-blue: var(--kanban-board-circle-blue);
 }
 
 /*
@@ -263,11 +221,11 @@
 */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }
 
@@ -278,8 +236,8 @@
 
 /* For IE, Edge and Firefox */
 .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 input::-webkit-outer-spin-button,
@@ -289,6 +247,6 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
 }

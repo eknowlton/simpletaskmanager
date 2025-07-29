@@ -1,9 +1,9 @@
-import IndexController from './IndexController'
-import DashboardController from './DashboardController'
-import TaskController from './TaskController'
-import ProjectController from './ProjectController'
-import Settings from './Settings'
-import Auth from './Auth'
+import Auth from './Auth';
+import DashboardController from './DashboardController';
+import IndexController from './IndexController';
+import ProjectController from './ProjectController';
+import Settings from './Settings';
+import TaskController from './TaskController';
 
 const Controllers = {
     IndexController,
@@ -12,6 +12,6 @@ const Controllers = {
     ProjectController,
     Settings,
     Auth,
-}
+};
 
-export default Controllers
+export default Controllers;

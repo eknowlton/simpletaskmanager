@@ -1,5 +1,5 @@
 group "default" {
-  targets = ["web", "app", "cli"]
+  targets = ["web", "app"]
 }
 
 variable "TAG" {
@@ -14,7 +14,7 @@ target "web" {
   context = "./"
   dockerfile = "./docker/nginx.Dockerfile"
   tags = [
-    "simpletaskmanager/web:${TAG}"
+    "932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/web:${TAG}"
   ]
 }
 
@@ -22,17 +22,6 @@ target "app" {
   context = "./"
   dockerfile = "./docker/app.Dockerfile"
   tags = [
-    "simpletaskmanager/app:${TAG}"
+    "932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/app:${TAG}"
   ]
-}
-
-target "cli" {
-  context = "./"
-  dockerfile = "./docker/cli.Dockerfile"
-  tags = [
-    "simpletaskmanager/app:${TAG}-cli"
-  ]
-  args = {
-    ENV = "${ENV}"
-  }
 }

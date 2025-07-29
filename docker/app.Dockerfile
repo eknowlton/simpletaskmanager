@@ -26,10 +26,14 @@ WORKDIR /var/www/html
 
 RUN npm install
 
-RUN npm run build
+RUN npm run build:ssr
 
 FROM app
 
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 COPY --from=node /var/www/html /var/www/html
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
@@ -39,8 +43,4 @@ WORKDIR /var/www/html
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 RUN php artisan clear-compiled  \
-        && composer dump-autoload\
-        && php artisan optimize \
-        && php artisan config:cache \
-        && php artisan config:clear \
-        && php artisan route:cache 
+        && composer dump-autoload

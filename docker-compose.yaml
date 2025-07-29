@@ -14,6 +14,19 @@ services:
     networks:
       - app-net
 
+  ssr:
+    image: simpletaskmanager/app
+    build:
+      context: ./
+      dockerfile: docker/app.Dockerfile
+    ports:
+      - '13714:13714'
+    networks:
+      - app-net
+    volumes:
+      - ./src:/var/www/html
+
+
   app:
     image: simpletaskmanager/app
     build:

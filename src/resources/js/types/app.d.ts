@@ -23,6 +23,7 @@ interface PaginatedCollection<T> {
 }
 
 type SharedProps = {
+    name: string;
     auth: SharedAuth;
     task_statuses: Shared.Data.TaskStatus[];
     project_statuses: Shared.Data.ProjectStatus[];

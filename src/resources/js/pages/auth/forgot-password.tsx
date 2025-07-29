@@ -15,9 +15,11 @@ export default function ForgotPassword({ status }: { status?: string }) {
         email: '',
     });
 
+    console.log('processing', processing);
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
+        console.log('Submitting forgot password form with data:', data);
         post(route('password.email'));
     };
 
@@ -46,7 +48,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     </div>
 
                     <div className="my-6 flex items-center justify-start">
-                        <Button className="w-full" disabled={processing}>
+                        <Button className="w-full" disabled={processing} type="submit">
                             {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                             Email password reset link
                         </Button>
