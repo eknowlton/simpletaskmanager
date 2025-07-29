@@ -1,5 +1,9 @@
 # simpletaskmanager
-A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, and other fun frameworks.
+Simple task manager application designed for desktop.
+
+A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, ShadCN, and other fun frameworks.
+
+## Containers
 
 - **simpletaskmanager/nginx**
 
@@ -9,6 +13,7 @@ A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindC
   Runs PHP-FPM and serves PHP application to NGINX.
 
 ## Running application locally
+
 Running the application locally should be as simple as running ...
 
 ```sh
