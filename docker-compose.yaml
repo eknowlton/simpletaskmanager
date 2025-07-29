@@ -40,6 +40,12 @@ services:
     networks:
       - app-net
 
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "8003:1025"
+      - "8100:8025"
+
   selenium: 
     image: selenium/standalone-chrome 
     ports: 

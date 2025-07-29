@@ -1,10 +1,10 @@
-# diedump.run
+# jobshop.works
 A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, and other fun frameworks.
 
-- **diedump.run/nginx**
+- **jobshop.works/nginx**
 
   Serves PHP application.
-- **diedump.run/app**
+- **jobshop.works/app**
 
   Runs PHP-FPM and serves PHP application to NGINX.
 
