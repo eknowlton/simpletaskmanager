@@ -8,7 +8,7 @@ uses(DatabaseTruncation::class);
 
 test('login component renders', function () {
     User::factory()->create([
-        'email' => 'test@diedump.run',
+        'email' => 'test@jobsho.works',
         'password' => bcrypt('password123'),
     ]);
 

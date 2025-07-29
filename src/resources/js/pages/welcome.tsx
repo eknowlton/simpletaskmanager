@@ -1,6 +1,6 @@
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import BetaLogo from '../../images/beta-logo.png';
+import BetaLogo from '../../images/jobshop.png';
 import ScreenBoard from '../../images/screen-board.png';
 import ScreenInbox from '../../images/screen-inbox.png';
 import ScreenProjects from '../../images/screen-projects.png';
@@ -17,7 +17,7 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <div className="container mx-auto flex min-h-screen flex-col items-center lg:justify-center lg:p-8 dark:text-white">
-                <header className="mb-6 w-full rounded-lg border border-gray-900 bg-gray-800 p-10 not-has-[nav]:hidden dark:border-gray-500 dark:bg-gray-800">
+                <header className="mb-6 w-full rounded-lg border border-gray-300 bg-gray-200 p-10 not-has-[nav]:hidden dark:border-gray-700 dark:bg-gray-200">
                     <nav className="flex items-center justify-end gap-4">
                         {auth.user ? (
                             <Link
@@ -30,20 +30,20 @@ export default function Welcome() {
                             <>
                                 <Link
                                     href={route('login')}
-                                    className="inline-block rounded-sm border border-border px-5 py-1.5 text-sm leading-normal text-white"
+                                    className="white inline-block rounded-sm border bg-gray-300 px-5 py-1.5 text-sm leading-normal dark:border-gray-400 dark:bg-gray-700"
                                 >
                                     Log in
                                 </Link>
                                 <Link
                                     href={route('register')}
-                                    className="inline-block rounded-sm border border-white bg-gray-200 px-5 py-1.5 text-sm leading-normal dark:bg-gray-700"
+                                    className="white inline-block rounded-sm border bg-gray-300 px-5 py-1.5 text-sm leading-normal dark:border-gray-400 dark:bg-gray-700"
                                 >
                                     Register
                                 </Link>
                             </>
                         )}
                     </nav>
-                    <img src={BetaLogo} className="mx-auto" />
+                    <img src={BetaLogo} className="mx-auto w-1/2" />
                 </header>
                 <div className="container my-5 flex flex-col gap-10 p-10">
                     <h3 className="text-2xl">Free Simple Task Management</h3>
@@ -82,8 +82,8 @@ export default function Welcome() {
                     </a>
                     <img src={ScreenChat} />
                 </div>
-                <footer className="mb-6 flex w-full flex-row rounded-lg border border-gray-500 bg-gray-800 p-10 text-white">
-                    <img src={BetaLogo} className="mx-auto mb-4" />
+                <footer className="mb-6 flex w-full flex-row rounded-lg border border-gray-300 bg-gray-200 p-10 text-black dark:border-gray-500 dark:bg-gray-500 dark:text-white">
+                    <img src={BetaLogo} className="mx-auto mb-4 w-1/3" />
                     <div className="flex-grow"></div>
                     <div>
                         <p className="text-sm">© 2023 Simple Task Management. All rights reserved.</p>
