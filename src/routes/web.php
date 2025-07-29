@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::put('/create', [ProjectController::class, 'store'])->name('store');
         Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
-
+        Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
         Route::get('/{project}/board', [ProjectsBoardController::class, 'show'])->name('board');
         Route::post(
             '/{project}/board/{task}/update',
@@ -55,7 +55,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('calendar');
         Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])
             ->name('tasks.store');
-        Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
         Route::get('/{project}/inbox', ProjectsInboxController::class)->name('inbox');
     });
 });

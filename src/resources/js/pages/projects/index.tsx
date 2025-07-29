@@ -32,7 +32,7 @@ export default function Index({ projects }: { projects: PaginatedCollection<Shar
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        form.post(route('projects.store'), {
+        form.put(route('projects.store'), {
             onSuccess: () => {
                 setView('index');
                 toast.success('Project created successfully!');

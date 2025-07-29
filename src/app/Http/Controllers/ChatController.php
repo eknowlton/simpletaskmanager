@@ -52,37 +52,44 @@ class ChatController extends Controller
     public function store(StoreChatProjectRequest $request)
     {
 
-        DB::beginTransaction();
+        DB::transaction(function () use ($request) {
+            $project = new Project();
+            $project->fill([
+                ...$request->only('project'),
+                'slug' => str($request->project['title'])->slug(),
+                'status' => ProjectStatus::InProgress
+            ]);
 
-        $project = new Project([
-            ...$request->project,
-            'slug' => str($request->project['title'])->slug(),
-            'status' => ProjectStatus::InProgress
-        ]);
+            $project->user()->associate($request->user());
 
-        $project->user()->associate($request->user());
+            $project->save();
 
-        $project->save();
+            collect($request->only('tasks'))->each(function ($task) use ($project) {
+                $project->tasks()->create($task->except('id'));
+            });
 
-        collect($request->tasks)->each(function ($task) use ($project) {
-            $project->tasks()->create($task);
+            return response()->json([
+                'message' => (object) [
+                    'id' => time(),
+                    'message' => "Project created successfully!",
+                    'action' => [
+                        'type' => 'link',
+                        'url' => route('projects.show', $project->id),
+                        'text' => 'View Project',
+                    ],
+                    'sender' => 'assistant',
+                    'isLoading' => false,
+                ]
+            ]);
         });
-
-        DB::commit();
 
         return response()->json([
             'message' => (object) [
                 'id' => time(),
-                'message' => "Project created successfully!",
-                'action' => [
-                    'type' => 'link',
-                    'url' => route('projects.show', $project->id),
-                    'text' => 'View Project',
-                ],
+                'message' => "An error occurred while creating the project. Please try again.",
                 'sender' => 'assistant',
                 'isLoading' => false,
             ],
-            'project' => $project,
         ]);
     }
 }

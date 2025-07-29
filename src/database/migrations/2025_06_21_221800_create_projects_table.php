@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid('id');
             $table->timestamps();
             $table->string('title');
             $table->string('slug')->unique();
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('status')->default('in_progress');
             $table->softDeletes();
-            $table->string('color')->default('#2596be');
+            $table->string('color')->default('#2596be')->nullable();
             $table->string('icon')->nullable();
         });
     }

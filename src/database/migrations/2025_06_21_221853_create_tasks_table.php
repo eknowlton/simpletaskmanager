@@ -12,15 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid('id');
             $table->timestamps();
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->foreignId('project_id')
+            $table->foreignUuid('project_id')
                 ->nullable()
-                ->constrained()
                 ->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
