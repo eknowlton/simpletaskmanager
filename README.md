@@ -1,10 +1,10 @@
-# jobshop.works
+# simpletaskmanager
 A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, and other fun frameworks.
 
-- **jobshop.works/nginx**
+- **simpletaskmanager/nginx**
 
   Serves PHP application.
-- **jobshop.works/app**
+- **simpletaskmanager/app**
 
   Runs PHP-FPM and serves PHP application to NGINX.
 

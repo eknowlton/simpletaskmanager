@@ -14,7 +14,7 @@ target "web" {
   context = "./"
   dockerfile = "./docker/nginx.Dockerfile"
   tags = [
-    "diedumprun/web:${TAG}"
+    "simpletaskmanager/web:${TAG}"
   ]
 }
 
@@ -22,7 +22,7 @@ target "app" {
   context = "./"
   dockerfile = "./docker/app.Dockerfile"
   tags = [
-    "diedumprun/app:${TAG}"
+    "simpletaskmanager/app:${TAG}"
   ]
 }
 
@@ -30,7 +30,7 @@ target "cli" {
   context = "./"
   dockerfile = "./docker/cli.Dockerfile"
   tags = [
-    "diedumprun/app:${TAG}-cli"
+    "simpletaskmanager/app:${TAG}-cli"
   ]
   args = {
     ENV = "${ENV}"

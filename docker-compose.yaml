@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: diedumprun/web
+    image: simpletaskmanager/web
     environment:
       NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx/conf.d
       APP_HOST: app
@@ -15,7 +15,7 @@ services:
       - app-net
 
   app:
-    image: diedumprun/app
+    image: simpletaskmanager/app
     build:
       context: ./
       dockerfile: docker/app.Dockerfile
