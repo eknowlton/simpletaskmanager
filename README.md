@@ -40,10 +40,5 @@ This will build and tag the images to the latest git commit short sha1 hash ( Yo
 
 ![image](https://github.com/user-attachments/assets/aec60f6b-eeb5-41d3-b40b-5ef1d6ff671f)
 
-![image](https://github.com/user-attachments/assets/23e1c959-41e8-4b12-911d-35b9b76919b2)
+<img width="1554" height="869" alt="image" src="https://github.com/user-attachments/assets/4c792f82-6041-40c6-b7fb-0c0702e9a40c" />
 
-![image](https://github.com/user-attachments/assets/b29cbe64-49a5-4a92-8c9a-52c86bfe2cd8)
-
-![image](https://github.com/user-attachments/assets/a31bb09c-4a86-418b-8add-192b342bc75c)
-
-![image](https://github.com/user-attachments/assets/1a4c5148-db18-4f10-9f3e-056f1a626a2e)
