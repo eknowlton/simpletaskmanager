@@ -1,0 +1,9 @@
+terraform/
+db-data/
+node_modules/
+README.md
+LICENSE
+shell.nix
+docker-bake.hcl
+docker-compose.yml
+src/.env.*
