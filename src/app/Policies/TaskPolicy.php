@@ -30,7 +30,7 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -38,10 +38,10 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): Response
     {
-        $ownsProject = $task->project->user->id === $user->id;
+        $ownsProject = $task->project->user_id === $user->id;
         $ownsTask = $user->id === $task->user_id;
 
-        return $ownsProject || $ownsTask
+        return $ownsTask || $ownsProject
             ? Response::allow()
             : Response::deny('You do not own this task.');
     }

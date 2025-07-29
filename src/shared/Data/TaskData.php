@@ -13,7 +13,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class TaskData extends Data
 {
     public function __construct(
-        public int $id,
+        public ?string $id = null,
         public string $title,
         public string $description,
         public ?CarbonImmutable $due_date = null,

@@ -22,15 +22,15 @@ declare namespace Shared.Data {
         data: Shared.Data.Task;
     };
     export type Project = {
-        id: string;
+        id: string | null;
         title: string;
         slug: string;
         description: string | null;
         color: string | null;
         icon: string | null;
         status: Shared.Data.ProjectStatus;
-        created_at: string;
-        updated_at: string;
+        created_at: string | null;
+        updated_at: string | null;
         tasks_count: number;
         completed_tasks_count: number;
     };
@@ -52,7 +52,7 @@ declare namespace Shared.Data {
         updated_at: string;
     };
     export type Task = {
-        id: number;
+        id: string;
         title: string;
         description: string;
         due_date: string | null;
