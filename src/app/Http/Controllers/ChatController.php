@@ -55,7 +55,7 @@ class ChatController extends Controller
         DB::transaction(function () use ($request) {
             $project = new Project();
             $project->fill([
-                ...$request->only('project'),
+                ...$request->project,
                 'slug' => str($request->project['title'])->slug(),
                 'status' => ProjectStatus::InProgress
             ]);
