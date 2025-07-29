@@ -8,13 +8,15 @@ use Shared\Models\Project;
 
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return inertia('projects/index', [
-            'projects' => ProjectData::collect(Project::withCount('tasks')
+            'projects' => ProjectData::collect(Project::forUser($request->user())
+                ->withCount('tasks')
                 ->withCount('completedTasks')
                 ->withCount('pendingTasks')
                 ->withCount('inProgressTasks')
@@ -38,7 +40,13 @@ class ProjectController extends Controller
             'icon'
         ]));
 
-        $project->slug = str($request->title)->slug();
+        $slug = str($request->title)->slug();
+
+        while (Project::where('slug', $slug)->exists()) {
+            $slug = str($request->title)->slug() . '-' . uniqid();
+        }
+
+        $project->slug = $slug;
 
         $project->user()->associate($request->user());
 

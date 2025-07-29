@@ -10,29 +10,21 @@ use Illuminate\Auth\Access\Response;
 class ProjectPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Project $project): bool
+    public function view(User $user, Project $project): Response
     {
-        return $user->id === $project->user_id
-            ? true
-            : false;
+        return $user->id == $project->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this project.');
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        return true;
+        return Response::allow();
     }
 
     /**
@@ -40,7 +32,8 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): Response
     {
-        return $user->id === $project->user_id
+        dd($user->id, $project->user_id, $user->id === $project->user_id);
+        return $user->id == $project->user_id
             ? Response::allow()
             : Response::deny('You do not own this project.');
     }
@@ -48,24 +41,10 @@ class ProjectPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Project $project): bool
+    public function delete(User $user, Project $project): Response
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Project $project): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Project $project): bool
-    {
-        return false;
+        return $user->id == $project->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this project.');
     }
 }
