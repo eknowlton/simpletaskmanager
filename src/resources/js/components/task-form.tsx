@@ -14,7 +14,7 @@ export type TaskFormData = {
     description: string;
     status: Shared.TaskStatus;
     priority: number;
-    project_id: number | null;
+    project_id: string | null;
     due_date: Date | null;
     tags?: { label: string; value: string }[];
     id: number;
@@ -64,7 +64,7 @@ export const TaskForm = ({
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="status">Status</Label>
-                    <Select onValueChange={(status) => setData('status', status)} value={data.status} name="status">
+                    <Select onValueChange={(status) => setData('status', status as Shared.TaskStatus)} value={data.status} name="status">
                         <SelectTrigger>
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
@@ -98,14 +98,14 @@ export const TaskForm = ({
                 {showProjectSelection && (
                     <div className="grid gap-2">
                         <Label htmlFor="project_id">Project</Label>
-                        <Select onValueChange={(value) => setData('project_id', parseInt(value, 0))} value={`${data.project_id}`} name="project_id">
+                        <Select onValueChange={(value) => setData('project_id', value)} value={data.project_id ?? undefined} name="project_id">
                             <SelectTrigger>
-                                <SelectValue placeholder={!project ? `No project selected` : 'Select a Project'} />
+                                <SelectValue placeholder={'Select a Project'} />
                             </SelectTrigger>
                             <SelectContent>
                                 {projects &&
                                     projects.map((project) => (
-                                        <SelectItem value={`${project.id}`} key={project.id}>
+                                        <SelectItem value={project.id as string} key={project.id}>
                                             {project.title}
                                         </SelectItem>
                                     ))}

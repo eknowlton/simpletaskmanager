@@ -40,6 +40,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /var/www/html
 
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage \
+    && chmod -R 755 /var/www/html/bootstrap/cache
+
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 RUN php artisan clear-compiled  \

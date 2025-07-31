@@ -58,10 +58,12 @@ export default function Index({ tasks }: { tasks: PaginatedCollection<Shared.Dat
                                             </div>
                                             <div className="flex flex-grow">
                                                 <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                                <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
-                                                    <Calendar className="h-4 w-4" />
-                                                    <span className="">{task.due_date ? new Date(task.due_date).toLocaleString() : null}</span>
-                                                </div>
+                                                {task.due_date && (
+                                                    <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
+                                                        <Calendar className="h-4 w-4" />
+                                                        <span className="">{task.due_date ? new Date(task.due_date).toLocaleString() : null}</span>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className="flex flex-grow pt-2">
                                                 <div className="flex-grow"></div>
