@@ -10,7 +10,7 @@ use Shared\Models\Task;
 use Shared\TaskStatus;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BoardStoreRequest;
+use App\Http\Requests\StoreBoardRequest;
 
 use Illuminate\Http\Request;
 
@@ -37,7 +37,7 @@ class BoardController extends Controller
         ]);
     }
 
-    public function store(BoardStoreRequest $request, Project $project, Task $task)
+    public function store(StoreBoardRequest $request, Project $project, Task $task)
     {
         $task->status = $request->input('status');
         $task->save();

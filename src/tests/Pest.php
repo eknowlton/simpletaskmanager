@@ -17,7 +17,12 @@ pest()->extend(Tests\DuskTestCase::class)
 
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->in('./*/Feature');
+
+
+pest()->extend(Tests\TestCase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in('./*/Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +49,3 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
-
-function something()
-{
-    // ..
-}

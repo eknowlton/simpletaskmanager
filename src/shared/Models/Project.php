@@ -83,4 +83,9 @@ class Project extends Model
     {
         return $this->tasks()->inbox();
     }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProjectFactory::new();
+    }
 }

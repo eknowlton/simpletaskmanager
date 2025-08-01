@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\App\Feature;
+
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
 

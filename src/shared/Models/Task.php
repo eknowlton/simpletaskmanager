@@ -71,4 +71,9 @@ class Task extends Model implements Auditable
         return $query->forUser($user)->inbox()
             ->whereJsonContains('tags', ['value' => 'two-minute']);
     }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\TaskFactory::new();
+    }
 }

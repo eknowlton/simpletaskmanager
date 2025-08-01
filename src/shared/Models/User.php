@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->tasks()->inbox();
     }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserFactory::new();
+    }
 }

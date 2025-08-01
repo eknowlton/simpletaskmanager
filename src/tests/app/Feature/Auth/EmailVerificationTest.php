@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+namespace Tests\App\Feature;
+
+use Shared\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
