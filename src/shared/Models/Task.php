@@ -74,6 +74,6 @@ class Task extends Model implements Auditable
     public function scopeTwoMinuteFor(Builder $query, User $user)
     {
         return $query->forUser($user)->inbox()
-            ->whereJsonContains('tags', ['value' => 'two-minute']);
+            ->whereJsonContains('tags', [ ['value' => 'two-minute'] ]);
     }
 }

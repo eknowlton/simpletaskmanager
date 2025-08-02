@@ -25,13 +25,12 @@ class TaskFactory extends Factory
             'description' => $this->faker->paragraph(),
             'due_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'status' => \Shared\TaskStatus::Pending->value,
+            'project_id' => \Shared\Models\Project::factory(),
             'priority' => $this->faker->numberBetween(0, 5),
-            'category' => $this->faker->word(),
+            'tags' =>  json_encode(collect([0...5])->map(fn () => ['value' => $word = $this->faker->word, 'label' => $word])->toArray()), 
             'created_at' => now(),
             'updated_at' => now(),
-            'deleted_at' => null,
-            'completed_at' => null,
-            'cancelled_at' => null,
+            'deleted_at' => null
         ];
     }
 }
