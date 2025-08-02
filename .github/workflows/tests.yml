@@ -7,16 +7,29 @@ on:
       - develop
 
 jobs:
-  build-test:
+  tests:
+    name: Run Tests
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-    - name: Install dependencies
-      uses: php-actions/composer@v6
+    - name: change to src/ directory
+      run: cd src
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        working_dir: src
+        php-version: '8.3'
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+        coverage: xdebug
 
-    - name: Run Pest tests
-      run: ./vendor/bin/pest
+    - name: Run composer install
+      run: composer install -n --prefer-dist
+
+    - name: Prepare Laravel Application
+      run: |
+        cp .env.ci .env
+        php artisan key:generate
+
+    - name: Run tests
+      run: php artisan test
