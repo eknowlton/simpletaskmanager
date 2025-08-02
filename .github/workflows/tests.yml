@@ -13,6 +13,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Build node assets
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - run: npm run build:ssr
+      working-directory: src/
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -23,12 +31,6 @@ jobs:
     - name: Run composer install
       working-directory: src/
       run: composer install -n --prefer-dist
-
-    - name: Build node assets
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    - run: npm run build:ssr
 
     - name: Prepare Laravel Application
       working-directory: src/
