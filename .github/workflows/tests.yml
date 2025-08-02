@@ -13,9 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: change to src/ directory
-      run: cd src
-
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -24,6 +21,7 @@ jobs:
         coverage: xdebug
 
     - name: Run composer install
+      working-directory: src/
       run: composer install -n --prefer-dist
 
     - name: Prepare Laravel Application
