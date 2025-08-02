@@ -18,6 +18,9 @@ jobs:
       with:
         node-version: 20
 
+    - run: npm install
+      working-directory: src/
+
     - run: npm run build:ssr
       working-directory: src/
 
