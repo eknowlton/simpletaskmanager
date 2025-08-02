@@ -19,7 +19,7 @@ class TaskData extends Data
         public ?CarbonImmutable $due_date = null,
         public TaskStatusData $status,
         public int $priority,
-        public ?int $project_id = null,
+        public ?string $project_id = null,
 
         /** @var \Shared\Data\TaskAuditData[] */
         public ?array $audits = [],

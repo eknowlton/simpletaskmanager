@@ -14,12 +14,4 @@ class TagData extends Data
         public string $label,
         public string $value
     ) {}
-
-    public static function fromTag($tag): self
-    {
-        return new self(
-            $tag['label'],
-            $tag['value'],
-        );
-    }
 }

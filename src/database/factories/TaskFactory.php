@@ -27,7 +27,7 @@ class TaskFactory extends Factory
             'status' => \Shared\TaskStatus::Pending->value,
             'project_id' => \Shared\Models\Project::factory(),
             'priority' => $this->faker->numberBetween(0, 5),
-            'tags' =>  json_encode(collect([0...5])->map(fn () => ['value' => $word = $this->faker->word, 'label' => $word])->toArray()), 
+            'tags' =>  collect([true, true, true])->map(fn () => ['value' => $word = $this->faker->word, 'label' => $word]), 
             'created_at' => now(),
             'updated_at' => now(),
             'deleted_at' => null

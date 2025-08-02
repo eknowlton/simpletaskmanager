@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Shared\Unit;
+namespace Tests\Shared\Unit\Models;
 
 use Shared\Models\Project;
 use Shared\Models\Task;
