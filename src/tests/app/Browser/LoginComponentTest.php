@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+namespace Tests\App\Browser;
+
+use Shared\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Inertia\Testing\AssertableInertia as Assert;
 

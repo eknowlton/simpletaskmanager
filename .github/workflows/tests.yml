@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+        coverage: xdebug
+
+    - name: Run composer install
+      working-directory: src/
+      run: composer install -n --prefer-dist
+
+    - name: Build node assets
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - run: npm install
+      working-directory: src/
+
+    - run: npm run build:ssr
+      working-directory: src/
+
+    - name: Prepare Laravel Application
+      working-directory: src/
+      run: |
+        cp .env.example .env
+        php artisan key:generate
+
+    - name: Run tests
+      working-directory: src/
+      run: php artisan test

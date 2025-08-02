@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+namespace Tests\App\Feature;
+
+use Shared\Models\User;
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');

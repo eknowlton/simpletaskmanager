@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+namespace Tests\App\Feature;
+
+use Shared\Models\User;
 
 test('confirm password screen can be rendered', function () {
     $user = User::factory()->create();

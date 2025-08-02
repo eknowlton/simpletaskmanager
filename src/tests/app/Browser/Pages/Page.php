@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Pages;
+namespace Tests\App\Browser\Pages;
 
 use Laravel\Dusk\Page as BasePage;
 

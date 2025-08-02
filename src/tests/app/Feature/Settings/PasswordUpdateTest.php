@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+namespace Tests\App\Feature;
+
+use Shared\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 test('password can be updated', function () {
