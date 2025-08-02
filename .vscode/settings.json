@@ -5,7 +5,6 @@
 
   "window.zoomLevel": 1,
   "workbench.editor.enablePreview": false,
-  "workbench.editor.showTabs": "none",
   "editor.minimap.enabled": false,
 
   "[typescript]": {
