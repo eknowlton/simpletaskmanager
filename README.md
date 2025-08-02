@@ -35,6 +35,16 @@ Well with all the new buzz around AI and how cool it actually is, I figured I wo
 
   Runs PHP-FPM and serves PHP application to NGINX.
 
+## Structure 
+
+The application is split up into three modules.
+
+- API,  `api/
+- App, `app/`
+- Shared, `shared`
+
+To allow sharing of data models, etc. that can be shared between the API and the App 
+
 ## Running application locally
 
 Running the application locally should be as simple as running ...
