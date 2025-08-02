@@ -25,9 +25,10 @@ jobs:
       run: composer install -n --prefer-dist
 
     - name: Prepare Laravel Application
+      working-directory: src/
       run: |
-        cp .env.ci .env
         php artisan key:generate
 
     - name: Run tests
+      working-directory: src/
       run: php artisan test
