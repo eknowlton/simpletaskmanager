@@ -2,6 +2,8 @@
 
 namespace Shared\Models;
 
+use Database\Factories\ProjectFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Shared\ProjectStatus;
 use Shared\TaskStatus;
 
@@ -10,9 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
+#[UseFactory(ProjectFactory::class)]
 class Project extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $table = 'projects';
 
     protected $fillable = [
         'title',
@@ -82,10 +87,5 @@ class Project extends Model
     public function inbox()
     {
         return $this->tasks()->inbox();
-    }
-
-    protected static function newFactory()
-    {
-        return \Database\Factories\ProjectFactory::new();
     }
 }

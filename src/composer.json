@@ -47,6 +47,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Tests\\": "tests/",
             "Tests\\Api\\": "tests/api/",
             "Tests\\App\\": "tests/app/",
             "Tests\\Shared\\": "tests/shared/"

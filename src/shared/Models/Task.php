@@ -2,6 +2,8 @@
 
 namespace Shared\Models;
 
+use Database\Factories\TaskFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Shared\TaskStatus;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -11,9 +13,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[UseFactory(TaskFactory::class)]
 class Task extends Model implements Auditable
 {
     use HasFactory, \OwenIt\Auditing\Auditable, HasUuids;
+
+    protected $table = 'tasks';
 
     protected $casts = [
         'due_date' => 'datetime',
@@ -70,10 +75,5 @@ class Task extends Model implements Auditable
     {
         return $query->forUser($user)->inbox()
             ->whereJsonContains('tags', ['value' => 'two-minute']);
-    }
-
-    protected static function newFactory()
-    {
-        return \Database\Factories\TaskFactory::new();
     }
 }
