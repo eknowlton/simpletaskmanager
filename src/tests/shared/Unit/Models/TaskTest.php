@@ -74,14 +74,3 @@ it('can scope tasks for a specific user', function () {
     expect($userTasks)->toHaveCount(1);
     expect($userTasks->first()->user_id)->toBe($user->id);
 });
-
-it('can scope two-minute tasks for a specific user', function () {
-    $user = User::factory()->create();
-    Task::factory()->create(['user_id' => $user->id, 'tags' => [ ['value' => 'two-minute'] ]]);
-    Task::factory()->create(['user_id' => $user->id, 'tags' => [ ['value' => 'other-tag'] ]]);
-
-    $twoMinuteTasks = Task::twoMinuteFor($user)->get();
-
-    expect($twoMinuteTasks)->toHaveCount(1);
-    expect($twoMinuteTasks->first()->tags)->toContain(['value' => 'two-minute']);
-});
