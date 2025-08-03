@@ -46,6 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/create', [ProjectController::class, 'store'])->name('store');
         Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
         Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
+        Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
         Route::get('/{project}/board', [ProjectsBoardController::class, 'show'])->name('board');
         Route::post(
             '/{project}/board/{task}/update',

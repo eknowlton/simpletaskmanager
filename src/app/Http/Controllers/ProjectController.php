@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteProjectRequest;
 use Shared\Data\ProjectData;
 use Shared\Data\TaskData;
 use Shared\Models\Project;
@@ -77,8 +78,10 @@ class ProjectController extends Controller
         $project->save();
     }
 
-    public function destroy(Project $project)
+    public function destroy(DeleteProjectRequest $request, Project $project)
     {
-        //
+        $project->delete();
+
+        return response(null, 204);
     }
 }
