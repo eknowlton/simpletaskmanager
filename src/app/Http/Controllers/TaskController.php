@@ -37,6 +37,8 @@ class TaskController extends Controller
         $task->project()->associate($request->project_id);
 
         $request->user()->tasks()->save($task);
+
+        return response(null, 201);
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
@@ -50,6 +52,8 @@ class TaskController extends Controller
 
     public function destroy(DeleteTaskRequest $request, Task $task)
     {
-        //
+        $task->delete();
+
+        return response(null, 204);
     }
 }
