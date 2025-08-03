@@ -49,11 +49,14 @@ To allow sharing of data models, etc. that can be shared between the API and the
 
 ## Running application locally
 
-Running the application locally should be as simple as running ...
+Running the application locally should be as simple as running `docker compose up`. Profiles are setup if you would like to use those too...
 
 ```sh
-$ docker compose up
+$ docker compose --profile local up
 ```
+
+There is a "production" profile as well, but I wouldn't run these specific containers for a production. You would want to have these services somewhere, like the database for example, and you would want that to be hosted probably outside of the container service. I personally choose to use cloud versions of these services.
+
 
 ## Building, Tagging & Pushing Images
 

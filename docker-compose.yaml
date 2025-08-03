@@ -1,5 +1,6 @@
 services:
   nginx:
+    profiles: ['production', 'development', 'local']
     image: simpletaskmanager/web
     environment:
       NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx/conf.d
@@ -15,6 +16,20 @@ services:
       - app-net
 
   ssr:
+    profiles: ['production']
+    image: simpletaskmanager/app
+    build:
+      context: ./
+      dockerfile: docker/app.Dockerfile
+    ports:
+      - '13714:13714'
+    networks:
+      - app-net
+    volumes:
+      - ./src:/var/www/html
+
+  node:
+    profiles: ['development', 'local']
     image: simpletaskmanager/app
     build:
       context: ./
@@ -27,6 +42,7 @@ services:
       - ./src:/var/www/html
 
   app:
+    profiles: ['production', 'development', 'local']
     image: simpletaskmanager/app
     build:
       context: ./
@@ -41,6 +57,7 @@ services:
     command: php-fpm -R
 
   database:
+    profiles: ['development', 'local']
     image: 'postgres:latest'
     ports:
       - 5432:5432
@@ -51,6 +68,12 @@ services:
       - ./db-data/:/var/lib/postgresql/data/
     networks:
       - app-net
+  
+  redis:
+    profiles: ['production', 'development', 'local']
+    image: 'redis:latest'
+    ports:
+      - 6379:6379
 
 networks:
   app-net:
