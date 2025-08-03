@@ -1,12 +1,10 @@
 <?php
 
-namespace Tests\Unit\Http\Policies;
+namespace Tests\App\Unit\Http\Policies;
 
 use Shared\Models\Project;
 use Shared\Models\Task;
 use Shared\Models\User;
-use Shared\TaskStatus;
-use Tests\TestCase;
 
 it('allows a user to create a task', function () {
     $user = User::factory()->create();

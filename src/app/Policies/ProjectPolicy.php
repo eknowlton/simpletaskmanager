@@ -32,7 +32,6 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): Response
     {
-        dd($user->id, $project->user_id, $user->id === $project->user_id);
         return $user->id == $project->user_id
             ? Response::allow()
             : Response::deny('You do not own this project.');
