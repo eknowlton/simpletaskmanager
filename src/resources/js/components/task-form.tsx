@@ -17,7 +17,7 @@ export type TaskFormData = {
     project_id: string | null;
     due_date: Date | null;
     tags?: { label: string; value: string }[];
-    id: number;
+    id: string;
 };
 
 export const TaskForm = ({

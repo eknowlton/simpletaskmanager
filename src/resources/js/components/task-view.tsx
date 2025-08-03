@@ -6,20 +6,20 @@ export function TaskView({ task }: { task: Shared.Data.Task }) {
     const {
         auth: { user },
     } = usePage<SharedProps>().props;
-    const form = useForm<TaskFormData>({
-        id: task.id,
+    const form = useForm<TaskFormData>('task-form', {
+        id: task.id ?? '',
         title: task.title,
         description: task.description ?? '',
         tags: task.tags ?? [],
         status: task.status.value,
-        project_id: task.project_id,
+        project_id: task.project_id ?? null,
         priority: task.priority,
         due_date: task.due_date ? new Date(task.due_date) : null,
     });
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        form.put(route('tasks.update', task.id), {
+        form.put(route('tasks.update', { task: task.id }), {
             onSuccess: () => {
                 toast.success('Task updated successfully');
             },

@@ -52,8 +52,6 @@ class ProjectController extends Controller
         $project->user()->associate($request->user());
 
         $project->save();
-
-        return response(null, 201);
     }
 
     public function show(Project $project)
@@ -81,7 +79,5 @@ class ProjectController extends Controller
     public function destroy(DeleteProjectRequest $request, Project $project)
     {
         $project->delete();
-
-        return response(null, 204);
     }
 }

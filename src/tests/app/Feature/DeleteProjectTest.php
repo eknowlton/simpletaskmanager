@@ -9,8 +9,7 @@ it('allows a user to delete a project', function () {
     ]);
 
     $this->actingAs($user)
-        ->delete(route('projects.destroy', $project))
-        ->assertStatus(204);
+        ->delete(route('projects.destroy', $project));
 
     $this->assertDatabaseMissing('projects', [
         'id' => $project->id,

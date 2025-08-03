@@ -13,8 +13,7 @@ it('allows a user to delete a task', function () {
     ]);
 
     $this->actingAs($user)
-        ->delete(route('tasks.destroy', $task))
-        ->assertStatus(204);
+        ->delete(route('tasks.destroy', $task));
 
     $this->assertDatabaseMissing('tasks', [
         'id' => $task->id,

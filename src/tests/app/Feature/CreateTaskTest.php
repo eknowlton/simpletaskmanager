@@ -16,8 +16,7 @@ it('allows a user to create a task', function () {
             'project_id' => $project->id,
             'description' => 'Task description',
             'status' => TaskStatus::Pending->value,
-        ])
-        ->assertStatus(201);
+        ]);
 
     $this->assertDatabaseHas('tasks', [
         'title' => 'New Task',

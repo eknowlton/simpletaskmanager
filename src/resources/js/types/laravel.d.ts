@@ -10,7 +10,7 @@ color: string;
 items: Array<Shared.Data.BoardItem>;
 };
 export type BoardItem = {
-id: number;
+id: string;
 data: Shared.Data.Task;
 };
 export type CalendarEvent = {
@@ -58,7 +58,7 @@ description: string;
 due_date: string | null;
 status: Shared.Data.TaskStatus;
 priority: number;
-project_id: number | null;
+project_id: string | null;
 audits: Array<Shared.Data.TaskAudit> | null;
 tags: Array<Shared.Data.Tag> | null;
 created_at: string;
