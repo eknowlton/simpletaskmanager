@@ -12,7 +12,7 @@ export type ProjectFormData = {
     status: Shared.ProjectStatus;
     icon: string | null;
     color: string | null;
-    id: number;
+    id: string;
 };
 
 export const ProjectForm = ({ onSubmit, form }: { form: InertiaFormProps<ProjectFormData>; onSubmit: React.FormEventHandler<HTMLFormElement> }) => {

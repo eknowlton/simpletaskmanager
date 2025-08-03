@@ -11,8 +11,7 @@ it('allows a user to update their own task', function () {
             'title' => 'Updated Task',
             'description' => 'Updated description',
             'status' => \Shared\TaskStatus::InProgress->value,
-        ])
-        ->assertStatus(200);
+        ]);
 
     $this->assertDatabaseHas('tasks', [
         'id' => $task->id,

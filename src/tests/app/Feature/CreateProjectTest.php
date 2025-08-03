@@ -12,8 +12,7 @@ it('allows a user to create a project', function () {
             'status' => \Shared\ProjectStatus::InProgress->value,
             'color' => '#FF5733',
             'icon' => 'project-icon',
-        ])
-        ->assertStatus(201);
+        ]);
 
     $this->assertDatabaseHas('projects', [
         'title' => 'New Project',

@@ -3,7 +3,6 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\Projects\TaskController as ProjectTaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\Inbox\BoardController as InboxBoardController;
@@ -55,8 +54,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/{project}/calendar', [ProjectsCalendarController::class, 'show'])
             ->name('calendar');
-        Route::post('/{project}/tasks/create', [ProjectTaskController::class, 'store'])
-            ->name('tasks.store');
         Route::get('/{project}/inbox', ProjectsInboxController::class)->name('inbox');
     });
 });

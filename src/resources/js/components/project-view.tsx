@@ -14,7 +14,7 @@ export function ProjectView({ project }: { project: Shared.Data.Project }) {
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        form.put(route('projects.update', project.id), {
+        form.put(route('projects.update', { project: project.id }), {
             replace: false,
             onSuccess: () => {
                 toast.success('Project updated successfully');

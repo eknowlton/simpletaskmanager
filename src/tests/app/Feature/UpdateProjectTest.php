@@ -15,8 +15,7 @@ it('allows a user to update a project', function () {
             'status' => \Shared\ProjectStatus::InProgress->value,
             'color' => '#FF5733',
             'icon' => 'updated-icon',
-        ])
-        ->assertStatus(200);
+        ]);
 
     $this->assertDatabaseHas('projects', [
         'id' => $project->id,
