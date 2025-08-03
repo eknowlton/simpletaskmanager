@@ -13,7 +13,7 @@ it('allows a user to delete a task', function () {
     ]);
 
     $this->actingAs($user)
-        ->delete("/tasks/{$task->id}")
+        ->delete(route('tasks.destroy', $task))
         ->assertStatus(204);
 
     $this->assertDatabaseMissing('tasks', [
@@ -27,6 +27,6 @@ it('denies a user to delete a task of another user', function () {
     $task = \Shared\Models\Task::factory()->create(['user_id' => $otherUser->id]);
 
     $this->actingAs($user)
-        ->delete("/tasks/{$task->id}")
+        ->delete(route('tasks.destroy', $task))
         ->assertStatus(403);
 });

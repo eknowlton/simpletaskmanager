@@ -52,7 +52,7 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('projects.index');
+        return response(null, 201);
     }
 
     public function show(Project $project)

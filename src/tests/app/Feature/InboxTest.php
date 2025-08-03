@@ -13,3 +13,15 @@ test('authenticated users can visit the inbox', function () {
 
     $this->get('/inbox')->assertOk();
 });
+
+test('inbox returns inertia component inbox', function () {
+    $this->actingAs($user = User::factory()->create());
+
+    $response = $this->get('/inbox');
+
+    $response->assertInertia(fn ($page) => $page
+        ->component('inbox')
+        ->has('inbox')
+        ->has('twoMinute')
+    );
+});

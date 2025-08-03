@@ -11,7 +11,7 @@ it('allows a user to create a task', function () {
     ]);
 
     $this->actingAs($user)
-        ->post('/tasks', [
+        ->post(route('tasks.store'), [
             'title' => 'New Task',
             'project_id' => $project->id,
             'description' => 'Task description',
@@ -30,6 +30,6 @@ it('fails validation when creating a task without required fields', function () 
     $user = \Shared\Models\User::factory()->create();
 
     $this->actingAs($user)
-        ->post('/tasks', [])
+        ->post(route('tasks.store'), [])
         ->assertStatus(302);
 });
