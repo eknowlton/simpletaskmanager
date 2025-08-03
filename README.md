@@ -6,6 +6,8 @@ Simple task manager application designed for desktop. With a special feature LLM
 
 A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, ShadCN, and other fun frameworks.
 
+Monoliths are back in style, I brought it with three modules for simpletaskmanager. 
+
 This application is designed for desktop use, and won't function for mobile well. A seperate react native application for WebSPA and possibly Android/iOS is planned in the future.
 
 ## jobshop.works
