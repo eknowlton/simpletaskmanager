@@ -3,10 +3,7 @@
 namespace Tests\App\Browser;
 
 use Shared\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Inertia\Testing\AssertableInertia as Assert;
-
-uses(DatabaseTruncation::class);
 
 test('login component renders', function () {
     User::factory()->create([

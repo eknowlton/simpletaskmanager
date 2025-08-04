@@ -35,9 +35,10 @@ services:
       context: ./
       dockerfile: docker/app.Dockerfile
     ports:
-      - '13714:13714'
+      - '5173:5173'
     networks:
       - app-net
+    command: npm run dev
     volumes:
       - ./src:/var/www/html
 
@@ -74,6 +75,16 @@ services:
     image: 'redis:latest'
     ports:
       - 6379:6379
+    networks:
+      - app-net
+
+  selenium:
+    profiles: ['development', 'local']
+    image: 'selenium/standalone-chrome:latest'
+    ports:
+      - 4444:4444
+    networks:
+      - app-net
 
 networks:
   app-net:

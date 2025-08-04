@@ -9,7 +9,15 @@
          backupStaticProperties="false">
     <testsuites>
         <testsuite name="Browser">
-            <directory suffix="Test.php">./tests/App/Browser</directory>
+            <directory suffix="Test.php">./tests/app/Browser</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+            <directory>api</directory>
+            <directory>shared</directory>
+            <directory>tests</directory>
+        </include>
+    </source>
 </phpunit>
