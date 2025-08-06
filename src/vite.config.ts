@@ -7,6 +7,14 @@ import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+    server: {
+        host: '0.0.0.0',
+        port: 3000,
+        hmr: {
+            host: '0.0.0.0',
+            port: 3000,
+        },
+    },
     plugins: [
         laravel({
             input: ['resources/js/app.tsx'],

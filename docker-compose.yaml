@@ -1,6 +1,6 @@
 services:
   nginx:
-    profiles: ['production', 'development', 'local']
+    profiles: ['production', 'development', 'local', 'testing']
     image: simpletaskmanager/web
     environment:
       NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx/conf.d
@@ -16,13 +16,14 @@ services:
       - app-net
 
   ssr:
-    profiles: ['production']
+    profiles: ['production', 'testing']
     image: simpletaskmanager/app
     build:
       context: ./
       dockerfile: docker/app.Dockerfile
     ports:
-      - '13714:13714'
+      - '3000:3000'
+    command: php artisan inertia:start-ssr
     networks:
       - app-net
     volumes:
@@ -35,7 +36,7 @@ services:
       context: ./
       dockerfile: docker/app.Dockerfile
     ports:
-      - '5173:5173'
+      - '3000:3000'
     networks:
       - app-net
     command: npm run dev
@@ -43,7 +44,7 @@ services:
       - ./src:/var/www/html
 
   app:
-    profiles: ['production', 'development', 'local']
+    profiles: ['production', 'development', 'local', 'testing']
     image: simpletaskmanager/app
     build:
       context: ./
@@ -58,7 +59,7 @@ services:
     command: php-fpm -R
 
   database:
-    profiles: ['development', 'local']
+    profiles: ['production', 'development', 'local', 'testing']
     image: 'postgres:latest'
     ports:
       - 5432:5432
@@ -79,7 +80,7 @@ services:
       - app-net
 
   selenium:
-    profiles: ['development', 'local']
+    profiles: ['testing']
     image: 'selenium/standalone-chrome:latest'
     ports:
       - 4444:4444

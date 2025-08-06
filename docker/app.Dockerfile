@@ -25,7 +25,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-install pdo pdo_pgsql pgsql zip bcmath gd
 
 # Start building frontend assets
-FROM node:18.20-alpine AS node
+FROM node:20-alpine AS node
 
 COPY ./src /var/www/html/
 
@@ -34,7 +34,10 @@ WORKDIR /var/www/html
 RUN npm install
 
 # Were building the SSR version of the frontend here
-RUN npm run build:ssr
+RUN npm run build
+
+# Make sure that vite does not load HMR by ensuring the hot file is not present
+RUN rm -rf /var/www/html/public/hot
 
 # Back to finish the app
 FROM app
