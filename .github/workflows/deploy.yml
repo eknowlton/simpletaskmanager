@@ -42,12 +42,12 @@ jobs:
         run: |
           {
             echo 'DEPLOYMENT<<EOF'
-            aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment'
+            aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment' | | jq 'del(.version, .state, .createdAt)
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
       - name: Trigger redeployment
         run: |
-          echo "${{ steps.get-config.outputs.DEPLOYMENT }}" | aws lightsail create-container-service-deployment \
+          aws lightsail create-container-service-deployment \
             --service-name stm \
-            --cli-input-json
+            --cli-input-json ${{ steps.get-config.outputs.DEPLOYMENT }}
