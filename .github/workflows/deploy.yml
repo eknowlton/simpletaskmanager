@@ -39,8 +39,8 @@ jobs:
 
       - name: Trigger redeployment from current deployment
         run: |
-          DEPLOYMENT=$(aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment' | jq 'del(.version, .state, .createdAt)')
           aws lightsail create-container-service-deployment \
             --service-name stm \
-            --cli-input-json $DEPLOYMENT
+            --cli-input-json \ 
+            $(aws lightsail get-container-services --service-name stm | jq -c '.containerServices[0].currentDeployment' | jq -c 'del(.version, .state, .createdAt)')
             
