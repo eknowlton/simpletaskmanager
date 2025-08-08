@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 
 /* @ts-ignore */
 import tailwindcss from '@tailwindcss/vite';
+import { resolve } from 'node:path';
 
 export default defineConfig({
     server: {
@@ -26,5 +27,10 @@ export default defineConfig({
     ],
     esbuild: {
         jsx: 'automatic',
+    },
+    resolve: {
+        alias: {
+            'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
+        },
     },
 });

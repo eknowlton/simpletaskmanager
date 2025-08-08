@@ -1,20 +1,4 @@
-FROM php:8.3-cli-alpine
-COPY ./src /var/www/html/
-
-RUN apk --no-cache update \
-  && apk add \
-  git \
-  curl \
-  libpng-dev \
-  libxml2-dev \
-  zip \
-  unzip \
-  libpq-dev \
-  libzip-dev \
-  shadow
-
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-  && docker-php-ext-install pdo pdo_pgsql pgsql zip bcmath gd
+FROM 932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/php AS app
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
