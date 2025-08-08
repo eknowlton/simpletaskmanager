@@ -36,7 +36,20 @@ export const TaskForm = ({
     const convertDateToDatetimeLocalInputValue = (date?: Date): string | undefined => {
         if (!date) return;
 
-        const isoString = date.toISOString();
+        date.setMilliseconds(0);
+
+        const isoString = date
+            .toLocaleString('sv', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                fractionalSecondDigits: 3,
+            })
+            .replace(',', '.')
+            .replace(' ', 'T');
         return isoString.slice(0, 16); // Convert to 'YYYY-MM-DDTHH:mm' format
     };
 
@@ -125,7 +138,17 @@ export const TaskForm = ({
                     <>
                         <div>
                             <Label htmlFor="due_date">Due Date</Label>
-                            <Input type="datetime-local" id="due_date" value={convertDateToDatetimeLocalInputValue(data.due_date)} className="mt-1" />
+                            <Input
+                                min={convertDateToDatetimeLocalInputValue(new Date())} // Prevent past dates
+                                type="datetime-local"
+                                id="due_date"
+                                value={convertDateToDatetimeLocalInputValue(data.due_date)}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    console.log('Due date changed:', e.currentTarget.value);
+                                    setData('due_date', new Date(e.currentTarget.value));
+                                }}
+                                className="mt-1 text-center"
+                            />
                         </div>
                         <button
                             type="button"

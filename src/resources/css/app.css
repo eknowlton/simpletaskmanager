@@ -251,7 +251,12 @@ input[type='number'] {
     -moz-appearance: textfield; /* Firefox */
 }
 
-::-webkit-datetime-edit { /**/ }
+::-webkit-datetime-edit { 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 ::-webkit-datetime-edit-fields-wrapper { /**/ }
 ::-webkit-datetime-edit-text { /**/ }
 ::-webkit-datetime-edit-month-field { /**/ }
