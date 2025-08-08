@@ -41,6 +41,5 @@ jobs:
         run: |
           aws lightsail create-container-service-deployment \
             --service-name stm \
-            --cli-input-json \ 
-            $(aws lightsail get-container-services --service-name stm | jq -c '.containerServices[0].currentDeployment' | jq -c 'del(.version, .state, .createdAt)')
+            --cli-input-json $(aws lightsail get-container-services --service-name stm | jq -c '.containerServices[0].currentDeployment' | jq -c 'del(.version, .state, .createdAt)')
             
