@@ -41,7 +41,7 @@ jobs:
         id: get-config
         run: |
           {
-            echo DEPLOYMENT<<EOF
+            echo DEPLOYMENT=<<EOF
             aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment' | jq 'del(.version, .state, .createdAt)
             echo EOF
           } >> "$GITHUB_OUTPUT"
