@@ -40,10 +40,11 @@ jobs:
       - name: Get and write deployment config to file
         id: get-config
         run: |
-          echo "deployment=$(aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment')" >> $GITHUB_ENV
+          deployment=$(aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment')
+          echo "deployment=$deployment" >> $GITHUB_ENV
 
       - name: Trigger redeployment
         run: |
-          echo "${{ env.deployment }}" | aws lightsail create-container-service-deployment \
+          echo "${{ steps.get-config.outputs.deployment }}" | aws lightsail create-container-service-deployment \
             --service-name stm \
             --cli-input-json
