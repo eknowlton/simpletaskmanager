@@ -3,7 +3,9 @@
     "type": "module",
     "scripts": {
         "build": "vite build && vite build --ssr",
-        "dev": "vite",
+        "build:dev": "vite build",
+        "dev": "vite --host 0.0.0.0 --port 3000",
+        "test": "vite",
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",

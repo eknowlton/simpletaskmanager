@@ -16,10 +16,9 @@ return [
     */
 
     'ssr' => [
-        'enabled' => true,
-        'url' => env('INERTIA_SSR_URL', 'http://localhost:3000'),
-        'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
-
+        'enabled' => env("INERTIA_SSR_ENABLED", true),
+        'url' => env("APP_URL", "http://0.0.0.0:3000"),
+        'bundle' => base_path('bootstrap/ssr/ssr.js'),
     ],
 
     /*

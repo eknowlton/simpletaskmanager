@@ -1,0 +1,44 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ['Tests']
+    types: [completed]
+    branches:
+      - never-for-now-wip
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Login to ECR with Docker
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 932061877711.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Build and push `latest` docker images
+        run: ENV=prod docker buildx bake --push --progress=plain
+
+      # Will need to add a step to deploy the updates images to lightsail
+      # I think just installing the lightail CLI and running the deploy command should be enough
+      
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'Not deploying as tests failed'

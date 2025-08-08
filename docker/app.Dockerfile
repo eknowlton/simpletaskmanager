@@ -33,11 +33,11 @@ WORKDIR /var/www/html
 
 RUN npm install
 
-# Were building the SSR version of the frontend here
-RUN npm run build
+RUN if [ "${ENV}" = "dev" ]; then npm run build:dev; fi
 
 # Make sure that vite does not load HMR by ensuring the hot file is not present
-RUN rm -rf /var/www/html/public/hot
+RUN if [ "${ENV}" = "prod" ]; then npm run build; fi
+RUN if [ "${ENV}" = "prod" ]; then rm -rf /var/www/html/public/hot; fi
 
 # Back to finish the app
 FROM app
