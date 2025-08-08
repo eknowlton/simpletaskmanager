@@ -22,10 +22,21 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1 
       
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Login to ECR with Docker
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 025425726556.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Build, tag and push latest docker images
+        run: docker buildx bake --push
+
       - name: Get and write deployment config to file
         id: get-config
         run: |
