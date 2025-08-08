@@ -28,9 +28,10 @@ WORKDIR /var/www/html
 
 # Install composer bin
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 COPY ./src /var/www/html/
+
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 # Start building frontend assets
 FROM node:20-alpine AS node
