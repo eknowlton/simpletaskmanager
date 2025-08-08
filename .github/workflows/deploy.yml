@@ -37,19 +37,9 @@ jobs:
       - name: Build, tag and push latest docker images
         run: docker buildx bake --push
 
-      - name: Get and write deployment config to file
-        id: get-config
-        run: |
-          DEPLOYMENT=$(cat << EOF
-            aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment' | jq 'del(.version, .state, .createdAt)
-          EOF
-          )
-          echo "DEPLOYMENT<<EOF" >> $GITHUB_OUTPUT
-          echo "$DEPLOYMENT" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Trigger redeployment
+      - name: Trigger redeployment from current deployment
         run: |
           aws lightsail create-container-service-deployment \
             --service-name stm \
-            --cli-input-json ${{ steps.get-config.outputs.DEPLOYMENT }}
+            --cli-input-json \
+            $(aws lightsail get-container-services --service-name stm | jq '.containerServices[0].currentDeployment' | jq 'del(.version, .state, .createdAt))
