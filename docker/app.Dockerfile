@@ -24,10 +24,18 @@ RUN if [ "${ENV}" = "dev" ]; then pecl install xdebug-3.4.5 && docker-php-ext-en
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-install pdo pdo_pgsql pgsql zip bcmath gd
 
+WORKDIR /var/www/html
+
+# Install composer bin
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
+
+COPY ./src /var/www/html/
+
 # Start building frontend assets
 FROM node:20-alpine AS node
 
-COPY ./src /var/www/html/
+COPY --from=app /var/www/html /var/www/html/
 
 WORKDIR /var/www/html
 
@@ -50,16 +58,12 @@ RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 # Get built frontend assets + other files
 COPY --from=node /var/www/html /var/www/html
 
-# Install composer bin
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
 WORKDIR /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 RUN php artisan clear-compiled  \
         && composer dump-autoload
