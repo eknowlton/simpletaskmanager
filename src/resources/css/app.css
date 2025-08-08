@@ -250,3 +250,14 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
     -moz-appearance: textfield; /* Firefox */
 }
+
+::-webkit-datetime-edit { /**/ }
+::-webkit-datetime-edit-fields-wrapper { /**/ }
+::-webkit-datetime-edit-text { /**/ }
+::-webkit-datetime-edit-month-field { /**/ }
+::-webkit-datetime-edit-day-field { /**/ }
+::-webkit-datetime-edit-year-field { /**/ }
+::-webkit-inner-spin-button { display: none }
+.dark ::-webkit-calendar-picker-indicator { 
+    filter: invert(1);
+ }

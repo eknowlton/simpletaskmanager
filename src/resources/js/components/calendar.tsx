@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
 import {
@@ -27,6 +26,7 @@ import {
 import { enUS } from 'date-fns/locale/en-US';
 import { ReactNode, createContext, forwardRef, useCallback, useContext, useMemo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { ButtonWithoutType as Button } from './ui/button-without-type';
 
 export type CalendarEvent = Shared.Data.CalendarEvent & {
     onClick?: () => void;

@@ -6,7 +6,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { InertiaFormProps, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { DateTimeInput } from './ui/date-time-input';
 import { TagInput } from './ui/tag-input';
 
 export type TaskFormData = {
@@ -15,7 +14,7 @@ export type TaskFormData = {
     status: Shared.TaskStatus;
     priority: number;
     project_id: string | null;
-    due_date: Date | null;
+    due_date?: Date;
     tags?: { label: string; value: string }[];
     id: string;
 };
@@ -34,9 +33,16 @@ export const TaskForm = ({
     const [hasDueDate, setHasDueDate] = useState<boolean>(!!data.due_date);
     const showProjectSelection = !project && projects && projects.length > 0;
 
+    const convertDateToDatetimeLocalInputValue = (date?: Date): string | undefined => {
+        if (!date) return;
+
+        const isoString = date.toISOString();
+        return isoString.slice(0, 16); // Convert to 'YYYY-MM-DDTHH:mm' format
+    };
+
     return (
-        <form onSubmit={onSubmit} className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 gap-6">
+        <form onSubmit={onSubmit} className="z-10 flex flex-col gap-6">
+            <div className="relative z-10 grid grid-cols-2 gap-6">
                 <div className="col-span-2 grid gap-2">
                     <Label htmlFor="title">Title</Label>
                     <Input
@@ -119,12 +125,12 @@ export const TaskForm = ({
                     <>
                         <div>
                             <Label htmlFor="due_date">Due Date</Label>
-                            <DateTimeInput value={data.due_date ?? undefined} onChange={(value) => setData('due_date', value ?? null)} />
+                            <Input type="datetime-local" id="due_date" value={convertDateToDatetimeLocalInputValue(data.due_date)} className="mt-1" />
                         </div>
                         <button
                             type="button"
                             onClick={() => {
-                                setData('due_date', null);
+                                setData('due_date', undefined);
                                 setHasDueDate(false);
                             }}
                         >
