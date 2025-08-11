@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Projects;
 
+use App\Http\Controllers\Controller;
+
 use Shared\Data\CalendarEventData;
 use Shared\Data\ProjectData;
 use Shared\Models\Project;
-
-use App\Http\Controllers\Controller;
 
 class CalendarController extends Controller
 {
