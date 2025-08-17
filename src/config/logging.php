@@ -57,7 +57,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single,larabug')),
+            'channels' => explode(',', env('LOG_STACK', 'stderr,larabug')),
             'ignore_exceptions' => false,
         ],
 
