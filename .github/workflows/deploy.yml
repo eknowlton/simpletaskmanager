@@ -35,7 +35,7 @@ jobs:
           aws s3 cp s3://jobshop.works/production.env ./src/.env
 
       - name: Build, tag and push latest docker images
-        run: docker buildx bake --push
+        run: ENV=prod docker buildx bake --push
 
       - name: Trigger redeployment from current deployment
         run: |
