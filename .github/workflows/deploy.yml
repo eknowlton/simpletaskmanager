@@ -26,13 +26,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1 
       
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
       - name: Login to ECR with Docker
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 932061877711.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Copy a file from s3
+        uses: prewk/s3-cp-action@v2
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          source: 's3://jobshop.works/production.env'
+          dest: './src/.env'
 
       - name: Build, tag and push latest docker images
         run: docker buildx bake --push
