@@ -23,11 +23,11 @@ export default function Board({ columns, project }: { columns: Shared.Data.Board
         },
         {
             title: project.title,
-            href: route('projects.show', project.id),
+            href: route('projects.show', project.id as string),
         },
         {
             title: 'Board',
-            href: route('projects.board', project.id),
+            href: route('projects.board', project.id as string),
         },
     ];
 
