@@ -1,5 +1,7 @@
 FROM 932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/php AS app
 
+ARG ENV=prod
+
 WORKDIR /var/www/html
 
 # Install composer bin
