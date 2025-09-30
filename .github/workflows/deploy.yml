@@ -35,7 +35,7 @@ jobs:
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 932061877711.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Build, tag and push latest docker images
-        run: docker buildx bake --push
+        run: ENV=prod docker buildx bake --push
 
       - name: Trigger redeployment from current deployment
         run: |
