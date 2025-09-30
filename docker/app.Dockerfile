@@ -1,7 +1,6 @@
 FROM 932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/php AS app
 
 ARG ENV=prod
-
 WORKDIR /var/www/html
 
 # Install composer bin
@@ -44,7 +43,7 @@ WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache \
-    && chmod _R 755 /var/www/html/bootstrap
+    && chmod -R 755 /var/www/html/bootstrap
 
 RUN php artisan clear-compiled  \
         && composer dump-autoload
