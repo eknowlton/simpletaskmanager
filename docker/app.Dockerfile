@@ -14,6 +14,8 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 # Start building frontend assets
 FROM node:20-alpine AS node
 
+ARG ENV=prod
+
 COPY --from=app /var/www/html /var/www/html/
 
 WORKDIR /var/www/html
@@ -41,8 +43,8 @@ WORKDIR /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
-
+    && chmod -R 755 /var/www/html/bootstrap/cache \
+    && chmod _R 755 /var/www/html/bootstrap
 
 RUN php artisan clear-compiled  \
         && composer dump-autoload
