@@ -46,3 +46,4 @@ next-env.d.ts
 /.idea
 /db-data
 .envrc
+production.env

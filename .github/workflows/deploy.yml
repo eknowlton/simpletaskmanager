@@ -27,13 +27,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1 
       
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
       - name: Login to ECR with Docker
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 932061877711.dkr.ecr.us-east-1.amazonaws.com
+          
+      - name: Copy production .env config
+        run: |
+          aws s3 cp s3://jobshop.works/production.env ./src/.env
 
       - name: Sync production.env configuration file
         run: |
