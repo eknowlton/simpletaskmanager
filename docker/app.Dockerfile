@@ -46,4 +46,10 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/bootstrap
 
 RUN php artisan clear-compiled  \
-        && composer dump-autoload
+        && php artisan ziggy:generate \
+        && php artisan wayfinder:generate \
+        && composer dump-autoload \
+        && php artisan config:cache \
+        && php artisan route:cache \
+        && php artisan view:cache \
+
