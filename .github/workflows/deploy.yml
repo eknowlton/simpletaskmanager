@@ -2,8 +2,9 @@ name: Deploy to AWS Lightsail
 
 on:
   workflow_run:
-    workflows: ['Tests']
-    types: [completed]
+    workflows: [Tests]
+    types: 
+    - completed
     branches:
       - main
   workflow_dispatch:
