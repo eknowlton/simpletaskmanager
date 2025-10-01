@@ -5,7 +5,7 @@ on:
     workflows: ['Tests']
     types: [completed]
     branches:
-      - never-for-now-wip
+      - main
   workflow_dispatch:
 
 jobs:
@@ -33,6 +33,10 @@ jobs:
       - name: Login to ECR with Docker
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 932061877711.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Sync production.env configuration file
+        run: |
+          aws s3 cp s3://jobshop.works/production.env ./src/production.env
 
       - name: Build, tag and push latest docker images
         run: ENV=prod docker buildx bake --push
