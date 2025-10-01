@@ -32,4 +32,7 @@ target "app" {
   tags = [
     "932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/app:${TAG}"
   ]
+  ARGS = {
+    ENV = "${ENV}"
+  }
 }

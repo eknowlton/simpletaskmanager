@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.6",
+        "livewire/livewire": "^3.6",
         "maestroerror/laragent": "^0.4.1",
         "owen-it/laravel-auditing": "^14.0",
         "predis/predis": "^3.1",
