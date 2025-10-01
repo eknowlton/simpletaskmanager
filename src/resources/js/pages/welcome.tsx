@@ -334,7 +334,7 @@ export default function App() {
                         </button>
                         {auth.user ? (
                             <Link
-                                href={route('dashboard')}
+                                href={route('index')}
                                 className="text-sm leading-6 font-semibold text-gray-900 transition-colors hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
                             >
                                 Dashboard <span aria-hidden="true">&rarr;</span>
