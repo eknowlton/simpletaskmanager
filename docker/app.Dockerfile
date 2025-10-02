@@ -27,8 +27,6 @@ RUN if [ "${ENV}" = "dev" ]; then npm run build:dev; fi
 RUN if [ "${ENV}" = "prod" ]; then npm run build; fi
 RUN if [ "${ENV}" = "prod" ]; then rm -rf /var/www/html/public/hot; fi
 
-RUN npm run version
-
 # Back to finish the app
 FROM app
 
