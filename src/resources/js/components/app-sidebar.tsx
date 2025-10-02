@@ -46,6 +46,11 @@ const footerNavItems: NavItem[] = [
         href: 'mailto:eknowlton@gmail.com',
         icon: BookOpen,
     },
+    {
+        title: 'Features & Fixes',
+        href: route('updates'),
+        icon: BookOpen,
+    }
 ];
 
 export function AppSidebar() {
