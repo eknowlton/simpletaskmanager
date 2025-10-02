@@ -614,6 +614,13 @@ export default function App() {
                             <span className="text-2xl font-bold text-white">JobShop</span>
                             <p className="text-sm leading-6 text-gray-300">The easiest way to manage your team's work and hit your deadlines.</p>
                         </div>
+                        <div className="space-y-8"></div>
+                        <div className="gap-2 flex flex-col">
+                            <Link href={`#features`} className={"text-white"}>Features</Link>
+                            <Link href={`/login`} className={"text-white"}>Log In</Link>
+                            <Link href={`/register`} className={"text-white"}>Register</Link>
+                            <Link href={`/updates`} className={"text-white"}>Changelog</Link>
+                        </div>
                     </div>
                     <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
                         <p className="text-xs leading-5 text-gray-400">&copy; 2024 JobShop, All rights reserved.</p>
