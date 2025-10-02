@@ -273,12 +273,12 @@ export default function App() {
             0%, 80% { stroke-dashoffset: 50; }
             90%, 100% { stroke-dashoffset: 0; }
         }
-        
+
         .bg-grid-pattern {
             background-image: radial-gradient(circle, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)'} 1px, transparent 1px);
             background-size: 2rem 2rem;
         }
-        
+
         .hero-bg > div { position: absolute; border-radius: 50%; animation: float 20s infinite linear; }
         .shape1 { width: 150px; height: 150px; left: 10%; top: 20%; background: ${theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0,0,0,0.03)'}; animation-duration: 25s; }
         .shape2 { width: 50px; height: 50px; left: 25%; top: 70%; background: ${theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0,0,0,0.04)'}; animation-duration: 18s; animation-delay: 3s; }
@@ -385,12 +385,21 @@ export default function App() {
                                         </a>
                                     </div>
                                     <div className="py-6">
-                                        <a
-                                            href="#"
-                                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base leading-7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-800"
-                                        >
-                                            Log in
-                                        </a>
+                                        {auth.user ? (
+                                            <Link
+                                                href={route('index')}
+                                                className="text-sm leading-6 font-semibold text-gray-900 transition-colors hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
+                                            >
+                                                Dashboard <span aria-hidden="true">&rarr;</span>
+                                            </Link>
+                                        ) : (
+                                            <Link
+                                                href={route('login')}
+                                                className="text-sm leading-6 font-semibold text-gray-900 transition-colors hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
+                                            >
+                                                Log In <span aria-hidden="true">&rarr;</span>
+                                            </Link>
+                                        )}
                                     </div>
                                 </div>
                             </div>

@@ -11,14 +11,7 @@ export default function UpdatesPage() {
     const rendered = useMarkdown(changelog);
 
     return (
-        <AppLayout
-            breadcrumbs={[
-                { title: 'Home', href: route('index') },
-                { title: 'Changelog', href: route('updates') },
-            ]}
-        >
             <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:py-10 lg:px-8">
-                {/* Header */}
                 <div className="mb-8 flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">Changelog</h1>
                     <p className="text-neutral-600 dark:text-neutral-300">What’s new and improved in this release.</p>
@@ -85,6 +78,5 @@ export default function UpdatesPage() {
                     </article>
                 </div>
             </div>
-        </AppLayout>
     );
 }

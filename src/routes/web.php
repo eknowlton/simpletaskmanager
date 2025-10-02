@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::get('/updates', function() {
+    $path = base_path('CHANGELOG.md');
+    $changelog = file_exists($path) ? file_get_contents($path) : '';
+    return inertia('updates', [
+        'changelog' => $changelog,
+    ]);
+})->name('updates');
 
-    Route::get('/updates', function() {
-        $path = base_path('CHANGELOG.md');
-        $changelog = file_exists($path) ? file_get_contents($path) : '';
-        return inertia('updates', [
-            'changelog' => $changelog,
-        ]);
-    })->name('updates');
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     Route::put('/chat', [ChatController::class, 'message'])->name('chat.message');

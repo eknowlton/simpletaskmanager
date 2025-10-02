@@ -50,6 +50,7 @@ const footerNavItems: NavItem[] = [
         title: 'Changelog',
         href: route('updates'),
         icon: BookOpen,
+        target: "_blank"
     },
 ];
 
