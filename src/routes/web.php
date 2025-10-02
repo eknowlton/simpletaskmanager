@@ -16,10 +16,17 @@ Route::get('/', IndexController::class)->name('index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    Route::get('/updates', function() {
+        $path = base_path('CHANGELOG.md');
+        $changelog = file_exists($path) ? file_get_contents($path) : '';
+        return inertia('updates', [
+            'changelog' => $changelog,
+        ]);
+    })->name('updates');
+
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     Route::put('/chat', [ChatController::class, 'message'])->name('chat.message');
     Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
-
     Route::prefix('inbox')->name('inbox.')->group(function () {
         Route::get('/', InboxController::class)->name('index');
 
