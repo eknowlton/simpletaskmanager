@@ -46,6 +46,14 @@ const footerNavItems: NavItem[] = [
         href: 'mailto:eknowlton@gmail.com',
         icon: BookOpen,
     },
+<<<<<<< Updated upstream
+=======
+    {
+        title: 'Changelog',
+        href: route('updates'),
+        icon: BookOpen,
+    }
+>>>>>>> Stashed changes
 ];
 
 export function AppSidebar() {
