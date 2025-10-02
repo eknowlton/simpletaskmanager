@@ -47,10 +47,10 @@ const footerNavItems: NavItem[] = [
         icon: BookOpen,
     },
     {
-        title: 'Features & Fixes',
+        title: 'Changelog',
         href: route('updates'),
         icon: BookOpen,
-    }
+    },
 ];
 
 export function AppSidebar() {

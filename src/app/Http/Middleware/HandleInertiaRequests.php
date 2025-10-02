@@ -66,6 +66,8 @@ class HandleInertiaRequests extends Middleware
 
             'sidebar_pen' => $sidebar_open,
 
+            'changelog' => file_get_contents(base_path('CHANGELOG.md')),
+
             ...($request->user() ? [
 
                 'task_statuses' => TaskStatusData::collect(TaskStatus::cases()),
