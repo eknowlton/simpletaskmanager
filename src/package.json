@@ -1,4 +1,5 @@
 {
+    "version": "1.0.1",
     "private": true,
     "type": "module",
     "scripts": {
@@ -8,17 +9,14 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
-<<<<<<< Updated upstream
-        "types": "tsc --noEmit"
-=======
         "types": "tsc --noEmit",
         "version": "auto-changelog -p --hide-credit && git add CHANGELOG.md"
->>>>>>> Stashed changes
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
         "@import-meta-env/typescript": "^0.4.0",
         "@types/node": "^22.13.5",
+        "auto-changelog": "^2.5.0",
         "eslint": "^9.17.0",
         "eslint-config-prettier": "^10.0.1",
         "eslint-plugin-react": "^7.37.3",

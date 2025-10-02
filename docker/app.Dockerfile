@@ -27,6 +27,8 @@ RUN if [ "${ENV}" = "dev" ]; then npm run build:dev; fi
 RUN if [ "${ENV}" = "prod" ]; then npm run build; fi
 RUN if [ "${ENV}" = "prod" ]; then rm -rf /var/www/html/public/hot; fi
 
+RUN npm run version
+
 # Back to finish the app
 FROM app
 
@@ -46,4 +48,10 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/bootstrap
 
 RUN php artisan clear-compiled  \
-        && composer dump-autoload
+        && php artisan ziggy:generate \
+        && php artisan wayfinder:generate \
+        && composer dump-autoload \
+        && php artisan config:cache \
+        && php artisan route:cache \
+        && php artisan view:cache 
+
