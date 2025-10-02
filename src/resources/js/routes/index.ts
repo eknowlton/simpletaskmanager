@@ -54,6 +54,55 @@ index.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
 
 /**
 * @see [serialized-closure]:2
+* @route '/updates'
+*/
+export const updates = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
+    url: string,
+    method: 'get',
+} => ({
+    url: updates.url(options),
+    method: 'get',
+})
+
+updates.definition = {
+    methods: ['get','head'],
+    url: '/updates',
+}
+
+/**
+* @see [serialized-closure]:2
+* @route '/updates'
+*/
+updates.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
+    return updates.definition.url + queryParams(options)
+}
+
+/**
+* @see [serialized-closure]:2
+* @route '/updates'
+*/
+updates.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
+    url: string,
+    method: 'get',
+} => ({
+    url: updates.url(options),
+    method: 'get',
+})
+
+/**
+* @see [serialized-closure]:2
+* @route '/updates'
+*/
+updates.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
+    url: string,
+    method: 'head',
+} => ({
+    url: updates.url(options),
+    method: 'head',
+})
+
+/**
+* @see [serialized-closure]:2
 * @route '/settings/appearance'
 */
 export const appearance = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
