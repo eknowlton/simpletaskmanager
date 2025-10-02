@@ -334,10 +334,10 @@ export default function App() {
                         </button>
                         {auth.user ? (
                             <Link
-                                href={route('index')}
+                                href={route('inbox.index')}
                                 className="text-sm leading-6 font-semibold text-gray-900 transition-colors hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
                             >
-                                Dashboard <span aria-hidden="true">&rarr;</span>
+                                Inbox <span aria-hidden="true">&rarr;</span>
                             </Link>
                         ) : (
                             <Link
@@ -387,10 +387,10 @@ export default function App() {
                                     <div className="py-6">
                                         {auth.user ? (
                                             <Link
-                                                href={route('index')}
+                                                href={route('inbox.index')}
                                                 className="text-sm leading-6 font-semibold text-gray-900 transition-colors hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
                                             >
-                                                Dashboard <span aria-hidden="true">&rarr;</span>
+                                                Inbox <span aria-hidden="true">&rarr;</span>
                                             </Link>
                                         ) : (
                                             <Link

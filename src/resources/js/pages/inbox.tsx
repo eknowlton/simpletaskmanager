@@ -23,7 +23,7 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Shared.Data.Task[];
     const [task, setTask] = useState<Shared.Data.Task | null>(null);
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout breadcrumbs={breadcrumbs} header={false}>
             <Head title="Inbox" />
             <div className="flex flex-row flex-wrap gap-4 rounded-xl px-4 pt-4">
                 <Button asChild>
