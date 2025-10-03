@@ -35,10 +35,6 @@ jobs:
         run: |
           aws s3 cp s3://jobshop.works/production.env ./src/.env
 
-      - name: Sync production.env configuration file
-        run: |
-          aws s3 cp s3://jobshop.works/production.env ./src/production.env
-
       - name: Build, tag and push latest docker images
         run: ENV=prod docker buildx bake --push
 
