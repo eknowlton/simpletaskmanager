@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file. Dates are d
 - Adding more tests [`#8`](https://github.com/eknowlton/simpletaskmanager/pull/8)
 - Create tasks from inbox #1 [`#11`](https://github.com/eknowlton/simpletaskmanager/pull/11)
 - finished add and update task on inbox [`#10`](https://github.com/eknowlton/simpletaskmanager/pull/10)
+- Fixes #24 [`#24`](https://github.com/eknowlton/simpletaskmanager/issues/24)
 - initial commit [`998c687`](https://github.com/eknowlton/simpletaskmanager/commit/998c687056248b0c7bdb5d33576f616ae6c31cda)
 - closer to working product [`c75cff3`](https://github.com/eknowlton/simpletaskmanager/commit/c75cff3e629365dae394a187a0c19d78a9979283)
 - lets get the deploy build working [`1ffd542`](https://github.com/eknowlton/simpletaskmanager/commit/1ffd5424601b0b4baf47f0bdff0191b752ff0674)
