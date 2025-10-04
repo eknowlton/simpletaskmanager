@@ -30,8 +30,6 @@ const useInView = (options) => {
     return [ref, inView];
 };
 
-// --- SVG Icon Components (HeroIcons & Custom) ---
-
 const MenuIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
@@ -90,24 +88,20 @@ const AnimatedAppPreview = ({ theme }) => (
         <rect width="800" height="450" rx="8" fill="url(#app-bg-gradient)" />
         <rect x="1" y="1" width="798" height="448" rx="7" fill="none" stroke={theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'} />
 
-        {/* Sidebar */}
         <rect x="0" y="0" width="150" height="450" fill={theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'} />
         <circle cx="30" cy="30" r="10" fill="#3B82F6" />
         <rect x="50" y="25" width="70" height="10" rx="3" fill={theme === 'dark' ? '#4B5563' : '#E5E7EB'} />
-        {/* Sidebar links */}
+
         <rect x="20" y="70" width="110" height="15" rx="4" fill={theme === 'dark' ? '#374151' : '#E5E7EB'} />
         <rect x="20" y="100" width="90" height="15" rx="4" fill={theme === 'dark' ? '#374151' : '#E5E7EB'} />
         <rect x="20" y="130" width="110" height="15" rx="4" fill={theme === 'dark' ? '#4B5563' : '#D1D5DB'} />
         <rect x="20" y="160" width="80" height="15" rx="4" fill={theme === 'dark' ? '#374151' : '#E5E7EB'} />
 
-        {/* Main Content Area - Kanban Board */}
         <g>
-            {/* Columns */}
             <rect x="180" y="20" width="190" height="410" rx="6" fill={theme === 'dark' ? '#111827' : '#F3F4F6'} />
             <rect x="390" y="20" width="190" height="410" rx="6" fill={theme === 'dark' ? '#111827' : '#F3F4F6'} />
             <rect x="600" y="20" width="190" height="410" rx="6" fill={theme === 'dark' ? '#111827' : '#F3F4F6'} />
 
-            {/* Column Headers */}
             <text x="190" y="45" fontFamily="sans-serif" fontSize="14" fontWeight="600" fill={theme === 'dark' ? '#D1D5DB' : '#4B5563'}>
                 To Do
             </text>
@@ -603,7 +597,6 @@ export default function App() {
                 </div>
             </main>
 
-            {/* Footer */}
             <footer className="bg-gray-900 dark:bg-black" aria-labelledby="footer-heading">
                 <h2 id="footer-heading" className="sr-only">
                     Footer

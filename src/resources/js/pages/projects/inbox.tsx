@@ -6,10 +6,12 @@ import { ProjectView } from '@/components/project-view';
 import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import TaskList from '@/components/ui/task-list';
+import TaskListItem from '@/components/ui/task-list-item';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { ChartNoAxesCombined, Plus, Sparkles } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -42,60 +44,17 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
                     <ContentHeader title={project.title} description={`Inbox`} />
                     <ContentBody>
                         {tasks.length > 0 ? (
-                            <>
-                                <div className="p-4">
-                                    {tasks.map((task) => (
-                                        <div
-                                            key={task.id}
-                                            className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
-                                        >
-                                            <div className="flex flex-grow">
-                                                <button
-                                                    className="flex-grow text-left text-lg"
-                                                    onClick={() => {
-                                                        setTask(task);
-                                                        setView('edit-task');
-                                                    }}
-                                                >
-                                                    {task.title}
-                                                </button>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
-                                                        <ChartNoAxesCombined className="h-4 w-4" /> {task.status.label}
-                                                    </span>
-                                                    <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
-                                                        <Sparkles className="h-4 w-4" /> {task.priority}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-grow">
-                                                <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                                {task.due_date && (
-                                                    <div>
-                                                        <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                        <span className="pl-4">{task.due_date && new Date(task.due_date).toLocaleString()}</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <div className="flex flex-grow pt-2">
-                                                <div className="flex-grow"></div>
-                                                <div className="text-gray-700 dark:text-gray-400">
-                                                    {task.tags &&
-                                                        task.tags.length > 0 &&
-                                                        task.tags.map(({ label, value }) => (
-                                                            <span
-                                                                key={value}
-                                                                className="ml-2 inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 dark:bg-gray-600 dark:text-gray-200"
-                                                            >
-                                                                {label}
-                                                            </span>
-                                                        ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </>
+                            <TaskList>
+                                {tasks.map((task) => (
+                                    <TaskListItem
+                                        item={task}
+                                        onClick={() => {
+                                            setTask(task);
+                                            setView('edit');
+                                        }}
+                                    />
+                                ))}
+                            </TaskList>
                         ) : (
                             <p className="p-6">No tasks in project.</p>
                         )}

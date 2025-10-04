@@ -10,6 +10,8 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+import TaskList from '@/components/ui/task-list';
+import TaskListItem from '@/components/ui/task-list-item';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -39,37 +41,14 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Shared.Data.Task[];
                     <ContentBody>
                         {inbox.length > 0 ? (
                             <div className="p-4">
-                                {inbox.map((task) => (
-                                    <div
-                                        key={task.id}
-                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
-                                    >
-                                        <div className="flex flex-grow">
-                                            <button
-                                                onClick={() => {
-                                                    setTask(task);
-                                                    setView('edit');
-                                                }}
-                                                className="flex-grow text-left"
-                                            >
-                                                {task.title}
-                                            </button>
-                                            <div>
-                                                {task.status.label}{' '}
-                                                <span className="text-sm text-gray-700 dark:text-gray-400">( {task.priority} )</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-grow">
-                                            <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                            {task.due_date && (
-                                                <div>
-                                                    <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                    <span className="pl-4">{task.due_date && new Date(task.due_date).toLocaleString()}</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
+                                <TaskList>
+                                    {inbox.map((task) => (
+                                        <TaskListItem item={task} onClick={() => {
+                                            setTask(task);
+                                            setView('edit');
+                                        }} />
+                                    ))}
+                                </TaskList>
                             </div>
                         ) : (
                             <p className="p-4">No upcoming tasks.</p>
@@ -80,39 +59,14 @@ export default function Inbox({ inbox, twoMinute }: { inbox: Shared.Data.Task[];
                     <ContentHeader title="2-Minute Tasks" />
                     <ContentBody>
                         {twoMinute.length > 0 ? (
-                            <div className="p-4">
+                            <TaskList>
                                 {twoMinute.map((task) => (
-                                    <div
-                                        key={task.id}
-                                        className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:bg-gray-100 dark:hover:bg-white/3"
-                                    >
-                                        <div className="flex flex-grow">
-                                            <button
-                                                onClick={() => {
-                                                    setTask(task);
-                                                    setView('edit');
-                                                }}
-                                                className="flex-grow text-left"
-                                            >
-                                                {task.title}
-                                            </button>
-                                            <div>
-                                                {task.status.label}{' '}
-                                                <span className="text-sm text-gray-700 dark:text-gray-400">( {task.priority} )</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-grow">
-                                            <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                            {task.due_date && (
-                                                <div>
-                                                    <span className="bold text-sm text-gray-700 dark:text-gray-400">Due On</span>
-                                                    <span className="pl-4">{task.due_date && new Date(task.due_date).toLocaleString()}</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
+                                    <TaskListItem item={task} onClick={() => {
+                                        setTask(task);
+                                        setView('edit');
+                                    }} />
                                 ))}
-                            </div>
+                            </TaskList>
                         ) : (
                             <p className="p-4">No two minute tasks.</p>
                         )}
