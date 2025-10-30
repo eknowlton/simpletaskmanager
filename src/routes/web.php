@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IndexController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\Projects\InboxController as ProjectsInboxController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
+
+Route::get('/about', AboutController::class)->name('about');
 
 Route::get('/updates', function() {
     $path = base_path('CHANGELOG.md');

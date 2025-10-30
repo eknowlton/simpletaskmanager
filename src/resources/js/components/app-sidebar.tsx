@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, BotMessageSquare, Calendar, Columns, FolderCheck, LayoutGrid, ListCheck } from 'lucide-react';
+import { BookOpen, BotMessageSquare, Calendar, Columns, FolderCheck, Info, LayoutGrid, ListCheck } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -42,6 +42,12 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
+        title: 'About',
+        href: route('about'),
+        icon: Info,
+        target: '_blank',
+    },
+    {
         title: 'Help',
         href: 'mailto:eknowlton@gmail.com',
         icon: BookOpen,
@@ -50,7 +56,7 @@ const footerNavItems: NavItem[] = [
         title: 'Changelog',
         href: route('updates'),
         icon: BookOpen,
-        target: "_blank"
+        target: '_blank',
     },
 ];
 
