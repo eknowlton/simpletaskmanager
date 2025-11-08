@@ -6,7 +6,7 @@ COPY ./src /var/www/html/
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
-RUN chown -R www-data:www-data /var/www
+#RUN chown -R www-data:www-data /var/www
 
 WORKDIR /var/www/html
 

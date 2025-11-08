@@ -44,6 +44,8 @@ services:
       - ./src:/var/www/html
 
   app:
+    depends_on:
+      - database
     profiles: ['production', 'development', 'local', 'testing']
     image: simpletaskmanager/app
     build:
@@ -67,7 +69,7 @@ services:
       - POSTGRES_USER=laravel
       - POSTGRES_PASSWORD=secret
     volumes:
-      - ./db-data/:/var/lib/postgresql/data/
+      - ./db-data:/var/lib/postgresql
     networks:
       - app-net
   

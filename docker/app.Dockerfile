@@ -36,20 +36,12 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/node
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 # Get built frontend assets + other files
+COPY --from=node /var/www/html/node_modules /var/www/html/node_modules
 COPY --from=node /var/www/html /var/www/html
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
+#RUN chown -R www-data:www-data /var/www/html \
+RUN chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache \
     && chmod -R 755 /var/www/html/bootstrap
-
-RUN php artisan clear-compiled  \
-        && php artisan ziggy:generate \
-        && php artisan wayfinder:generate \
-        && composer dump-autoload \
-        && php artisan config:cache \
-        && php artisan route:cache \
-        && php artisan view:cache 
-
