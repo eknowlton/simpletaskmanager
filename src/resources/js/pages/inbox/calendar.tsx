@@ -1,4 +1,5 @@
 import {
+    Calendar as CCalendar,
     CalendarCurrentDate,
     CalendarDayView,
     CalendarMonthView,
@@ -7,7 +8,6 @@ import {
     CalendarTodayTrigger,
     CalendarViewTrigger,
     CalendarWeekView,
-    Calendar as CCalendar,
 } from '@/components/calendar';
 import { TaskView } from '@/components/task-view';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -26,6 +26,8 @@ export default function Calendar({ events }: { events: Shared.Data.CalendarEvent
             <CCalendar
                 events={events.map((event) => ({
                     ...event,
+                    start: event.start ? new Date(event.start) : null,
+                    end: event.end ? new Date(event.end) : null,
                     onClick: () => {
                         setTask(event.data);
                         setView('edit');

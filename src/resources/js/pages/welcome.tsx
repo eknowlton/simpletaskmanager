@@ -2,7 +2,7 @@ import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
 
-const useInView = (options) => {
+const useInView = (options: any) => {
     const ref = useRef(null);
     const [inView, setInView] = useState(false);
 
@@ -27,7 +27,7 @@ const useInView = (options) => {
         };
     }, [options]);
 
-    return [ref, inView];
+    return [ref, inView] as const;
 };
 
 const MenuIcon = () => (
@@ -42,19 +42,19 @@ const XIcon = () => (
     </svg>
 );
 
-const CheckCircleIcon = ({ className }) => (
+const CheckCircleIcon = ({ className }: { className: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 
-const ChevronDownIcon = ({ className }) => (
+const ChevronDownIcon = ({ className }: { className: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
     </svg>
 );
 
-const SunIcon = ({ className }) => (
+const SunIcon = ({ className }: { className: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
             strokeLinecap="round"
@@ -65,7 +65,7 @@ const SunIcon = ({ className }) => (
     </svg>
 );
 
-const MoonIcon = ({ className }) => (
+const MoonIcon = ({ className }: { className: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
             strokeLinecap="round"
@@ -76,7 +76,7 @@ const MoonIcon = ({ className }) => (
     </svg>
 );
 
-const AnimatedAppPreview = ({ theme }) => (
+const AnimatedAppPreview = ({ theme }: { theme: any }) => (
     <svg viewBox="0 0 800 450" className="h-auto w-full rounded-md shadow-2xl ring-1 ring-gray-900/10 dark:ring-white/10">
         {/* Background and Frame */}
         <defs>
@@ -231,7 +231,7 @@ export default function App() {
 
     const [openFaq, setOpenFaq] = useState(null);
 
-    const toggleFaq = (index) => {
+    const toggleFaq = (index: any) => {
         setOpenFaq(openFaq === index ? null : index);
     };
 
@@ -608,11 +608,19 @@ export default function App() {
                             <p className="text-sm leading-6 text-gray-300">The easiest way to manage your team's work and hit your deadlines.</p>
                         </div>
                         <div className="space-y-8"></div>
-                        <div className="gap-2 flex flex-col">
-                            <Link href={`#features`} className={"text-white"}>Features</Link>
-                            <Link href={`/login`} className={"text-white"}>Log In</Link>
-                            <Link href={`/register`} className={"text-white"}>Register</Link>
-                            <Link href={`/updates`} className={"text-white"}>Changelog</Link>
+                        <div className="flex flex-col gap-2">
+                            <Link href={`#features`} className={'text-white'}>
+                                Features
+                            </Link>
+                            <Link href={`/login`} className={'text-white'}>
+                                Log In
+                            </Link>
+                            <Link href={`/register`} className={'text-white'}>
+                                Register
+                            </Link>
+                            <Link href={`/updates`} className={'text-white'}>
+                                Changelog
+                            </Link>
                         </div>
                     </div>
                     <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">

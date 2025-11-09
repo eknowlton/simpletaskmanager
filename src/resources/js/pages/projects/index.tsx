@@ -9,7 +9,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Check, CheckCheck, Plus } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -21,14 +21,16 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Index({ projects }: { projects: PaginatedCollection<Shared.Data.Project> }) {
     const [view, setView] = useState<'index' | 'add'>('index');
-    const form = useForm<ProjectFormData>({
+    const initial: ProjectFormData = {
         title: '',
         description: '',
         status: 'active',
         icon: '',
         color: '',
-        id: 0,
-    });
+        id: '0',
+    };
+
+    const form = useForm<ProjectFormData>(initial);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -62,10 +64,13 @@ export default function Index({ projects }: { projects: PaginatedCollection<Shar
                                     {projects.data.map((project: Shared.Data.Project) => (
                                         <div
                                             key={project.id}
-                                            className="mb-2 flex flex-col justify-between rounded-md border hover:border-gray-300 dark:hover:border-gray-700 p-2 hover:bg-gray-100 dark:hover:bg-white/3"
+                                            className="mb-2 flex flex-col justify-between rounded-md border p-2 hover:border-gray-300 hover:bg-gray-100 dark:hover:border-gray-700 dark:hover:bg-white/3"
                                         >
-                                            <div className="flex flex-grow justify-between bg-gray-200 dark:bg-gray-900 px-3 py-2 rounded mb-2">
-                                                <Link href={route('projects.inbox', project.id)} className="flex-grow text-left flex flex-row items-center gap-2">
+                                            <div className="mb-2 flex flex-grow justify-between rounded bg-gray-200 px-3 py-2 dark:bg-gray-900">
+                                                <Link
+                                                    href={route('projects.inbox', { project_id: project.id })}
+                                                    className="flex flex-grow flex-row items-center gap-2 text-left"
+                                                >
                                                     {project.title}
                                                 </Link>
                                                 <div>{project.status.label}</div>

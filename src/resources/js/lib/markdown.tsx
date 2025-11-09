@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, JSX, useMemo } from 'react';
 
 // Lightweight Markdown renderer for common elements (headings, lists, code blocks, paragraphs, links)
 export function useMarkdown(md: string) {
@@ -29,7 +29,10 @@ export function useMarkdown(md: string) {
         const flushCode = () => {
             if (codeBuffer.length) {
                 elements.push(
-                    <pre key={`code-${elements.length}`} className="my-4 overflow-x-auto rounded-md bg-neutral-900/90 p-4 text-neutral-100 dark:bg-neutral-900">
+                    <pre
+                        key={`code-${elements.length}`}
+                        className="my-4 overflow-x-auto rounded-md bg-neutral-900/90 p-4 text-neutral-100 dark:bg-neutral-900"
+                    >
                         <code className={`language-${codeLang}`}>{codeBuffer.join('\n')}</code>
                     </pre>,
                 );
@@ -40,7 +43,10 @@ export function useMarkdown(md: string) {
 
         const heading = (text: string, level: number) => {
             const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-            const sizes = {
+            interface Sizes {
+                [index: number]: string;
+            }
+            const sizes: Sizes = {
                 1: 'mt-10 scroll-mt-24 text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100',
                 2: 'mt-8 scroll-mt-24 text-2xl font-semibold text-neutral-900 dark:text-neutral-100',
                 3: 'mt-6 scroll-mt-24 text-xl font-semibold text-neutral-900 dark:text-neutral-100',
@@ -51,9 +57,7 @@ export function useMarkdown(md: string) {
             return <Tag className={sizes[level]}>{inline(text)}</Tag>;
         };
 
-        const paragraph = (text: string) => (
-            <p className="my-3 leading-7 text-neutral-700 dark:text-neutral-300">{inline(text)}</p>
-        );
+        const paragraph = (text: string) => <p className="my-3 leading-7 text-neutral-700 dark:text-neutral-300">{inline(text)}</p>;
 
         const linkify = (text: string): (string | JSX.Element)[] => {
             const parts: (string | JSX.Element)[] = [];
@@ -125,6 +129,7 @@ export function useMarkdown(md: string) {
             return parts;
         };
 
+        // @ts-expect-error Not sure whats happening here
         const inline = (text: string) => emStrong(linkify(text));
 
         while (i < lines.length) {
@@ -169,9 +174,7 @@ export function useMarkdown(md: string) {
             const h = line.match(/^(#{1,6})\s+(.+)$/);
             if (h) {
                 flushList();
-                elements.push(
-                    <Fragment key={`h-${elements.length}`}>{heading(h[2].trim(), h[1].length)}</Fragment>,
-                );
+                elements.push(<Fragment key={`h-${elements.length}`}>{heading(h[2].trim(), h[1].length)}</Fragment>);
                 i++;
                 continue;
             }
@@ -194,9 +197,7 @@ export function useMarkdown(md: string) {
 
             // default paragraph
             flushList();
-            elements.push(
-                <Fragment key={`p-${elements.length}`}>{paragraph(line)}</Fragment>,
-            );
+            elements.push(<Fragment key={`p-${elements.length}`}>{paragraph(line)}</Fragment>);
             i++;
         }
 

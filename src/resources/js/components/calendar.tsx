@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
 import {
-    Locale,
     addDays,
     addMonths,
     addWeeks,
@@ -15,6 +14,7 @@ import {
     isSameHour,
     isSameMonth,
     isToday,
+    Locale,
     setHours,
     setMonth,
     startOfMonth,
@@ -25,11 +25,12 @@ import {
     subYears,
 } from 'date-fns';
 import { enUS } from 'date-fns/locale/en-US';
-import { ReactNode, createContext, forwardRef, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, forwardRef, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 export type CalendarEvent = Shared.Data.CalendarEvent & {
     onClick?: () => void;
+    start: Date;
 };
 
 const monthEventVariants = cva('size-2 rounded-full', {

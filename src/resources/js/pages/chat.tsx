@@ -236,7 +236,7 @@ export default function Chat({ sessionId, message }: { sessionId: string; messag
                                         </div>
                                     ))}
                             </div>
-                            <Button onClick={() => handleCreate(true)}>Create Project</Button>
+                            <Button onClick={() => handleCreate()}>Create Project</Button>
                             <CreateProjectSheet open={create} onOpenChange={(open) => !open && setCreate(false)} />
                         </ContentBody>
                     </ContentContainer>

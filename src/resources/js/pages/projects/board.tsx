@@ -9,6 +9,7 @@ import { Head, router } from '@inertiajs/react';
 import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { TaskView } from '@/components/task-view';
 
 export default function Board({ columns, project }: { columns: Shared.Data.BoardColumn[]; project: Shared.Data.Project }) {
     const [isDragging, setIsDragging] = useState<any>(null);

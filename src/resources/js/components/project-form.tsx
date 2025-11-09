@@ -6,14 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { InertiaFormProps, usePage } from '@inertiajs/react';
 
-export type ProjectFormData = {
-    title: string;
-    description: string | null;
-    status: Shared.ProjectStatus;
-    icon: string | null;
-    color: string | null;
-    id: string;
-};
+export type ProjectFormData = Partial<Omit<Shared.Data.Project, 'status'>> & { status: string };
 
 export const ProjectForm = ({ onSubmit, form }: { form: InertiaFormProps<ProjectFormData>; onSubmit: React.FormEventHandler<HTMLFormElement> }) => {
     const { project_statuses: statuses } = usePage<SharedProps>().props;

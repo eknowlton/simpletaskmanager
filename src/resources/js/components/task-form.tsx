@@ -8,16 +8,7 @@ import { InertiaFormProps, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { TagInput } from './ui/tag-input';
 
-export type TaskFormData = {
-    title: string;
-    description: string;
-    status: Shared.TaskStatus;
-    priority: number;
-    project_id: string | null;
-    due_date?: Date;
-    tags?: { label: string; value: string }[];
-    id: string;
-};
+export type TaskFormData = Partial<Omit<Shared.Data.Task, 'status' | 'due_date'>> & { status: string; due_date?: Date };
 
 export const TaskForm = ({
     form,

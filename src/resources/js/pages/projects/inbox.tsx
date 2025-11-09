@@ -9,12 +9,10 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import TaskList from '@/components/ui/task-list';
 import TaskListItem from '@/components/ui/task-list-item';
 import AppLayout from '@/layouts/app-layout';
+import { nullTask, useShowProject } from '@/pages/projects/show';
 import { type BreadcrumbItem } from '@/types';
-import {Head, router} from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
-import axios from "axios";
-import toast from "react-hot-toast";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,21 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Show({ project, tasks }: { project: Shared.Data.Project; tasks: Shared.Data.Task[] }) {
-    const [view, setView] = useState<'show' | 'edit' | 'add-task' | 'edit-task'>('show');
-    const [task, setTask] = useState<Shared.Data.Task | null>(null);
-
-    const deleteProject = () => {
-        axios
-            .delete(route('projects.destroy', { project: project.id }))
-            .then((response) => {
-                router.get(route('projects.index'));
-                toast.success("Project deleted successfully.");
-            })
-            .catch((error) => {
-                toast.error("Failed to delete project. Please try again later.")
-            });
-    }
-
+    const { view, setView, task, setTask, deleteProject } = useShowProject(project);
     return (
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
             <Head title={`${project.title}`} />
@@ -88,7 +72,7 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
             </Sheet>
             <Sheet open={view === 'add-task'} onOpenChange={(open) => !open && setView('show')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
-                    <AddTask onSuccess={() => setView('show')} task={{ project_id: parseInt(project.id, 10) }} />
+                    <AddTask onSuccess={() => setView('show')} task={{ ...nullTask, project_id: project.id }} />
                 </SheetContent>
             </Sheet>
         </AppLayout>

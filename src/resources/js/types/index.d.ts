@@ -1,5 +1,5 @@
 import { LucideIcon } from 'lucide-react';
-import type { Config, Router } from 'ziggy-js';
+import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: User;
@@ -7,7 +7,7 @@ export interface Auth {
 
 export interface BreadcrumbItem {
     title: string;
-    href: string | Router;
+    href: string;
 }
 
 export interface NavGroup {
@@ -20,7 +20,7 @@ export interface NavItem {
     href: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
-    target?: "_blank" | null;
+    target?: '_blank' | null;
 }
 
 export interface SharedData {

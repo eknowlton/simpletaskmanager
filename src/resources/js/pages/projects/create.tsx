@@ -5,6 +5,7 @@ import { ProjectForm, ProjectFormData } from '@/components/project-form';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
+import React from 'react';
 import toast from 'react-hot-toast';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -18,16 +19,17 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Create({}: {}) {
+export default function Create() {
     const { project_statuses: statuses } = usePage<SharedProps>().props;
-    const form = useForm<ProjectFormData>({
+    const initial: ProjectFormData = {
         title: '',
         description: '',
         status: statuses?.[0]?.value || 'active',
         icon: '',
         color: '',
-        id: 0,
-    });
+        id: '0',
+    };
+    const form = useForm<ProjectFormData>(initial);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();

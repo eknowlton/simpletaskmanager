@@ -4,18 +4,20 @@ import { ContentContainer } from '@/components/content-container';
 import { ContentHeader } from '@/components/content-header';
 import { PaginatedCollectionPaging } from '@/components/paginated-collection-paging';
 import { ProjectView } from '@/components/project-view';
+import { TaskFormData } from '@/components/task-form';
 import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
-import {Head, router} from '@inertiajs/react';
-import { useState } from 'react';
 import TaskList from '@/components/ui/task-list';
 import TaskListItem from '@/components/ui/task-list-item';
+import AppLayout from '@/layouts/app-layout';
+import { type BreadcrumbItem } from '@/types';
+import { Head, router } from '@inertiajs/react';
+import axios from 'axios';
 import { Plus } from 'lucide-react';
-import axios from "axios";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import Project = Shared.Data.Project;
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,21 +26,42 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Show({ project, tasks }: { project: Shared.Data.Project; tasks: PaginatedCollection<Shared.Data.Task> }) {
+export const nullTask: TaskFormData = {
+    project_id: null,
+    title: '',
+    description: '',
+    priority: 5,
+    status: 'pending',
+    tags: [],
+};
+
+export const useShowProject = (project: Project) => {
     const [view, setView] = useState<'show' | 'edit' | 'add-task' | 'edit-task'>('show');
     const [task, setTask] = useState<Shared.Data.Task | null>(null);
 
     const deleteProject = () => {
         axios
             .delete(route('projects.destroy', { project: project.id }))
-            .then((response) => {
+            .then(() => {
                 router.get(route('projects.index'));
-                toast.success("Project deleted successfully.");
+                toast.success('Project deleted successfully.');
             })
-            .catch((error) => {
-                toast.error("Failed to delete project. Please try again later.")
+            .catch(() => {
+                toast.error('Failed to delete project. Please try again later.');
             });
-    }
+    };
+
+    return {
+        view,
+        setView,
+        task,
+        setTask,
+        deleteProject,
+    };
+};
+
+export default function Show({ project, tasks }: { project: Shared.Data.Project; tasks: PaginatedCollection<Shared.Data.Task> }) {
+    const { view, setView, task, setTask, deleteProject } = useShowProject(project);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs.concat([{ title: `${project.title}`, href: `/project/${project.id}/show` }])}>
@@ -65,10 +88,13 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
                             <>
                                 <TaskList>
                                     {tasks.data.map((task) => (
-                                        <TaskListItem item={task} onClick={() => {
-                                            setTask(task);
-                                            setView('edit-task');
-                                        }} />
+                                        <TaskListItem
+                                            item={task}
+                                            onClick={() => {
+                                                setTask(task);
+                                                setView('edit-task');
+                                            }}
+                                        />
                                     ))}
                                 </TaskList>
                                 <PaginatedCollectionPaging collection={tasks} />
@@ -90,7 +116,7 @@ export default function Show({ project, tasks }: { project: Shared.Data.Project;
             <Sheet open={view === 'add-task'} onOpenChange={(open) => !open && setView('show')}>
                 <SheetContent className="w-1/2 xl:w-1/3">
                     <div className="mt-10 px-5">
-                        <AddTask onSuccess={() => setView('show')} task={{ project_id: parseInt(project.id, 10) }} />
+                        <AddTask onSuccess={() => setView('show')} task={{ ...nullTask, project_id: project.id }} />
                     </div>
                 </SheetContent>
             </Sheet>
