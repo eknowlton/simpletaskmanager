@@ -12,6 +12,8 @@ This application is designed for desktop use, and won't function for mobile well
 
 ## jobshop.works
 
+!! I'm currently moving this project from AWS to colocated VPS hosting. There will be some downtime.
+
 Currently trying out running small applications on AWS Lightsail via Containers. Utilizing the free tier, although it isn't the speediest so far.
 
 https://jobshop.works
