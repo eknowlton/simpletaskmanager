@@ -55,7 +55,7 @@ declare namespace Shared.Data {
         id: string | null;
         title: string;
         description: string;
-        due_date: string | null;
+        planned_on: string | null;
         status: Shared.Data.TaskStatus;
         priority: number;
         project_id: string | null;

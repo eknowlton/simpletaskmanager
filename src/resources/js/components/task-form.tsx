@@ -8,7 +8,7 @@ import { InertiaFormProps, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { TagInput } from './ui/tag-input';
 
-export type TaskFormData = Partial<Omit<Shared.Data.Task, 'status' | 'due_date'>> & { status: string; due_date?: Date };
+export type TaskFormData = Partial<Omit<Shared.Data.Task, 'status' | 'planned_on'>> & { status: string; planned_on?: Date };
 
 export const TaskForm = ({
     form,
@@ -21,7 +21,7 @@ export const TaskForm = ({
 }) => {
     const { task_statuses: statuses, projects } = usePage<SharedProps>().props;
     const { data, setData, errors } = form;
-    const [hasDueDate, setHasDueDate] = useState<boolean>(!!data.due_date);
+    const [hasDueDate, setHasDueDate] = useState<boolean>(!!data.planned_on);
     const showProjectSelection = !project && projects && projects.length > 0;
 
     const convertDateToDatetimeLocalInputValue = (date?: Date): string | undefined => {
@@ -128,15 +128,15 @@ export const TaskForm = ({
                 {hasDueDate ? (
                     <>
                         <div>
-                            <Label htmlFor="due_date">Due Date</Label>
+                            <Label htmlFor="planned_on">Planned On</Label>
                             <Input
                                 min={convertDateToDatetimeLocalInputValue(new Date())} // Prevent past dates
                                 type="datetime-local"
-                                id="due_date"
-                                value={convertDateToDatetimeLocalInputValue(data.due_date)}
+                                id="planned_on"
+                                value={convertDateToDatetimeLocalInputValue(data.planned_on)}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    console.log('Due date changed:', e.currentTarget.value);
-                                    setData('due_date', new Date(e.currentTarget.value));
+                                    console.log('Planned On changed:', e.currentTarget.value);
+                                    setData('planned_on', new Date(e.currentTarget.value));
                                 }}
                                 className="mt-1 text-center"
                             />
@@ -144,22 +144,22 @@ export const TaskForm = ({
                         <button
                             type="button"
                             onClick={() => {
-                                setData('due_date', undefined);
+                                setData('planned_on', undefined);
                                 setHasDueDate(false);
                             }}
                         >
-                            Clear due date
+                            Remove Planned Date
                         </button>
                     </>
                 ) : (
                     <button
                         type="button"
                         onClick={() => {
-                            setData('due_date', new Date());
+                            setData('planned_on', new Date());
                             setHasDueDate(true);
                         }}
                     >
-                        Set due date
+                        Plan Task Date
                     </button>
                 )}
                 <div

@@ -14,7 +14,7 @@ export function TaskView({ task }: { task: Shared.Data.Task }) {
         status: task.status.value,
         project_id: task.project_id ?? null,
         priority: task.priority,
-        due_date: task.due_date ? new Date(task.due_date) : undefined,
+        planned_on: task.planned_on ? new Date(task.planned_on) : undefined,
     });
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {

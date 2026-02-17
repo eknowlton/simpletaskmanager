@@ -1,4 +1,4 @@
-FROM 932061877711.dkr.ecr.us-east-1.amazonaws.com/simpletaskmanager/php AS app
+FROM 01a-custom:php AS app
 
 ARG ENV=prod
 WORKDIR /var/www/html
@@ -36,7 +36,6 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/node
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 # Get built frontend assets + other files
-COPY --from=node /var/www/html/node_modules /var/www/html/node_modules
 COPY --from=node /var/www/html /var/www/html
 
 WORKDIR /var/www/html

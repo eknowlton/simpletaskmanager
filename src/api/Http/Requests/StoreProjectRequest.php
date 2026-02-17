@@ -2,10 +2,9 @@
 
 namespace Api\Http\Requests;
 
-use Shared\ProjectStatus;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Shared\ProjectStatus;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -27,7 +26,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'due_date' => ['nullable', 'date'],
+            'planned_on' => ['nullable', 'date'],
             'status' => [
                 'required',
                 'string',

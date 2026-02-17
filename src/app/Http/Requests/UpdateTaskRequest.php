@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Shared\TaskStatus;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Shared\TaskStatus;
 
 class UpdateTaskRequest extends FormRequest
 {
@@ -27,7 +26,7 @@ class UpdateTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255', 'min:3'],
             'description' => ['required', 'string'],
-            'due_date' => [
+            'planned_on' => [
                 'nullable',
                 'date'
             ],

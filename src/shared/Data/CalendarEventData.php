@@ -2,11 +2,11 @@
 
 namespace Shared\Data;
 
-use Shared\Models\Task;
 use Carbon\Carbon;
+use Shared\Models\Task;
 use Spatie\LaravelData\Data;
 
-/** 
+/**
  * @typescript CalendarEvent
  * @typescript-transformer Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptTransformer
  */
@@ -27,8 +27,8 @@ class CalendarEventData extends Data
             $task->id,
             $task->title,
             'white',
-            $task->due_date,
-            $task->due_date,
+            $task->planned_on,
+            $task->planned_on,
             TaskData::from($task)
         );
     }

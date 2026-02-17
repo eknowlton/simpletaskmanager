@@ -12,7 +12,7 @@ export function AddTask({ onSuccess, task }: { onSuccess?: () => void; task?: Ta
         status: task?.status ?? 'pending',
         project_id: task?.project_id ?? null,
         priority: task?.priority ?? 5,
-        due_date: task?.due_date ? new Date(task.due_date) : undefined,
+        planned_on: task?.planned_on ? new Date(task.planned_on) : undefined,
     };
 
     const form = useForm<TaskFormData>(initial);

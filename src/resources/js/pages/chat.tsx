@@ -69,7 +69,7 @@ interface ChatAgentTask {
     description: string;
     status: { label: string; value: string };
     priority: string;
-    due_date?: string;
+    planned_on?: string;
     tags?: { label: string; value: string }[];
 }
 
@@ -211,10 +211,10 @@ export default function Chat({ sessionId, message }: { sessionId: string; messag
                                             </div>
                                             <div className="flex flex-grow">
                                                 <div className="flex-grow text-gray-700 dark:text-gray-400">{task.description}</div>
-                                                {task.due_date && (
+                                                {task.planned_on && (
                                                     <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                                                         <Calendar className="h-4 w-4" />
-                                                        <span className="">{new Date(task.due_date).toLocaleString()}</span>
+                                                        <span className="">{new Date(task.planned_on).toLocaleString()}</span>
                                                     </div>
                                                 )}
                                             </div>

@@ -23,11 +23,11 @@ class TaskFactory extends Factory
             'user_id' => \Shared\Models\User::factory(),
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(),
-            'due_date' => $this->faker->dateTimeBetween('now', '+1 month'),
+            'planned_on' => $this->faker->dateTimeBetween('now', '+1 month'),
             'status' => \Shared\TaskStatus::Pending->value,
             'project_id' => \Shared\Models\Project::factory(),
             'priority' => $this->faker->numberBetween(0, 5),
-            'tags' =>  collect([true, true, true])->map(fn () => ['value' => $word = $this->faker->word, 'label' => $word]), 
+            'tags' =>  collect([true, true, true])->map(fn () => ['value' => $word = $this->faker->word, 'label' => $word]),
             'created_at' => now(),
             'updated_at' => now(),
             'deleted_at' => null

@@ -1,5 +1,6 @@
 import { AddTask } from '@/components/add-task';
 import { Board as BoardComponent, CustomDragEndEvent } from '@/components/board';
+import { TaskView } from '@/components/task-view';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import AppLayout from '@/layouts/app-layout';
@@ -9,7 +10,6 @@ import { Head, router } from '@inertiajs/react';
 import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { TaskView } from '@/components/task-view';
 
 export default function Board({ columns, project }: { columns: Shared.Data.BoardColumn[]; project: Shared.Data.Project }) {
     const [isDragging, setIsDragging] = useState<any>(null);
@@ -48,7 +48,7 @@ export default function Board({ columns, project }: { columns: Shared.Data.Board
                 title: task.data.title,
                 description: task.data.description,
                 tags: task.data.tags,
-                due_date: task.data.due_date,
+                planned_on: task.data.planned_on,
                 priority: task.data.priority,
                 project_id: task.data.project_id,
                 status: overId,

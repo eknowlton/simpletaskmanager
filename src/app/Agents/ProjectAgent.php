@@ -2,8 +2,8 @@
 
 namespace App\Agents;
 
-use Shared\TaskStatus;
 use LarAgent\Agent;
+use Shared\TaskStatus;
 
 class ProjectAgent extends Agent
 {
@@ -21,7 +21,7 @@ class ProjectAgent extends Agent
     {
         $currentDate = now()->format('Y-m-d H:i:s');
 
-        return "Its your job to help the user design a project by providing a title, a description and the project details including the breakdown of its tasks. Be sure to create due dates that reflect the current date of {$currentDate} Never give more than 10 tasks.";
+        return "Its your job to help the user design a project by providing a title, a description and the project details including the breakdown of its tasks. Never give more than 10 tasks.";
     }
 
     public function prompt($message)
@@ -81,10 +81,10 @@ class ProjectAgent extends Agent
                                             'type' => 'string',
                                             'description' => 'A brief description of the task.',
                                         ],
-                                        'due_date' => [
+                                        'planned_on' => [
                                             'type' => 'string',
                                             'format' => 'date-time',
-                                            'description' => 'The due date for the task.',
+                                            'description' => 'The date the task is planned for.',
                                         ],
                                         'priority' => [
                                             'type' => 'number',
@@ -119,7 +119,7 @@ class ProjectAgent extends Agent
                                             'description' => 'Tags associated with the task for categorization of priority and urgency.',
                                         ],
                                     ],
-                                    'required' => ['title', 'description', 'due_date', 'priority', 'tags'],
+                                    'required' => ['title', 'description', 'planned_on', 'priority', 'tags'],
                                     'additionalProperties' => false,
                                 ],
                                 'description' => 'A list of tasks involved in the project.',

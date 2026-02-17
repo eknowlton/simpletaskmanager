@@ -2,10 +2,9 @@
 
 namespace Api\Http\Requests\Projects;
 
-use Shared\TaskStatus;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Shared\TaskStatus;
 
 class StoreTaskRequest extends FormRequest
 {
@@ -27,7 +26,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'due_date' => [
+            'planned_on' => [
                 'nullable',
                 'date'
             ],

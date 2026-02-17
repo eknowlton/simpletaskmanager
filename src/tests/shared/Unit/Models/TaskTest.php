@@ -2,8 +2,8 @@
 
 namespace Tests\Shared\Unit\Models;
 
-use Shared\Models\Task;
 use Shared\Models\Project;
+use Shared\Models\Task;
 use Shared\Models\User;
 use Shared\TaskStatus;
 
@@ -44,8 +44,8 @@ it('can scope tasks with a specific status', function () {
 });
 
 it('can scope tasks in the inbox', function () {
-    $task1 = Task::factory()->create(['due_date' => now()->addDay(), 'created_at' => now()->subDay()]);
-    $task2 = Task::factory()->create(['due_date' => now()->addDays(2), 'created_at' => now()]);
+    $task1 = Task::factory()->create(['planned_on' => now()->addDay(), 'created_at' => now()->subDay()]);
+    $task2 = Task::factory()->create(['planned_on' => now()->addDays(2), 'created_at' => now()]);
 
     $inboxTasks = Task::inbox()->get();
 

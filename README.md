@@ -2,7 +2,7 @@
 
 [![Tests badge](https://github.com/eknowlton/simpletaskmanager/actions/workflows/tests.yml/badge.svg?event=push)](https://github.com/eknowlton/simpletaskmanager/actions/workflows/tests.yml)
 
-Simple task manager application designed for desktop. With a special feature LLM Agent that can create and plan tasks for your project, as you describe details down to the due dates and tags.
+Simple task manager application designed for desktop. With a special feature LLM Agent that can create and plan tasks for your project, as you describe details down to the planned on date and tags.
 
 A laravel based server-side SPA for managing tasks with Inertia, Vite, TailwindCSS, ShadCN, and other fun frameworks.
 

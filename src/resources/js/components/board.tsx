@@ -36,9 +36,9 @@ function Card({ item, columnId, onClick }: { item: Shared.Data.BoardItem; column
                 </div>
                 <div className="flex items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
                     <div className="flex-grow">&nbsp;</div>
-                    {task.due_date && (
+                    {task.planned_on && (
                         <>
-                            <ClockAlert className="h-4 w-4" /> {new Date(task.due_date ?? '').toLocaleString()}
+                            <ClockAlert className="h-4 w-4" /> {new Date(task.planned_on ?? '').toLocaleString()}
                         </>
                     )}
                 </div>

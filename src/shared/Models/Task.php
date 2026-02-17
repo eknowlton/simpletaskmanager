@@ -4,14 +4,12 @@ namespace Shared\Models;
 
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
-use Shared\TaskStatus;
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use OwenIt\Auditing\Contracts\Auditable;
+use Shared\TaskStatus;
 
 #[UseFactory(TaskFactory::class)]
 class Task extends Model implements Auditable
@@ -21,7 +19,7 @@ class Task extends Model implements Auditable
     protected $table = 'tasks';
 
     protected $casts = [
-        'due_date' => 'datetime',
+        'planned_on' => 'datetime',
         'status' => TaskStatus::class,
         'tags' => 'json'
     ];
@@ -29,7 +27,7 @@ class Task extends Model implements Auditable
     protected $fillable = [
         'title',
         'description',
-        'due_date',
+        'planned_on',
         'status',
         'priority',
         'tags',
@@ -57,7 +55,7 @@ class Task extends Model implements Auditable
 
     public function scopeInbox(Builder $query)
     {
-        return $query->orderBy('due_date')
+        return $query->orderBy('planned_on')
             ->orderBy('created_at');
     }
 

@@ -4,9 +4,8 @@ namespace Shared\Data;
 
 use Carbon\CarbonImmutable;
 use Spatie\LaravelData\Data;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-/** 
+/**
  * @typescript Task
  * @typescript-transformer Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptTransformer
  */
@@ -16,7 +15,7 @@ class TaskData extends Data
         public ?string $id = null,
         public string $title,
         public string $description,
-        public ?CarbonImmutable $due_date = null,
+        public ?CarbonImmutable $planned_on = null,
         public TaskStatusData $status,
         public int $priority,
         public ?string $project_id = null,

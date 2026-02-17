@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine AS app
+FROM php:8.3-fpm-alpine
 
 # Use ENV for conditional commands per environment
 ARG ENV
@@ -25,3 +25,10 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-install pdo pdo_pgsql pgsql zip bcmath gd
 
 WORKDIR /var/www/html
+
+ARG UID
+ENV UID=${UID}
+RUN useradd www-data 
+RUN usermod -u ${UID} www-data
+
+USER www-data

@@ -44,7 +44,7 @@ export default function Board({ columns }: { columns: Shared.Data.BoardColumn[] 
                 title: task.data.title,
                 description: task.data.description,
                 tags: task.data.tags,
-                due_date: task.data.due_date,
+                planned_on: task.data.planned_on,
                 priority: task.data.priority,
                 project_id: task.data.project_id,
                 status: overId,

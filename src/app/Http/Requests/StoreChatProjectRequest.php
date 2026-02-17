@@ -30,7 +30,7 @@ class StoreChatProjectRequest extends FormRequest
 
             'tasks.*.title' => ['required', 'string', 'max:255'],
             'tasks.*.description' => ['required', 'string'],
-            'tasks.*.due_date' => [
+            'tasks.*.planned_on' => [
                 'nullable',
                 'date'
             ],

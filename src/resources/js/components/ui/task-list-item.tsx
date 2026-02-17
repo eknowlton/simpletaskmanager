@@ -1,4 +1,4 @@
-import { Calendar, ChartNoAxesCombined, Sparkles, Check, Square, SquareCheck } from 'lucide-react';
+import { Calendar, ChartNoAxesCombined, Sparkles, Square, SquareCheck } from 'lucide-react';
 
 export default function TaskListItem({ item: task, onClick }: { item: Shared.Data.Task, onClick: () => void }) {
     return (
@@ -21,10 +21,10 @@ export default function TaskListItem({ item: task, onClick }: { item: Shared.Dat
             </div>
             <div className="flex flex-grow">
                 <div className="flex-grow text-gray-700 dark:text-gray-400 p-2">{task.description}</div>
-                {task.due_date && (
+                {task.planned_on && (
                     <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
                         <Calendar className="h-4 w-4" />
-                        <span className="">{task.due_date ? new Date(task.due_date).toLocaleString() : null}</span>
+                        <span className="">{task.planned_on ? new Date(task.planned_on).toLocaleString() : null}</span>
                     </div>
                 )}
             </div>
